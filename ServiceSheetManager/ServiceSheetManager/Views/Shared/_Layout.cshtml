@@ -21,8 +21,14 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Job Cost Stats", "Index", "JobCost")</li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Customer Stats<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Matrix Stats", "Index", "MatrixServiceStats")</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Eng Stats", "EngineerCalendar", "EngineerStatistics")</li>
                 </ul>
             </div>
         </div>
