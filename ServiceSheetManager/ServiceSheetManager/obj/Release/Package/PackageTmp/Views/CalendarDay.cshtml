@@ -1,0 +1,30 @@
+﻿@model ServiceSheetManager.Models.NonDbModels.EngineerCalendarDay
+
+<div class="col-md-2">
+    <p>@Model.CalendarDate.ToString("dd/MM/yyyy") - @Model.CalendarDate.DayOfWeek.ToString()</p>
+    @foreach (var dayDetail in Model.CalendarDayDetails.Values)
+    {
+        <div class="well well-sm">
+            @if (!dayDetail.MissingDay)
+            {
+                <div>
+                    <p>@dayDetail.EngineerInitials - @dayDetail.TotalHours</p>
+                    <div class="hidden jobNumbers">
+                        @foreach (var jobDetails in dayDetail.JobsList)
+                        {
+                            <p>@jobDetails.Customer</p>
+                            <p>@jobDetails.MttJobNumber</p>
+                            <p>Onsite time - @jobDetails.TotalTimeOnsite</p>
+                            <p>Travel Time - @jobDetails.TotalTravelTime</p>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p class="text-danger">@dayDetail.Engineer</p>
+            }
+        </div>
+
+    }
+</div>
