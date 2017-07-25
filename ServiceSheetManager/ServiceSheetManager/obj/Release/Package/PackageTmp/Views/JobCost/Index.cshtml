@@ -1,0 +1,67 @@
+﻿@model ServiceSheetManager.ViewModels.JobCostDetailsVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<form asp-action="Index" method="get">
+    <p>
+        @Html.LabelFor(m => m.ActiveJobDateFrom)
+        @Html.EditorFor(m => m.ActiveJobDateFrom, "", new { @name = "DateFrom" })
+    </p>
+    <p>
+        @Html.LabelFor(m => m.ActiveJobDateTo)
+        @Html.EditorFor(m => m.ActiveJobDateTo, "", new { @name = "DateTo" })
+    </p>
+    <input type="submit" value="Select Dates" class="btn btn-default" />
+</form>
+
+<form asp-action="Index" method="get">
+    @Html.DropDownListFor(m => m.SelectedJobNumber, new SelectList(Model.AllJobNumbers, "Text", "Value"), "", new { @name = "JobNumber" })
+    @*<input type="text" name="JobNumber" value="@Model.JobNumberSearch" />*@
+    <input type="submit" value="Search" class="btn btn-default" />
+</form>
+
+<p>
+    <label>Job number found: </label>
+    @Html.DisplayFor(m => m.SelectedJobNumber)
+</p>
+
+<p>
+    @Html.LabelFor(m => m.NumberEngineers)
+    @Html.DisplayFor(m => m.NumberEngineers)
+</p>
+<p>
+    @Html.LabelFor(m => m.TotalDays)
+    @Html.DisplayFor(m => m.TotalDays)
+</p>
+<p>
+    @Html.LabelFor(m => m.TotalHoursOnsite)
+    @Html.DisplayFor(m => m.TotalHoursOnsite)
+</p>
+<p>
+    @Html.LabelFor(m => m.TotalTravelTime)
+    @Html.DisplayFor(m => m.TotalTravelTime)
+</p>
+<p>
+    @Html.LabelFor(m => m.TotalDailyAllowances)
+    @Html.DisplayFor(m => m.TotalDailyAllowances)
+</p>
+<p>
+    @Html.LabelFor(m => m.TotalOvernightAllowances)
+    @Html.DisplayFor(m => m.TotalOvernightAllowances)
+</p>
+<p>
+    @Html.LabelFor(m => m.TotalMileage)
+    @Html.DisplayFor(m => m.TotalMileage)
+</p>
+<p>
+    @Html.LabelFor(m => m.StandardHours)
+    @Html.DisplayFor(m => m.StandardHours)
+</p>
+<p>
+    @Html.LabelFor(m => m.OvertimeHours)
+    @Html.DisplayFor(m => m.OvertimeHours)
+</p>
