@@ -1,0 +1,296 @@
+﻿@model ServiceSheetManager.ViewModels.ServiceSheetApprovalVM
+
+@{
+    ViewBag.Title = "Approve Service Sheet";
+}
+
+@using (Html.BeginForm("Approve", "ServiceSheetApproval", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.ServiceSheetModel.Id)
+    @Html.HiddenFor(m => m.ServiceSheetModel.SubmissionNumber)
+    @Html.HiddenFor(m => m.ServiceSheetModel.AppName)
+    @Html.HiddenFor(m => m.ServiceSheetModel.CanvasResponseId)
+    @Html.HiddenFor(m => m.ServiceSheetModel.Username)
+    @Html.HiddenFor(m => m.ServiceSheetModel.SubmissionFormName)
+    @Html.HiddenFor(m => m.ServiceSheetModel.SubmissionFormVersion)
+    @Html.HiddenFor(m => m.ServiceSheetModel.DtDevice)
+    @Html.HiddenFor(m => m.ServiceSheetModel.DtResponse)
+
+    <h2>Service Report and Timesheet No. @Html.DisplayFor(m => m.ServiceSheetModel.SubmissionNumber)</h2>
+
+    if (Model.Errors)
+    {
+        <div class="text-danger">
+            <h4>The errors need fixing before submission</h4>
+        </div>
+    }
+
+    <div>
+        <h3 class="row">Job Details</h3>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.Customer)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.Customer)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.Customer)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.AddressLine1)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.AddressLine1)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.AddressLine1)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.AddressLine2)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.AddressLine2)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.AddressLine2)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.TownCity)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.TownCity)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.TownCity)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.Postcode)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.Postcode)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.Postcode)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.CustomerContact)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.CustomerContact)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.CustomerContact)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.CustomerPhoneNo)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.CustomerPhoneNo)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.CustomerPhoneNo)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.MachineMakeModel)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.MachineMakeModel)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.MachineMakeModel)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.MachineSerial)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.MachineSerial)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.MachineSerial)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.CncControl)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.CncControl)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.CncControl)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.DtJobStart)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.DtJobStart)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.DtJobStart)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.CustomerOrderNo)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.CustomerOrderNo)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.CustomerOrderNo)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.MttJobNumber)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.MttJobNumber)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.MttJobNumber)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.JobDescription)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.JobDescription)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.JobDescription)</div>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="row">
+            <h3 class="col-md-12">Timesheet</h3>
+        </div>
+
+        <div class="panel-group">
+            <div class="panel panel-default">
+                @Html.EditorFor(m => m.ServiceDayModels)
+            </div>
+        </div>
+
+        <div class="row">
+            <h3 class="col-md-12">Service Report</h3>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.JobTotalTravelTime)</div>
+            <div class="col-md-2">@Html.TextBoxFor(m => m.ServiceSheetModel.JobTotalTravelTime, new { @class = "JobTotalTravelTime" })</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.JobTotalTravelTime)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.JobTotalTimeOnsite)</div>
+            <div class="col-md-2">@Html.TextBoxFor(m => m.ServiceSheetModel.JobTotalTimeOnsite, new { @class = "JobTotalOnsiteTime"})</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.JobTotalTimeOnsite)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.JobTotalMileage)</div>
+            <div class="col-md-2">@Html.TextBoxFor(m => m.ServiceSheetModel.JobTotalMileage, new { @class = "JobTotalMileage"})</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.JobTotalMileage)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.TotalDailyAllowances)</div>
+            <div class="col-md-2">@Html.TextBoxFor(m => m.ServiceSheetModel.TotalDailyAllowances, new { @class = "JobTotalDailyAllowances"})</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.TotalDailyAllowances)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.TotalOvernightAllowances)</div>
+            <div class="col-md-2">@Html.TextBoxFor(m => m.ServiceSheetModel.TotalOvernightAllowances, new { @class = "JobTotalOvernightAllowances" })</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.TotalOvernightAllowances)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.JobStatus)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.JobStatus)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.JobStatus)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.FinalJobReport)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.FinalJobReport)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.FinalJobReport)</div>
+        </div>
+
+        <div class="row form-group">
+            <h3 class="col-md-12">Follow-up Work</h3>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.AdditionalFaults)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.AdditionalFaults)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.AdditionalFaults)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.FollowUpPartsRequired)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.FollowUpPartsRequired)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.FollowUpPartsRequired)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.QuoteRequired)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.QuoteRequired)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.QuoteRequired)</div>
+        </div>
+        <div class="row form-group">
+            <h3 class="col-md-12">Follow-up Work Images</h3>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.Image1Url)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.Image1Url)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.Image1Url)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.Image2Url)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.Image2Url)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.Image2Url)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.Image3Url)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.Image3Url)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.Image3Url)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.Image4Url)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.Image4Url)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.Image4Url)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.Image5Url)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.Image5Url)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.Image5Url)</div>
+        </div>
+        <div class="row form-group">
+            <h3 class="col-md-12">Job Signoff</h3>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.CustomerSignatureUrl)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.CustomerSignatureUrl)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.CustomerSignatureUrl)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.CustomerName)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.CustomerName)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.CustomerName)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.DtSigned)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.DtSigned)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.DtSigned)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.MttEngSignatureUrl)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.MttEngSignatureUrl)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.MttEngSignatureUrl)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.UserFirstName)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.UserFirstName)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.UserFirstName)</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2">@Html.LabelFor(m => m.ServiceSheetModel.UserSurname)</div>
+            <div class="col-md-2">@Html.EditorFor(m => m.ServiceSheetModel.UserSurname)</div>
+            <div class="col-md-2 text-danger">@Html.ValidationMessageFor(m => m.ServiceSheetModel.UserSurname)</div>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"><input type="submit" value="Approve" /></div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        CallUpdateTravelOnly = function ()
+        {
+            var sum = 0;
+            $('.totalTravelTime').each(function () {
+                sum += parseFloat(this.value);
+            });
+            $('.JobTotalTravelTime').val(sum);
+        }
+
+        CallUpdateOnsiteTime = function ()
+        {
+            var onsiteSum = 0;
+            $('.totalOnsiteTime').each(function () {
+                onsiteSum += parseFloat(this.value);
+            });
+            $('.JobTotalOnsiteTime').val(onsiteSum);
+        }
+
+        CallUpdateTravelAndOnsiteTime = function ()
+        {
+            CallUpdateTravelOnly();
+            CallUpdateOnsiteTime();
+        }
+
+        CallUpdateDailyAllowanceCount = function ()
+        {
+            var dailyAllowanceSum = 0;
+            $('.DailyAllowance').each(function ()
+            {
+                dailyAllowanceSum += parseInt(this.value);
+            });
+            $('.JobTotalDailyAllowances').val(dailyAllowanceSum);
+        }
+
+        CallUpdateOvernightAllowanceCount = function ()
+        {
+            var overnightSum = 0;
+            $('.OvernightAllowance').each(function ()
+            {
+                overnightSum += parseInt(this.value);
+            })
+            $(".JobTotalOvernightAllowances").val(overnightSum);
+        }
+
+        CallUpdateMileage = function ()
+        {
+            var mileageSum = 0;
+            $(".Mileage").each(function ()
+            {
+                mileageSum += parseInt(this.value);
+            })
+            $(".JobTotalMileage").val(mileageSum);
+        }
+    });
+</script>
+
+
+

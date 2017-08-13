@@ -1,5 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ServiceSheetsLocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CanvasRawData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DtStartSubmission" Type="datetime" Nullable="false" />
+    <Property Name="DtEndSubmission" Type="datetime" Nullable="false" />
+    <Property Name="SubmissionNumber" Type="int" Nullable="false" />
+    <Property Name="AppName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="UserFirstName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="UserSurname" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CanvasResponseId" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="DtResponse" Type="datetime" Nullable="false" />
+    <Property Name="DtDevice" Type="datetime" Nullable="false" />
+    <Property Name="SubmissionFormName" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="SubmissionFormVersion" Type="int" Nullable="false" />
+    <Property Name="Customer" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="AddressLine1" Type="nvarchar" MaxLength="255" />
+    <Property Name="AddressLine2" Type="nvarchar" MaxLength="255" />
+    <Property Name="TownCity" Type="nvarchar" MaxLength="100" />
+    <Property Name="Postcode" Type="nvarchar" MaxLength="10" />
+    <Property Name="CustomerContact" Type="nvarchar" MaxLength="100" />
+    <Property Name="CustomerPhoneNo" Type="nvarchar" MaxLength="20" />
+    <Property Name="MachineMakeModel" Type="nvarchar" MaxLength="100" />
+    <Property Name="MachineSerial" Type="nvarchar" MaxLength="100" />
+    <Property Name="CncControl" Type="nvarchar" MaxLength="100" />
+    <Property Name="DtJobStart" Type="date" Nullable="false" />
+    <Property Name="CustomerOrderNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="MttJobNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="JobDescription" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TravelStartTime" Type="datetime" Nullable="false" />
+    <Property Name="ArrivalOnsiteTime" Type="datetime" Nullable="false" />
+    <Property Name="DepartureSiteTime" Type="datetime" Nullable="false" />
+    <Property Name="TravelEndTime" Type="datetime" Nullable="false" />
+    <Property Name="Mileage" Type="int" Nullable="false" />
+    <Property Name="DailyAllowance" Type="int" Nullable="false" />
+    <Property Name="OvernightAllowance" Type="int" Nullable="false" />
+    <Property Name="BarrierPayment" Type="int" Nullable="false" />
+    <Property Name="TravelToSiteTime" Type="float" Nullable="false" />
+    <Property Name="TravelFromSiteTime" Type="float" Nullable="false" />
+    <Property Name="TotalTravelTime" Type="float" Nullable="false" />
+    <Property Name="TotalOnsiteTime" Type="float" Nullable="false" />
+    <Property Name="DailyReport" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PartsSuppliedToday" Type="nvarchar(max)" />
+    <Property Name="DtReport" Type="date" Nullable="false" />
+    <Property Name="JobTotalTimeOnsite" Type="float" Nullable="false" />
+    <Property Name="JobTotalTravelTime" Type="float" Nullable="false" />
+    <Property Name="JobTotalMileage" Type="int" Nullable="false" />
+    <Property Name="TotalDailyAllowances" Type="int" Nullable="false" />
+    <Property Name="TotalOvernightAllowances" Type="int" Nullable="false" />
+    <Property Name="TotalBarrierPayments" Type="int" Nullable="false" />
+    <Property Name="JobStatus" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="FinalJobReport" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AdditionalFaults" Type="nvarchar(max)" />
+    <Property Name="QuoteRequired" Type="bit" Nullable="false" />
+    <Property Name="FollowUpPartsRequired" Type="nvarchar(max)" />
+    <Property Name="Image1Url" Type="nvarchar" MaxLength="255" />
+    <Property Name="Image2Url" Type="nvarchar" MaxLength="255" />
+    <Property Name="Image3Url" Type="nvarchar" MaxLength="255" />
+    <Property Name="Image4Url" Type="nvarchar" MaxLength="255" />
+    <Property Name="Image5Url" Type="nvarchar" MaxLength="255" />
+    <Property Name="CustomerSignatureUrl" Type="nvarchar" MaxLength="255" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="DtSigned" Type="date" Nullable="false" />
+    <Property Name="MttEngSignatureUrl" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Approved" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="MatrixServiceOverview">
     <Key>
       <PropertyRef Name="Id" />
@@ -15,7 +83,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TravelStartTime" Type="datetime" Nullable="false" />
     <Property Name="ArrivalOnsiteTime" Type="datetime" Nullable="false" />
     <Property Name="DepartureSiteTime" Type="datetime" Nullable="false" />
@@ -37,7 +105,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SubmissionNumber" Type="int" Nullable="false" />
     <Property Name="AppName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="Username" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -96,6 +164,7 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="ServiceSheetsLocalModelStoreContainer">
+    <EntitySet Name="CanvasRawData" EntityType="Self.CanvasRawData" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MatrixServiceOverview" EntityType="Self.MatrixServiceOverview" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ServiceDay" EntityType="Self.ServiceDay" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ServiceSheet" EntityType="Self.ServiceSheet" Schema="dbo" store:Type="Tables" />

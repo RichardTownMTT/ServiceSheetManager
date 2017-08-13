@@ -4,7 +4,75 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ServiceSheetsLocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ServiceSheetsLocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CanvasRawData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DtStartSubmission" Type="datetime" Nullable="false" />
+          <Property Name="DtEndSubmission" Type="datetime" Nullable="false" />
+          <Property Name="SubmissionNumber" Type="int" Nullable="false" />
+          <Property Name="AppName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserFirstName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserSurname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CanvasResponseId" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DtResponse" Type="datetime" Nullable="false" />
+          <Property Name="DtDevice" Type="datetime" Nullable="false" />
+          <Property Name="SubmissionFormName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SubmissionFormVersion" Type="int" Nullable="false" />
+          <Property Name="Customer" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="255" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="255" />
+          <Property Name="TownCity" Type="nvarchar" MaxLength="100" />
+          <Property Name="Postcode" Type="nvarchar" MaxLength="10" />
+          <Property Name="CustomerContact" Type="nvarchar" MaxLength="100" />
+          <Property Name="CustomerPhoneNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="MachineMakeModel" Type="nvarchar" MaxLength="100" />
+          <Property Name="MachineSerial" Type="nvarchar" MaxLength="100" />
+          <Property Name="CncControl" Type="nvarchar" MaxLength="100" />
+          <Property Name="DtJobStart" Type="date" Nullable="false" />
+          <Property Name="CustomerOrderNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="MttJobNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="JobDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TravelStartTime" Type="datetime" Nullable="false" />
+          <Property Name="ArrivalOnsiteTime" Type="datetime" Nullable="false" />
+          <Property Name="DepartureSiteTime" Type="datetime" Nullable="false" />
+          <Property Name="TravelEndTime" Type="datetime" Nullable="false" />
+          <Property Name="Mileage" Type="int" Nullable="false" />
+          <Property Name="DailyAllowance" Type="int" Nullable="false" />
+          <Property Name="OvernightAllowance" Type="int" Nullable="false" />
+          <Property Name="BarrierPayment" Type="int" Nullable="false" />
+          <Property Name="TravelToSiteTime" Type="float" Nullable="false" />
+          <Property Name="TravelFromSiteTime" Type="float" Nullable="false" />
+          <Property Name="TotalTravelTime" Type="float" Nullable="false" />
+          <Property Name="TotalOnsiteTime" Type="float" Nullable="false" />
+          <Property Name="DailyReport" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PartsSuppliedToday" Type="nvarchar(max)" />
+          <Property Name="DtReport" Type="date" Nullable="false" />
+          <Property Name="JobTotalTimeOnsite" Type="float" Nullable="false" />
+          <Property Name="JobTotalTravelTime" Type="float" Nullable="false" />
+          <Property Name="JobTotalMileage" Type="int" Nullable="false" />
+          <Property Name="TotalDailyAllowances" Type="int" Nullable="false" />
+          <Property Name="TotalOvernightAllowances" Type="int" Nullable="false" />
+          <Property Name="TotalBarrierPayments" Type="int" Nullable="false" />
+          <Property Name="JobStatus" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FinalJobReport" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AdditionalFaults" Type="nvarchar(max)" />
+          <Property Name="QuoteRequired" Type="bit" Nullable="false" />
+          <Property Name="FollowUpPartsRequired" Type="nvarchar(max)" />
+          <Property Name="Image1Url" Type="nvarchar" MaxLength="255" />
+          <Property Name="Image2Url" Type="nvarchar" MaxLength="255" />
+          <Property Name="Image3Url" Type="nvarchar" MaxLength="255" />
+          <Property Name="Image4Url" Type="nvarchar" MaxLength="255" />
+          <Property Name="Image5Url" Type="nvarchar" MaxLength="255" />
+          <Property Name="CustomerSignatureUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DtSigned" Type="date" Nullable="false" />
+          <Property Name="MttEngSignatureUrl" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="MatrixServiceOverview">
           <Key>
             <PropertyRef Name="Id" />
@@ -20,7 +88,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TravelStartTime" Type="datetime" Nullable="false" />
           <Property Name="ArrivalOnsiteTime" Type="datetime" Nullable="false" />
           <Property Name="DepartureSiteTime" Type="datetime" Nullable="false" />
@@ -42,7 +110,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SubmissionNumber" Type="int" Nullable="false" />
           <Property Name="AppName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -101,6 +169,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ServiceSheetsLocalModelStoreContainer">
+          <EntitySet Name="CanvasRawData" EntityType="Self.CanvasRawData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MatrixServiceOverview" EntityType="Self.MatrixServiceOverview" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceDay" EntityType="Self.ServiceDay" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceSheet" EntityType="Self.ServiceSheet" Schema="dbo" store:Type="Tables" />
@@ -109,8 +178,7 @@
             <End Role="ServiceDay" EntitySet="ServiceDay" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ServiceSheetsLocalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -129,7 +197,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="TravelStartTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ArrivalOnsiteTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DepartureSiteTime" Type="DateTime" Nullable="false" Precision="3" />
@@ -152,7 +220,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="SubmissionNumber" Type="Int32" Nullable="false" />
           <Property Name="AppName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
@@ -219,7 +287,76 @@
             <End Role="ServiceSheet" EntitySet="ServiceSheets" />
             <End Role="ServiceDay" EntitySet="ServiceDays" />
           </AssociationSet>
+          <EntitySet Name="CanvasRawDatas" EntityType="ServiceSheetsLocalModel.CanvasRawData" />
         </EntityContainer>
+        <EntityType Name="CanvasRawData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DtStartSubmission" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DtEndSubmission" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SubmissionNumber" Type="Int32" Nullable="false" />
+          <Property Name="AppName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserFirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserSurname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CanvasResponseId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DtResponse" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DtDevice" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SubmissionFormName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SubmissionFormVersion" Type="Int32" Nullable="false" />
+          <Property Name="Customer" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TownCity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Postcode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerContact" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerPhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MachineMakeModel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MachineSerial" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CncControl" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DtJobStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CustomerOrderNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MttJobNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="JobDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TravelStartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ArrivalOnsiteTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DepartureSiteTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TravelEndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Mileage" Type="Int32" Nullable="false" />
+          <Property Name="DailyAllowance" Type="Int32" Nullable="false" />
+          <Property Name="OvernightAllowance" Type="Int32" Nullable="false" />
+          <Property Name="BarrierPayment" Type="Int32" Nullable="false" />
+          <Property Name="TravelToSiteTime" Type="Double" Nullable="false" />
+          <Property Name="TravelFromSiteTime" Type="Double" Nullable="false" />
+          <Property Name="TotalTravelTime" Type="Double" Nullable="false" />
+          <Property Name="TotalOnsiteTime" Type="Double" Nullable="false" />
+          <Property Name="DailyReport" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PartsSuppliedToday" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DtReport" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="JobTotalTimeOnsite" Type="Double" Nullable="false" />
+          <Property Name="JobTotalTravelTime" Type="Double" Nullable="false" />
+          <Property Name="JobTotalMileage" Type="Int32" Nullable="false" />
+          <Property Name="TotalDailyAllowances" Type="Int32" Nullable="false" />
+          <Property Name="TotalOvernightAllowances" Type="Int32" Nullable="false" />
+          <Property Name="TotalBarrierPayments" Type="Int32" Nullable="false" />
+          <Property Name="JobStatus" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FinalJobReport" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AdditionalFaults" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuoteRequired" Type="Boolean" Nullable="false" />
+          <Property Name="FollowUpPartsRequired" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image1Url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Image2Url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Image3Url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Image4Url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Image5Url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerSignatureUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DtSigned" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MttEngSignatureUrl" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -309,6 +446,75 @@
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="DtSigned" ColumnName="DtSigned" />
                 <ScalarProperty Name="MttEngSignatureUrl" ColumnName="MttEngSignatureUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CanvasRawDatas">
+            <EntityTypeMapping TypeName="ServiceSheetsLocalModel.CanvasRawData">
+              <MappingFragment StoreEntitySet="CanvasRawData">
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="MttEngSignatureUrl" ColumnName="MttEngSignatureUrl" />
+                <ScalarProperty Name="DtSigned" ColumnName="DtSigned" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerSignatureUrl" ColumnName="CustomerSignatureUrl" />
+                <ScalarProperty Name="Image5Url" ColumnName="Image5Url" />
+                <ScalarProperty Name="Image4Url" ColumnName="Image4Url" />
+                <ScalarProperty Name="Image3Url" ColumnName="Image3Url" />
+                <ScalarProperty Name="Image2Url" ColumnName="Image2Url" />
+                <ScalarProperty Name="Image1Url" ColumnName="Image1Url" />
+                <ScalarProperty Name="FollowUpPartsRequired" ColumnName="FollowUpPartsRequired" />
+                <ScalarProperty Name="QuoteRequired" ColumnName="QuoteRequired" />
+                <ScalarProperty Name="AdditionalFaults" ColumnName="AdditionalFaults" />
+                <ScalarProperty Name="FinalJobReport" ColumnName="FinalJobReport" />
+                <ScalarProperty Name="JobStatus" ColumnName="JobStatus" />
+                <ScalarProperty Name="TotalBarrierPayments" ColumnName="TotalBarrierPayments" />
+                <ScalarProperty Name="TotalOvernightAllowances" ColumnName="TotalOvernightAllowances" />
+                <ScalarProperty Name="TotalDailyAllowances" ColumnName="TotalDailyAllowances" />
+                <ScalarProperty Name="JobTotalMileage" ColumnName="JobTotalMileage" />
+                <ScalarProperty Name="JobTotalTravelTime" ColumnName="JobTotalTravelTime" />
+                <ScalarProperty Name="JobTotalTimeOnsite" ColumnName="JobTotalTimeOnsite" />
+                <ScalarProperty Name="DtReport" ColumnName="DtReport" />
+                <ScalarProperty Name="PartsSuppliedToday" ColumnName="PartsSuppliedToday" />
+                <ScalarProperty Name="DailyReport" ColumnName="DailyReport" />
+                <ScalarProperty Name="TotalOnsiteTime" ColumnName="TotalOnsiteTime" />
+                <ScalarProperty Name="TotalTravelTime" ColumnName="TotalTravelTime" />
+                <ScalarProperty Name="TravelFromSiteTime" ColumnName="TravelFromSiteTime" />
+                <ScalarProperty Name="TravelToSiteTime" ColumnName="TravelToSiteTime" />
+                <ScalarProperty Name="BarrierPayment" ColumnName="BarrierPayment" />
+                <ScalarProperty Name="OvernightAllowance" ColumnName="OvernightAllowance" />
+                <ScalarProperty Name="DailyAllowance" ColumnName="DailyAllowance" />
+                <ScalarProperty Name="Mileage" ColumnName="Mileage" />
+                <ScalarProperty Name="TravelEndTime" ColumnName="TravelEndTime" />
+                <ScalarProperty Name="DepartureSiteTime" ColumnName="DepartureSiteTime" />
+                <ScalarProperty Name="ArrivalOnsiteTime" ColumnName="ArrivalOnsiteTime" />
+                <ScalarProperty Name="TravelStartTime" ColumnName="TravelStartTime" />
+                <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+                <ScalarProperty Name="MttJobNumber" ColumnName="MttJobNumber" />
+                <ScalarProperty Name="CustomerOrderNo" ColumnName="CustomerOrderNo" />
+                <ScalarProperty Name="DtJobStart" ColumnName="DtJobStart" />
+                <ScalarProperty Name="CncControl" ColumnName="CncControl" />
+                <ScalarProperty Name="MachineSerial" ColumnName="MachineSerial" />
+                <ScalarProperty Name="MachineMakeModel" ColumnName="MachineMakeModel" />
+                <ScalarProperty Name="CustomerPhoneNo" ColumnName="CustomerPhoneNo" />
+                <ScalarProperty Name="CustomerContact" ColumnName="CustomerContact" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="TownCity" ColumnName="TownCity" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="SubmissionFormVersion" ColumnName="SubmissionFormVersion" />
+                <ScalarProperty Name="SubmissionFormName" ColumnName="SubmissionFormName" />
+                <ScalarProperty Name="DtDevice" ColumnName="DtDevice" />
+                <ScalarProperty Name="DtResponse" ColumnName="DtResponse" />
+                <ScalarProperty Name="CanvasResponseId" ColumnName="CanvasResponseId" />
+                <ScalarProperty Name="UserSurname" ColumnName="UserSurname" />
+                <ScalarProperty Name="UserFirstName" ColumnName="UserFirstName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="AppName" ColumnName="AppName" />
+                <ScalarProperty Name="SubmissionNumber" ColumnName="SubmissionNumber" />
+                <ScalarProperty Name="DtEndSubmission" ColumnName="DtEndSubmission" />
+                <ScalarProperty Name="DtStartSubmission" ColumnName="DtStartSubmission" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

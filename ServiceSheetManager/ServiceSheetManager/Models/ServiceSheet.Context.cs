@@ -28,5 +28,6 @@ namespace ServiceSheetManager.Models
         public virtual DbSet<MatrixServiceOverview> MatrixServiceOverviews { get; set; }
         public virtual DbSet<ServiceDay> ServiceDays { get; set; }
         public virtual DbSet<ServiceSheet> ServiceSheets { get; set; }
+        public virtual DbSet<CanvasRawData> CanvasRawDatas { get; set; }
     }
 }

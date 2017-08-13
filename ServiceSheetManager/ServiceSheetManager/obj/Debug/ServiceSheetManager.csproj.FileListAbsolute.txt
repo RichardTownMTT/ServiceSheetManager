@@ -66,6 +66,6 @@ C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceS
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\Microsoft.AI.Web.xml
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.csprojResolveAssemblyReference.cache
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.pdb
-C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.csprojResolveAssemblyReference.cache
