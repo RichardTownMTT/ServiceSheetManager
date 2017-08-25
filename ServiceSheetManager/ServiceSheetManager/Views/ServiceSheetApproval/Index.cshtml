@@ -1,82 +1,92 @@
 ﻿@model IEnumerable<ServiceSheetManager.ViewModels.ServiceSheetApprovalIndexVM>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Approval";
 }
 
-<h2>Index</h2>
+<h2 class="page-header">Service Sheet Approval</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.SubmissionNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Surname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Customer)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MachineMake)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MachineSerial)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.JobStart)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MttJobNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Approved)
-        </th>
-        <th></th>
-    </tr>
+@if (Model.Count() == 0)
+{
+    <h1 class="col-md-12 text-center">There are no submissions to approve</h1>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SubmissionNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MachineMake)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MachineSerial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MttJobNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approved)
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubmissionNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Surname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Customer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MachineMake)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MachineSerial)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.JobStart)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MttJobNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Approved)
-        </td>
-        <td>
-            @Html.ActionLink("Approve", "Approve", new { SubmissionNo=item.SubmissionNumber }) 
-        </td>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubmissionNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MachineMake)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MachineSerial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MttJobNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Approved)
+                </td>
+                <td>
+                    @Html.ActionLink("Approve", "Approve", new { SubmissionNo = item.SubmissionNumber })
+                </td>
+            </tr>
+        }
+
+    </table>
 }
 
-</table>
+
