@@ -1,84 +1,86 @@
 ﻿@model ServiceSheetManager.ViewModels.ServiceDayCreateVM
 <div id="ServiceDayPanel" class="panel panel-default">
-    @Html.HiddenFor(m => m.ServiceDayEntity.Id)
-    @Html.HiddenFor(m => m.TempId)
-    <div class="panel-heading">
-        <h4 class="panel-title">
-            <a class="panelDateHeaderText" data-toggle="collapse" data-parent="#accordion-service-days" href="#dayCollapse_@(Model.TempId)">@Model.ServiceDayEntity.DtReport.ToShortDateString()</a>
-        </h4>
-    </div>
+    <div class="serviceDayContainer">
+        @Html.HiddenFor(m => m.ServiceDayEntity.Id)
+        @Html.HiddenFor(m => m.TempId)
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a class="panelDateHeaderText" data-toggle="collapse" data-parent="#accordion-service-days" href="#dayCollapse_@(Model.TempId)">@Model.ServiceDayEntity.DtReport.ToShortDateString()</a>
+            </h4>
+        </div>
 
-    <div id='dayCollapse_@(Model.TempId)' class="panel-collapse collapse">
-        <div class="panel-body">
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.DtReport, new { @class = "control-label" })</div>
-                <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.DtReport, "{0:dd/MM/yyyy}", new { @class = "DtReport form-control" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.DtReport)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.ReportDayOfWeek, new { @class = "control-label" })</div>
-                <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.ReportDayOfWeek, new { @class = "ReportDayOfWeek form-control" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.ReportDayOfWeek)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.TravelStartTime, new { @class = "control-label" })</div>
-                <div class="col-md-4" id="travelStart_@(Model.TempId)">@Html.TextBoxFor(m => m.ServiceDayEntity.TravelStartTime, new { @class = "form-control" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.TravelStartTime)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.ArrivalOnsiteTime, new { @class = "control-label" })</div>
-                <div class="col-md-4" id="arrivalOnsite_@(Model.TempId)">@Html.TextBoxFor(m => m.ServiceDayEntity.ArrivalOnsiteTime, new { @class = "form-control" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.ArrivalOnsiteTime)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.DepartureSiteTime)</div>
-                <div class="col-md-4" id="departureSite_@(Model.TempId)">@Html.TextBoxFor(m => m.ServiceDayEntity.DepartureSiteTime, new { @class = "form-control" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.DepartureSiteTime)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.TravelEndTime, new { @class = "control-label" })</div>
-                <div class="col-md-4" id="travelEnd_@(Model.TempId)">@Html.TextBoxFor(m => m.ServiceDayEntity.TravelEndTime, new { @class = "form-control" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.TravelEndTime)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.Mileage)</div>
-                <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.Mileage, new { @class = "Mileage form-control" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.Mileage)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.DailyAllowance)</div>
-                <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.DailyAllowance, new { @class = "DailyAllowance form-control" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.DailyAllowance)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.OvernightAllowance)</div>
-                <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.OvernightAllowance, new { @class = "OvernightAllowance form-control" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.OvernightAllowance)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.BarrierPayment)</div>
-                <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.BarrierPayment, new { @class = "form-control" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.BarrierPayment)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.TotalTravelTime)</div>
-                <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.TotalTravelTime, new { @class = "totalTravelTime form-control" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.TotalTravelTime)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.TotalOnsiteTime)</div>
-                <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.TotalOnsiteTime, new { @class = "totalOnsiteTime form-control" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.TotalOnsiteTime)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.DailyReport)</div>
-                <div class="col-md-4">@Html.TextAreaFor(m => m.ServiceDayEntity.DailyReport, new { @class = "form-control", rows = "8" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.DailyReport)</div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.PartsSuppliedToday)</div>
-                <div class="col-md-4">@Html.TextAreaFor(m => m.ServiceDayEntity.PartsSuppliedToday, new { @class = "form-control", rows = "8" })</div>
-                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.PartsSuppliedToday)</div>
+        <div id='dayCollapse_@(Model.TempId)' class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.DtReport, new { @class = "control-label" })</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.DtReport, "{0:dd/MM/yyyy}", new { @class = "DtReport form-control" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.DtReport)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.ReportDayOfWeek, new { @class = "control-label" })</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.ReportDayOfWeek, new { @class = "ReportDayOfWeek form-control" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.ReportDayOfWeek)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.TravelStartTime, new { @class = "control-label" })</div>
+                    <div class="col-md-4" id="travelStart_@(Model.TempId)">@Html.TextBoxFor(m => m.ServiceDayEntity.TravelStartTime, "{0:HH:mm}", new { @class = "form-control timepicker" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.TravelStartTime)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.ArrivalOnsiteTime, new { @class = "control-label" })</div>
+                    <div class="col-md-4" id="arrivalOnsite_@(Model.TempId)">@Html.TextBoxFor(m => m.ServiceDayEntity.ArrivalOnsiteTime, "{0:HH:mm}", new { @class = "form-control timepicker" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.ArrivalOnsiteTime)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.DepartureSiteTime)</div>
+                    <div class="col-md-4" id="departureSite_@(Model.TempId)">@Html.TextBoxFor(m => m.ServiceDayEntity.DepartureSiteTime, "{0:HH:mm}", new { @class = "form-control timepicker" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.DepartureSiteTime)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.TravelEndTime, new { @class = "control-label" })</div>
+                    <div class="col-md-4" id="travelEnd_@(Model.TempId)">@Html.TextBoxFor(m => m.ServiceDayEntity.TravelEndTime, "{0:HH:mm}", new { @class = "form-control timepicker" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.TravelEndTime)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.Mileage)</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.Mileage, new { @class = "Mileage form-control" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.Mileage)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.DailyAllowance)</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.DailyAllowance, new { @class = "DailyAllowance form-control" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.DailyAllowance)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.OvernightAllowance)</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.OvernightAllowance, new { @class = "OvernightAllowance form-control" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.OvernightAllowance)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.BarrierPayment)</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.BarrierPayment, new { @class = "form-control" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.BarrierPayment)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.TotalTravelTime)</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.TotalTravelTime, new { @class = "totalTravelTime form-control" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.TotalTravelTime)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.TotalOnsiteTime)</div>
+                    <div class="col-md-4">@Html.TextBoxFor(m => m.ServiceDayEntity.TotalOnsiteTime, new { @class = "totalOnsiteTime form-control" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.TotalOnsiteTime)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.DailyReport)</div>
+                    <div class="col-md-4">@Html.TextAreaFor(m => m.ServiceDayEntity.DailyReport, new { @class = "form-control", rows = "8" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.DailyReport)</div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.ServiceDayEntity.PartsSuppliedToday)</div>
+                    <div class="col-md-4">@Html.TextAreaFor(m => m.ServiceDayEntity.PartsSuppliedToday, new { @class = "form-control", rows = "8" })</div>
+                    <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ServiceDayEntity.PartsSuppliedToday)</div>
+                </div>
             </div>
         </div>
     </div>
@@ -201,6 +203,8 @@
             var dayName = weekday[selectedDay];
             $(this).parent().parent().parent().find('.ReportDayOfWeek').val(dayName);
         });
-        
+
+        $('.timepicker').timepicker({ step: 15, timeFormat: 'h:i A'});
+
     })
 </script>

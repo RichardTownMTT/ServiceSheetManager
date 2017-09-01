@@ -57,12 +57,12 @@ namespace ServiceSheetManager.Models
             public int SubmissionFormVersion { get; set; }
 
             [Required(AllowEmptyStrings = false, ErrorMessage = "Customer is required.")]
-            [StringLength(255, ErrorMessage ="Maximum customer length is 255")]
+            [StringLength(255, ErrorMessage = "Maximum customer length is 255")]
             public string Customer { get; set; }
 
             [StringLength(255, ErrorMessage = "Maximum address length is 255")]
             [Display(Name = "Address Line 1")]
-            public string AddressLine1 { get; set;}
+            public string AddressLine1 { get; set; }
 
             [StringLength(255, ErrorMessage = "Maximum address length is 255")]
             [Display(Name = "Address Line 2")]
@@ -76,28 +76,28 @@ namespace ServiceSheetManager.Models
             public string Postcode { get; set; }
 
             [StringLength(100, ErrorMessage = "Maximum length is 100")]
-            [Display(Name ="Customer Contact")]
+            [Display(Name = "Customer Contact")]
             public string CustomerContact { get; set; }
 
             [StringLength(20, ErrorMessage = "Maximum length is 20")]
-            [Display(Name ="Customer Phone No")]
+            [Display(Name = "Customer Phone No")]
             public string CustomerPhoneNo { get; set; }
 
             [StringLength(100, ErrorMessage = "Maximum length is 100")]
-            [Display(Name ="Machine Make/Model")]
+            [Display(Name = "Machine Make/Model")]
             public string MachineMakeModel { get; set; }
 
             [StringLength(100, ErrorMessage = "Maximum length is 100")]
-            [Display(Name ="Machine Serial No")]
+            [Display(Name = "Machine Serial No")]
             public string MachineSerial { get; set; }
 
             [StringLength(100, ErrorMessage = "Maximum length is 100")]
-            [Display(Name ="CNC Control")]
+            [Display(Name = "CNC Control")]
             public string CncControl { get; set; }
 
-            [Required(ErrorMessage ="Job start date is required")]
-            [Display(Name ="Job Start Date")]
-            [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+            [Required(ErrorMessage = "Job start date is required")]
+            [Display(Name = "Job Start Date")]
+            [DataType(DataType.Date)]
             public System.DateTime DtJobStart { get; set; }
 
             [StringLength(100, ErrorMessage = "Maximum length is 100")]

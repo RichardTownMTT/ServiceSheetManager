@@ -17,22 +17,22 @@ namespace ServiceSheetManager.Models
 
             [Required(ErrorMessage = "Travel start time is required.")]
             [Display(Name = "Travel Start Time")]
-            [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+            [DataType(DataType.Time)]
             public System.DateTime TravelStartTime { get; set; }
 
             [Required(ErrorMessage = "Arrival time onsite is required")]
             [Display(Name = "Arrival Onsite Time")]
-            [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+            [DataType(DataType.Time)]
             public System.DateTime ArrivalOnsiteTime { get; set; }
 
             [Required(ErrorMessage = "Departure site time is required")]
             [Display(Name = "Departure From Site Time")]
-            [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+            [DataType(DataType.Time)]
             public System.DateTime DepartureSiteTime { get; set; }
 
             [Required(ErrorMessage = "Travel end time is required")]
             [Display(Name = "Travel End Time")]
-            [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+            [DataType(DataType.Time)]
             public System.DateTime TravelEndTime { get; set; }
 
             [Required(ErrorMessage = "Mileage is required")]
@@ -81,8 +81,8 @@ namespace ServiceSheetManager.Models
             public string PartsSuppliedToday { get; set; }
 
             [Required(ErrorMessage = "Report date is required")]
-            [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}", ApplyFormatInEditMode = true)]
             [Display(Name = "Report Date")]
+            [DataType(DataType.Date)]
             public System.DateTime DtReport { get; set; }
 
             [Display(Name = "Day")]

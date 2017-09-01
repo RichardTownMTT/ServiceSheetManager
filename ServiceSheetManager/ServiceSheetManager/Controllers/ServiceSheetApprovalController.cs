@@ -73,28 +73,9 @@ namespace ServiceSheetManager.Controllers
         {
             //Validate entities
 
-            bool errors = false;
-
-            bool valid = TryValidateModel(vm.ServiceSheetModel);
-            if (!valid)
+            if (!ModelState.IsValid)
             {
-                errors = true;
-            }
-
-
-            foreach (var day in vm.ServiceDayModels)
-            {
-                bool validDay = TryValidateModel(day);
-                if(!validDay)
-                {
-                    errors = true;
-                }
-            }
-
-            if(errors)
-            {
-                //Output errors
-                vm.Errors = errors;
+                vm.Errors = true;
                 return View(vm);
             }
 
@@ -111,21 +92,26 @@ namespace ServiceSheetManager.Controllers
 
             foreach (var day in vm.ServiceDayModels)
             {
+                //Verify that the totals, dates on the travel times, etc. are correct
+                updateServiceDayTimes(day.ServiceDayEntity);
                 day.ServiceDayEntity.ServiceSheet = serviceSheetAdd;
                 serviceDaysAdd.Add(day.ServiceDayEntity);
             }
 
             serviceSheetAdd.ServiceDays = serviceDaysAdd;
-            
+
+            //The mileage, allowance and time totals need to be updated on the service sheet
+            updateServiceSheetTotals(serviceSheetAdd);
+
+            //Add the entities to save to the db context
             db.ServiceSheets.Add(serviceSheetAdd);
             var serviceDaysToSave = vm.ServiceDayModels.Select(m => m.ServiceDayEntity).ToList();
             db.ServiceDays.AddRange(serviceDaysToSave);
-
-            //db.Entry(serviceSheetAdd).State = EntityState.Added;
+            
+            //Link the service sheet to the service day
             foreach (var daySave in serviceDaysAdd)
             {
                 daySave.ServiceSheet = serviceSheetAdd;
-                //db.Entry(daySave).State = EntityState.Added;
             }
             
             try
@@ -135,10 +121,71 @@ namespace ServiceSheetManager.Controllers
             catch(Exception ex)
             {
                 System.Diagnostics.Trace.TraceError("Error occured while saving: " + ex.ToString());
-                return View(vm);
+                return RedirectToAction("Error");
             }
 
-            return View(vm);
+            return RedirectToAction("Index");
+        }
+
+        private void updateServiceSheetTotals(ServiceSheet serviceSheetAdd)
+        {
+            //Update all the totals held on the service sheet
+            int totalMileage = 0;
+            double totalTimeOnsite = 0;
+            double totalTravelTime = 0;
+            int totalDailyAllowances = 0;
+            int totalOvernightAllowances = 0;
+            int totalBarrierPayments = 0;
+
+            foreach (var day in serviceSheetAdd.ServiceDays)
+            {
+                totalMileage += day.Mileage;
+                totalTimeOnsite += day.TotalOnsiteTime;
+                totalTravelTime += day.TotalTravelTime;
+                totalDailyAllowances += day.DailyAllowance;
+                totalOvernightAllowances += day.OvernightAllowance;
+                totalBarrierPayments += day.BarrierPayment;
+            }
+
+            serviceSheetAdd.JobTotalMileage = totalMileage;
+            serviceSheetAdd.JobTotalTimeOnsite = totalTimeOnsite;
+            serviceSheetAdd.JobTotalTravelTime = totalTravelTime;
+            serviceSheetAdd.TotalDailyAllowances = totalDailyAllowances;
+            serviceSheetAdd.TotalOvernightAllowances = totalOvernightAllowances;
+            serviceSheetAdd.TotalBarrierPayments = totalBarrierPayments;
+        }
+
+        private void updateServiceDayTimes(ServiceDay day)
+        {
+            //The travel times, etc will have todays date on, need to set to the dtReport date
+            DateTime reportDate = day.DtReport;
+            TimeSpan travelStartTime = day.TravelStartTime.TimeOfDay;
+            DateTime travelStart = reportDate.Date + travelStartTime;
+            day.TravelStartTime = travelStart;
+
+            TimeSpan arrivalOnsiteTime = day.ArrivalOnsiteTime.TimeOfDay;
+            DateTime arrivalOnsite = reportDate.Date + arrivalOnsiteTime;
+            day.ArrivalOnsiteTime = arrivalOnsite;
+
+            TimeSpan departureTime = day.DepartureSiteTime.TimeOfDay;
+            DateTime departureSite = reportDate.Date + departureTime;
+            day.DepartureSiteTime = departureSite;
+
+            TimeSpan travelEndTime = day.TravelEndTime.TimeOfDay;
+            DateTime travelEnd = reportDate.Date + travelEndTime;
+            day.TravelEndTime = travelEnd;
+
+            //The onsite and travel times now need to be recalculated
+            TimeSpan travelToSiteTime = arrivalOnsite - travelStart;
+            day.TravelToSiteTime = travelToSiteTime.TotalHours;
+
+            TimeSpan totalOnsiteTime = departureSite - arrivalOnsite;
+            day.TotalOnsiteTime = totalOnsiteTime.TotalHours;
+
+            TimeSpan travelFromSiteTime = travelEnd - departureSite;
+            day.TravelFromSiteTime = travelFromSiteTime.TotalHours;
+
+            day.TotalTravelTime = travelToSiteTime.TotalHours + travelFromSiteTime.TotalHours;
         }
     }
 }
