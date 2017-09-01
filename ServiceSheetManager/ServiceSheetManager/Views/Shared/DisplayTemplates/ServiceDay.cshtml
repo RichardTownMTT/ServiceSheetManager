@@ -1,0 +1,70 @@
+﻿@model ServiceSheetManager.Models.ServiceDay
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion-service-days" href="#collapse_@(Model.Id)">@Model.DtReport.ToShortDateString()</a>
+        </h4>
+    </div>
+    <div id="collapse_@(Model.Id)" class="panel-collapse collapse">
+        <div class="panel-body">
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.DtReport)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.DtReport, "{0:dd/MM/yyyy}")</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.ReportDayOfWeek)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.ReportDayOfWeek)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.TravelStartTime)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.TravelStartTime, "{0:HH:mm}")</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.ArrivalOnsiteTime)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.ArrivalOnsiteTime, "{0:HH:mm}")</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.DepartureSiteTime)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.DepartureSiteTime, "{0:HH:mm}")</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.TravelEndTime)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.TravelEndTime, "{0:HH:mm}")</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.Mileage)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.Mileage)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.DailyAllowance)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.DailyAllowance)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.OvernightAllowance)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.OvernightAllowance)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.BarrierPayment)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.BarrierPayment)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.TotalTravelTime)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.TotalTravelTime)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.TotalOnsiteTime)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.TotalOnsiteTime)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.DailyReport)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.DailyReport)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.PartsSuppliedToday)</div>
+                <div class="col-md-10">@Html.DisplayFor(m => m.PartsSuppliedToday)</div>
+            </div>
+        </div>
+    </div>
+</div>
+

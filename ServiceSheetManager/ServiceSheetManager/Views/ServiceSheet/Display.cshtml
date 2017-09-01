@@ -1,0 +1,183 @@
+﻿@model ServiceSheetManager.Models.ServiceSheet
+
+@{
+    ViewBag.Title = "View Submission";
+}
+
+<h2>Service Report and Timesheet No. @Html.DisplayFor(m => m.SubmissionNumber)</h2>
+
+<div>
+    <div class="row page-header">
+        <h3 class="col-md-12">Job Details</h3>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.Customer)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Customer)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.AddressLine1)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.AddressLine1)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.AddressLine2)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.AddressLine2)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.TownCity)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.TownCity)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.Postcode)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Postcode)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.CustomerContact)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.CustomerContact)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.CustomerPhoneNo)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.CustomerPhoneNo)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.MachineMakeModel)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.MachineMakeModel)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.MachineSerial)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.MachineSerial)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.CncControl)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.CncControl)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.DtJobStart)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.DtJobStart, "{0:dd/MM/yyyy}")</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.CustomerOrderNo)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.CustomerOrderNo)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.MttJobNumber)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.MttJobNumber)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.JobDescription)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.JobDescription)</div>
+    </div>
+
+    <div class="row"></div>
+
+    <div class="row page-header">
+        <h3 class="col-md-12">Timesheets</h3>
+    </div>
+
+    <div class="panel-group" id="accordion-service-days">
+        @Html.DisplayFor(m => m.ServiceDays)
+    </div>
+
+    <div class="row page-header">
+        <h3 class="col-md-12">Service Report</h3>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.JobTotalTravelTime)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.JobTotalTravelTime)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.JobTotalTimeOnsite)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.JobTotalTimeOnsite)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.JobTotalMileage)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.JobTotalMileage)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.TotalDailyAllowances)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.TotalDailyAllowances)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.TotalOvernightAllowances)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.TotalOvernightAllowances)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.JobStatus)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.JobStatus)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.FinalJobReport)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.FinalJobReport)</div>
+    </div>
+
+    <div class="row page-header">
+        <h3 class="col-md-12">Follow-up Work</h3>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.AdditionalFaults)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.AdditionalFaults)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.FollowUpPartsRequired)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.FollowUpPartsRequired)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.QuoteRequired)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.QuoteRequired)</div>
+    </div>
+    <div class="row page-header">
+        <h3 class="col-md-12">Follow-up Work Images</h3>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.Image1Url)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Image1Url)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.Image2Url)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Image2Url)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.Image3Url)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Image3Url)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.Image4Url)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Image4Url)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.Image5Url)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Image5Url)</div>
+    </div>
+    <div class="row page-header">
+        <h3 class="col-md-12">Job Signoff</h3>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.CustomerSignatureUrl)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.CustomerSignatureUrl)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.CustomerName)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.CustomerName)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.DtSigned)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.DtSigned)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.MttEngSignatureUrl)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.MttEngSignatureUrl)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.UserFirstName)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.UserFirstName)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-2">@Html.LabelFor(m => m.UserSurname)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.UserSurname)</div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-4"></div>
+        <div class="col-md-2">@Html.ActionLink("Back", "Index", "ServiceSheet", new { @class = "btn btn-default" })</div>
+        <div class="col-md-6"></div>
+    </div>
+</div>
+

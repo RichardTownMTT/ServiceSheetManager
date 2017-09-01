@@ -155,6 +155,7 @@
     <Compile Include="Controllers\JobCostController.cs" />
     <Compile Include="Controllers\MatrixServiceStatsController.cs" />
     <Compile Include="Controllers\ServiceSheetApprovalController.cs" />
+    <Compile Include="Controllers\ServiceSheetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -208,6 +209,7 @@
     <Compile Include="ViewModels\ServiceDayCreateVM.cs" />
     <Compile Include="ViewModels\ServiceSheetApprovalIndexVM.cs" />
     <Compile Include="ViewModels\ServiceSheetApprovalVM.cs" />
+    <Compile Include="ViewModels\ServiceSheetIndexVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -317,6 +319,9 @@
     <Content Include="Views\ServiceSheetApproval\Index.cshtml" />
     <Content Include="Views\ServiceSheetApproval\Approve.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ServiceDayCreateVM.cshtml" />
+    <Content Include="Views\ServiceSheet\Index.cshtml" />
+    <Content Include="Views\ServiceSheet\Display.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ServiceDay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

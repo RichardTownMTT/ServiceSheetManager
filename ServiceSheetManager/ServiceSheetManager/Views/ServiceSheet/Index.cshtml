@@ -1,0 +1,34 @@
+﻿@model ServiceSheetManager.ViewModels.ServiceSheetIndexVM
+@{
+    ViewBag.Title = "Service Sheets";
+}
+
+<h2 class="page-header">Service Sheet Index</h2>
+
+@if (Model.ServiceSheets.Count == 0)
+{
+    <h3 class="col-md-12 text-center">There are no service sheets to view</h3>
+}
+else
+{
+    var serviceSheet = Model.ServiceSheets.FirstOrDefault();
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(m => serviceSheet.SubmissionNumber)</th>
+            <th>@Html.DisplayNameFor(m => serviceSheet.Customer)</th>
+            <th>@Html.DisplayNameFor(m => serviceSheet.MttJobNumber)</th>
+            <th></th>
+        </tr>
+
+        @foreach (var sheet in Model.ServiceSheets)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => sheet.SubmissionNumber)</td>
+                <td>@Html.DisplayFor(m => sheet.Customer)</td>
+                <td>@Html.DisplayFor(m => sheet.MttJobNumber)</td>
+                <td>@Html.ActionLink("View", "Display", new { SubmissionNumber = sheet.SubmissionNumber})</td>
+            </tr>
+        }
+    </table>
+}
+

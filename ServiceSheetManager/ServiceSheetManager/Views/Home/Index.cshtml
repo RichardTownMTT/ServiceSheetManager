@@ -9,6 +9,15 @@
 
 <div class="row">
     <div class="col-md-4">
+        <h2>Service Sheet Viewer</h2>
+        <p>
+            View all historical service sheets submitted by engineers through Canvas
+        </p>
+        <p>
+            @Html.ActionLink("View Service Sheets \u00BB", "Index", "ServiceSheet", new { }, new { @class = "btn btn-default" })
+        </p>
+    </div>
+    <div class="col-md-4">
         <h2>Service Sheet Approval</h2>
         <p>
             View all service sheets submitted by engineers through Canvas and approve for sending to customer
@@ -24,15 +33,15 @@
             @Html.ActionLink("Matrix Statistics \u00BB", "Index", "MatrixServiceStats", new { }, new { @class = "btn btn-default"})
         </p>
     </div>
+</div>
+<div class="row">
     <div class="col-md-4">
         <h2>Engineer Calendar</h2>
         <p>View past engineer jobs, location tracker and other engineer related statistics</p>
         <p>
-            @Html.ActionLink("Engineer Calendar \u00BB", "EngineerCalendar", "EngineerStatistics", new { }, new { @class="btn btn-default"})
+            @Html.ActionLink("Engineer Calendar \u00BB", "EngineerCalendar", "EngineerStatistics", new { }, new { @class = "btn btn-default" })
         </p>
     </div>
-</div>
-<div class="row">
     <div class="col-md-4">
         <h2>Job Cost Statistics</h2>
         <p>Job costing statistics and job cost calculators</p>
