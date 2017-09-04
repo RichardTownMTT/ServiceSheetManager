@@ -5,30 +5,359 @@
 
 <h2 class="page-header">Service Sheet Index</h2>
 
-@if (Model.ServiceSheets.Count == 0)
-{
-    <h3 class="col-md-12 text-center">There are no service sheets to view</h3>
-}
-else
-{
-    var serviceSheet = Model.ServiceSheets.FirstOrDefault();
-    <table class="table">
-        <tr>
-            <th>@Html.DisplayNameFor(m => serviceSheet.SubmissionNumber)</th>
-            <th>@Html.DisplayNameFor(m => serviceSheet.Customer)</th>
-            <th>@Html.DisplayNameFor(m => serviceSheet.MttJobNumber)</th>
-            <th></th>
-        </tr>
 
-        @foreach (var sheet in Model.ServiceSheets)
-        {
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Search</h3>
+    </div>
+    <div class="panel-group" id="searchAccordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#searchAccordion" href="#collapseSubmissionNoSearch">Submission Number Search</a>
+                </h4>
+            </div>
+            @if (Model.SubmissionNumber != 0)
+            {
+                <div id="collapseSubmissionNoSearch" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <form class="form-horizontal" asp-action="Index" asp-controller="ServiceSheet">
+                            <div class="form-group">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            @Html.LabelFor(m => m.SubmissionNumber, new { @class = "control-label" })
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBoxFor(m => m.SubmissionNumber, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input value="Filter" type="submit" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-4 text-danger">@Html.ValidationMessageFor(m => m.SubmissionNumber)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div id="collapseSubmissionNoSearch" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <form class="form-horizontal" asp-action="Index" asp-controller="ServiceSheet">
+                            <div class="form-group">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            @Html.LabelFor(m => m.SubmissionNumber, new { @class = "control-label" })
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBoxFor(m => m.SubmissionNumber, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input value="Filter" type="submit" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-4 text-danger">@Html.ValidationMessageFor(m => m.SubmissionNumber)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#searchAccordion" href="#collapseDateSearch">Date Search</a>
+                </h4>
+            </div>
+            @if (Model.SheetsFromDateSearch > new DateTime() && Model.SheetsToDateSearch > new DateTime())
+            {
+                <div id="collapseDateSearch" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <form class="form-horizontal" asp-action="Index" asp-controller="ServiceSheet">
+                            <div class="form-group">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            @Html.LabelFor(m => m.SheetsFromDateSearch, new { @class = "control-label" })
+                                        </div>
+                                        <div class="col-md-2">
+                                            @Html.EditorFor(m => m.SheetsFromDateSearch, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-1">
+                                            @Html.LabelFor(m => m.SheetsToDateSearch, new { @class = "control-label" })
+                                        </div>
+                                        <div class="col-md-2">
+                                            @Html.EditorFor(m => m.SheetsToDateSearch, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input value="Filter" type="submit" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-2">@Html.ValidationMessageFor(m => m.SheetsFromDateSearch)</div>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-2">@Html.ValidationMessageFor(m => m.SheetsToDateSearch)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div id="collapseDateSearch" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <form class="form-horizontal" asp-action="Index" asp-controller="ServiceSheet">
+                            <div class="form-group">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            @Html.LabelFor(m => m.SheetsFromDateSearch, new { @class = "control-label" })
+                                        </div>
+                                        <div class="col-md-2">
+                                            @Html.EditorFor(m => m.SheetsFromDateSearch, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-1">
+                                            @Html.LabelFor(m => m.SheetsToDateSearch, new { @class = "control-label" })
+                                        </div>
+                                        <div class="col-md-2">
+                                            @Html.EditorFor(m => m.SheetsToDateSearch, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input value="Filter" type="submit" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-2">@Html.ValidationMessageFor(m => m.SheetsFromDateSearch)</div>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-2">@Html.ValidationMessageFor(m => m.SheetsToDateSearch)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#searchAccordion" href="#collapseCustomerSearch">Customer Search</a>
+                </h4>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.CustomerSearch))
+            {
+                <div id="collapseCustomerSearch" class="panel-body collapse in">
+                    <form class="form-horizontal" asp-action="Index" asp-controller="ServiceSheet">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.LabelFor(m => m.CustomerSearch, new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.CustomerSearch, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-6">
+                                <input value="Filter" type="submit" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <div id="collapseCustomerSearch" class="panel-body collapse">
+                    <form class="form-horizontal" asp-action="Index" asp-controller="ServiceSheet">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.LabelFor(m => m.CustomerSearch, new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.CustomerSearch, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-6">
+                                <input value="Filter" type="submit" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+
+
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#searchAccordion" href="#collapseJobNoSearch">Job Number Search</a>
+                </h4>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.MttJobNumberSearch))
+            {
+                <div class="panel-body collapse in" id="collapseJobNoSearch">
+                    <form class="form-horizontal" asp-action="Index" asp-controller="ServiceSheet">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.LabelFor(m => m.MttJobNumberSearch, new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.MttJobNumberSearch, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-6">
+                                <input value="Filter" type="submit" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <div class="panel-body collapse" id="collapseJobNoSearch">
+                    <form class="form-horizontal" asp-action="Index" asp-controller="ServiceSheet">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.LabelFor(m => m.MttJobNumberSearch, new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.MttJobNumberSearch, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-6">
+                                <input value="Filter" type="submit" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#searchAccordion" href="#collapseEngineerSearch">Engineer Search</a>
+                </h4>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.SelectedEngineer))
+            {
+                <div class="panel-body collapse in" id="collapseEngineerSearch">
+                    <form class="form-horizontal" asp-action="Index" asp-controller="ServiceSheet">
+                        <div class="form-group">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(m => m.Engineers)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(m => m.SelectedEngineer, new SelectList(Model.Engineers, "Value", "Text"), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        @Html.LabelFor(m => m.SheetsFromEngineerSearch, new { @class = "control-label" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.EditorFor(m => m.SheetsFromEngineerSearch, new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-md-1">
+                                        @Html.LabelFor(m => m.SheetsToEngineerSearch, new { @class = "control-label" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.EditorFor(m => m.SheetsToEngineerSearch, new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input value="Filter" type="submit" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <div class="panel-body collapse" id="collapseEngineerSearch">
+                    <form class="form-horizontal" asp-action="Index" asp-controller="ServiceSheet">
+                        <div class="form-group">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(m => m.Engineers)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(m => m.SelectedEngineer, new SelectList(Model.Engineers, "Value", "Text"), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        @Html.LabelFor(m => m.SheetsFromEngineerSearch, new { @class = "control-label" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.EditorFor(m => m.SheetsFromEngineerSearch, new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-md-1">
+                                        @Html.LabelFor(m => m.SheetsToEngineerSearch, new { @class = "control-label" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.EditorFor(m => m.SheetsToEngineerSearch, new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input value="Filter" type="submit" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Results</h3>
+    </div>
+    @if (Model.ServiceSheets.Count == 0)
+    {
+
+        <div class="panel-body">
+            <h3 class="col-md-12 text-center">There are no service sheets to view</h3>
+        </div>
+
+    }
+    else
+    {
+        var serviceSheet = Model.ServiceSheets.FirstOrDefault();
+        <table class="table">
             <tr>
-                <td>@Html.DisplayFor(m => sheet.SubmissionNumber)</td>
-                <td>@Html.DisplayFor(m => sheet.Customer)</td>
-                <td>@Html.DisplayFor(m => sheet.MttJobNumber)</td>
-                <td>@Html.ActionLink("View", "Display", new { SubmissionNumber = sheet.SubmissionNumber})</td>
+                <th>@Html.DisplayNameFor(m => serviceSheet.SubmissionNumber)</th>
+                <th>@Html.DisplayNameFor(m => serviceSheet.Customer)</th>
+                <th>@Html.DisplayNameFor(m => serviceSheet.MttJobNumber)</th>
+                <th></th>
             </tr>
-        }
-    </table>
-}
 
+            @foreach (var sheet in Model.ServiceSheets)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => sheet.SubmissionNumber)</td>
+                    <td>@Html.DisplayFor(m => sheet.Customer)</td>
+                    <td>@Html.DisplayFor(m => sheet.MttJobNumber)</td>
+                    <td>@Html.ActionLink("View", "Display", new { SubmissionNumber = sheet.SubmissionNumber })</td>
+                </tr>
+            }
+        </table>
+    }
+</div>
