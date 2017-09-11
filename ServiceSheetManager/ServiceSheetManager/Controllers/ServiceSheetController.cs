@@ -5,135 +5,123 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace ServiceSheetManager.Controllers
 {
     public class ServiceSheetController : Controller
     {
+        private const int pageSize = 10;
         private ServiceSheetsEntities db = new ServiceSheetsEntities();
 
+        public ActionResult ListReports([Bind] int? page, int? submissionNumber, DateTime? sheetsFromDateSearch, DateTime? sheetsToDateSearch, string customerSearch,
+                                            string mttJobNumberSearch, string selectedEngineer, string currentSortOrder)
+        {
+            int pageNumber = (page ?? 1);
+            ServiceSheetListVM vm = new ServiceSheetListVM();
+
+            List<ServiceSheet> serviceSheetsFound = GetServiceSheets(submissionNumber, sheetsFromDateSearch, sheetsToDateSearch, customerSearch, mttJobNumberSearch, selectedEngineer).ToList();
+
+            IEnumerable<ServiceSheet> sortedServiceSheets;
+
+            currentSortOrder = String.IsNullOrEmpty(currentSortOrder) ? ServiceSheetListVM.customerSortAsc : currentSortOrder;
+
+
+            switch (currentSortOrder)
+            {
+                case ServiceSheetListVM.customerSortAsc:
+                    sortedServiceSheets = serviceSheetsFound.OrderBy(s => s.Customer);
+                    break;
+                case ServiceSheetListVM.customerSortDesc:
+                    sortedServiceSheets = serviceSheetsFound.OrderByDescending(s => s.Customer);
+                    break;
+                case ServiceSheetListVM.submissionSortAsc:
+                    sortedServiceSheets = serviceSheetsFound.OrderBy(s => s.SubmissionNumber);
+                    break;
+                case ServiceSheetListVM.submissionSortDesc:
+                    sortedServiceSheets = serviceSheetsFound.OrderByDescending(s => s.SubmissionNumber);
+                    break;
+                case ServiceSheetListVM.jobNumberSortAsc:
+                    sortedServiceSheets = serviceSheetsFound.OrderBy(s => s.MttJobNumber);
+                    break;
+                case ServiceSheetListVM.jobNumberSortDesc:
+                    sortedServiceSheets = serviceSheetsFound.OrderByDescending(s => s.MttJobNumber);
+                    break;
+                case ServiceSheetListVM.machineSortAsc:
+                    sortedServiceSheets = serviceSheetsFound.OrderBy(m => m.MachineMakeModel);
+                    break;
+                case ServiceSheetListVM.machineSortDesc:
+                    sortedServiceSheets = serviceSheetsFound.OrderByDescending(m => m.MachineMakeModel);
+                    break;
+                case ServiceSheetListVM.engineerSortAsc:
+                    sortedServiceSheets = serviceSheetsFound.OrderBy(m => m.EngineerFullName);
+                    break;
+                case ServiceSheetListVM.engineerSortDesc:
+                    sortedServiceSheets = serviceSheetsFound.OrderByDescending(m => m.EngineerFullName);
+                    break;
+                default:
+                    sortedServiceSheets = serviceSheetsFound.OrderBy(s => s.Customer);
+                    break;
+            }
+
+            vm.CurrentSortOrder = currentSortOrder;
+            vm.ServiceSheets = sortedServiceSheets.ToPagedList(pageNumber, pageSize);
+
+            return View(vm);
+        }
+
         // GET: ServiceSheet
-        public async Task<ActionResult> Index([Bind] ServiceSheetIndexVM submittedVM)
+        public async Task<ActionResult> Index([Bind] int? page, int? submissionNumber, DateTime? sheetsFromDateSearch, DateTime? sheetsToDateSearch, string customerSearch,
+                                            string mttJobNumberSearch, string selectedEngineer)
         {
             ServiceSheetIndexVM vm = new ServiceSheetIndexVM();
-
-            if(!ModelState.IsValid)
-            {
-                return View(submittedVM);
-            }
 
             //Populate the list of engineers
             List<SelectListItem> engineerSL = await CreateEngineerList();
             vm.Engineers = engineerSL;
 
-            List<ServiceSheet> serviceSheetsFound = new List<ServiceSheet>();
-
-            //Customer search entered
-            if (!String.IsNullOrEmpty(submittedVM.CustomerSearch))
-            {
-                serviceSheetsFound = await db.ServiceSheets.Where(s => s.Customer.Contains(submittedVM.CustomerSearch)).ToListAsync();
-                vm.ServiceSheets = serviceSheetsFound;
-
-                //Return the search term
-                vm.CustomerSearch = submittedVM.CustomerSearch;
-            }
-
-            //Submission number search entered
-            if (submittedVM.SubmissionNumber != 0)
-            {
-                serviceSheetsFound = await db.ServiceSheets.Where(s => s.SubmissionNumber == submittedVM.SubmissionNumber).ToListAsync();
-                vm.ServiceSheets = serviceSheetsFound;
-
-                //Return the search term
-                vm.SubmissionNumber = submittedVM.SubmissionNumber;
-            }
-
-            //Job number search entered
-            if (!String.IsNullOrEmpty(submittedVM.MttJobNumberSearch))
-            {
-                serviceSheetsFound = await db.ServiceSheets.Where(m => m.MttJobNumber.Contains(submittedVM.MttJobNumberSearch)).ToListAsync();
-                vm.ServiceSheets = serviceSheetsFound;
-
-                //Return the search term
-                vm.MttJobNumberSearch = submittedVM.MttJobNumberSearch;
-            }
-
-            //Engineer search entered
-            if (!string.IsNullOrEmpty(submittedVM.SelectedEngineer))
-            {
-                DateTime dateFrom = submittedVM.SheetsFromEngineerSearch;
-                DateTime dateTo = submittedVM.SheetsToEngineerSearch;
-
-                if (dateFrom > dateTo)
-                {
-                    ModelState.AddModelError(String.Empty, "The from date must be before the to date");
-                    return View(vm);
-                }
-
-                serviceSheetsFound = await db.ServiceSheets.Where(e => e.Username.Equals(submittedVM.SelectedEngineer) 
-                                            && e.ServiceDays.Any(sd => sd.DtReport >= dateFrom)
-                                            && e.ServiceDays.Any(sd => sd.DtReport <= dateTo)).ToListAsync();
-                vm.ServiceSheets = serviceSheetsFound;
-
-                //Return the search terms
-                vm.SelectedEngineer = submittedVM.SelectedEngineer;
-                vm.SheetsFromEngineerSearch = submittedVM.SheetsFromEngineerSearch;
-                vm.SheetsToEngineerSearch = submittedVM.SheetsToEngineerSearch;
-            }
-
-            //Date search entered
-            if (submittedVM.SheetsFromDateSearch > new DateTime() && submittedVM.SheetsToDateSearch > new DateTime())
-            {
-                DateTime dateFrom = submittedVM.SheetsFromDateSearch;
-                DateTime dateTo = submittedVM.SheetsToDateSearch;
-
-                if (dateFrom > dateTo)
-                {
-                    ModelState.AddModelError(String.Empty, "The from date must be before the to date");
-                    return View(vm);
-                }
-
-                serviceSheetsFound = await db.ServiceSheets.Where(d => d.ServiceDays.Any(s => s.DtReport >= dateFrom)
-                                        && d.ServiceDays.Any(s => s.DtReport <= dateTo)).ToListAsync();
-                vm.ServiceSheets = serviceSheetsFound;
-
-                //Return the search terms
-                vm.SheetsFromDateSearch = dateFrom;
-                vm.SheetsToDateSearch = dateTo;
-            }
-
-
-
-            //else if (!string.IsNullOrEmpty(submittedVM.SelectedEngineer))
-            //{
-            //    var serviceSheetsEng = await db.ServiceSheets.Where(e => e.Username.Equals(submittedVM.SelectedEngineer)).ToListAsync();
-            //    vm.ServiceSheets = serviceSheetsEng;
-            //}
-            //else if (!String.IsNullOrEmpty(submittedVM.SubmissionNumber.ToString()))
-            //{
-            //    var serviceSheetsSubmissionNumber = await db.ServiceSheets.Where(s => s.SubmissionNumber == submittedVM.SubmissionNumber).ToListAsync();
-            //    vm.ServiceSheets = serviceSheetsSubmissionNumber;
-            //}
-            //else if (dateFrom != new DateTime() && dateTo != new DateTime())
-            //{
-            //    var serviceSheetDates = await db.ServiceSheets.Where(d => d.ServiceDays.Any(s => s.DtReport >= dateFrom)
-            //                            && d.ServiceDays.Any(s => s.DtReport <= dateTo)).ToListAsync();
-            //    vm.ServiceSheets = serviceSheetDates;
-            //}
-            //else
-            //{
-            //    //Default the date search to the last week
-            //    DateTime currentDate = DateTime.Now;
-            //    DateTime lastWeek = DateTime.Now.AddDays(-7);
-            //    vm.SheetsFrom = lastWeek;
-            //    vm.SheetsTo = currentDate;
-            //    var serviceSheets = await db.ServiceSheets.OrderByDescending(s => s.SubmissionNumber).Take(5).ToListAsync();
-            //    vm.ServiceSheets = serviceSheets;
-            //}
+            //Return the current search terms to include in the view
+            vm.SubmissionNumber = submissionNumber;
+            vm.SheetsFromDateSearch = sheetsFromDateSearch;
+            vm.SheetsToDateSearch = sheetsToDateSearch;
+            vm.CustomerSearch = customerSearch;
+            vm.MttJobNumberSearch = mttJobNumberSearch;
+            vm.SelectedEngineer = selectedEngineer;
 
             return View(vm);
+        }
+
+        public IQueryable<ServiceSheet> GetServiceSheets(int? submissionNumber, DateTime? sheetsFromDateSearch, DateTime? sheetsToDateSearch, string customerSearch,
+                                            string mttJobNumberSearch, string selectedEngineer)
+        {
+            var result = db.ServiceSheets.AsQueryable();
+
+            if (submissionNumber.HasValue)
+            {
+                result = result.Where(s => s.SubmissionNumber == submissionNumber);
+            }
+            if (sheetsFromDateSearch.HasValue)
+            {
+                result = result.Where(s => s.ServiceDays.Any(d => d.DtReport >= sheetsFromDateSearch));
+            }
+            if (sheetsToDateSearch.HasValue)
+            {
+                result = result.Where(s => s.ServiceDays.Any(d => d.DtReport <= sheetsToDateSearch));
+            }
+            if (!string.IsNullOrEmpty(customerSearch))
+            {
+                result = result.Where(s => s.Customer.Contains(customerSearch));
+            }
+            if (!string.IsNullOrEmpty(mttJobNumberSearch))
+            {
+                result = result.Where(s => s.MttJobNumber.Contains(mttJobNumberSearch));
+            }
+            if (!string.IsNullOrEmpty(selectedEngineer))
+            {
+                result = result.Where(s => s.Username.Equals(selectedEngineer));
+            }
+            return result;
         }
 
         private async Task<List<SelectListItem>> CreateEngineerList()
@@ -151,7 +139,7 @@ namespace ServiceSheetManager.Controllers
                 engineerSL.Add(new SelectListItem() { Text = engName, Value = username });
             }
 
-            return engineerSL;
+            return engineerSL.OrderBy(m => m.Text).ToList();
         }
 
         //Display

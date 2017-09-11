@@ -187,7 +187,10 @@ namespace ServiceSheetManager.Models
             [Required]
             [StringLength(255, ErrorMessage = "Maximum length is 255")]
             public string MttEngSignatureUrl { get; set; }
+
         }
-        
+        //Utility methods
+        [Display(Name = "Engineer")]
+        public string EngineerFullName { get { return UserFirstName + " " + UserSurname; } }
     }
 }
