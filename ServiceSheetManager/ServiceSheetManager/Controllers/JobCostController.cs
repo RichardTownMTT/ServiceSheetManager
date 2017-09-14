@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using ServiceSheetManager.Models;
 using ServiceSheetManager.ViewModels;
-using ServiceSheetManager.ViewModels.Helpers;
+using ServiceSheetManager.Helpers;
 
 namespace ServiceSheetManager.Controllers
 {

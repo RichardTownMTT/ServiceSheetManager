@@ -1,0 +1,209 @@
+﻿@model ServiceSheetManager.ViewModels.ServiceDayVM
+
+<div class="panel panel-default">
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.ServiceSheetId)
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion-service-days" href="#collapse_@(Model.Id)">@Model.DtReport.ToShortDateString()</a>
+        </h4>
+    </div>
+    <div id="collapse_@(Model.Id)" class="panel-collapse collapse">
+        <div class="panel-body">
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.DtReport, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.DtReport, "{0:dd/MM/yyyy}", new { @class = "DtReport form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.DtReport)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.ReportDayOfWeekName, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.ReportDayOfWeekName, new { @class = "ReportDayOfWeek form-control", @readonly = true })</div>
+                <div class="col-md-6"></div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.TravelStartTime, new { @class = "control-label" })</div>
+                <div class="col-md-4" id="travelStart_@(Model.Id)">@Html.TextBoxFor(m => m.TravelStartTime, "{0:HH:mm}", new { @class = "form-control timepicker" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.TravelStartTime)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.ArrivalOnsiteTime, new { @class = "control-label" })</div>
+                <div class="col-md-4" id="arrivalOnsite_@(Model.Id)">@Html.TextBoxFor(m => m.ArrivalOnsiteTime, "{0:HH:mm}", new { @class = "form-control timepicker" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.ArrivalOnsiteTime)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.DepartureSiteTime)</div>
+                <div class="col-md-4" id="departureSite_@(Model.Id)">@Html.TextBoxFor(m => m.DepartureSiteTime, "{0:HH:mm}", new { @class = "form-control timepicker" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.DepartureSiteTime)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.TravelEndTime, new { @class = "control-label" })</div>
+                <div class="col-md-4" id="travelEnd_@(Model.Id)">@Html.TextBoxFor(m => m.TravelEndTime, "{0:HH:mm}", new { @class = "form-control timepicker" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.TravelEndTime)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.Mileage)</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.Mileage, new { @class = "Mileage form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.Mileage)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.DailyAllowance)</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.DailyAllowance, new { @class = "DailyAllowance form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.DailyAllowance)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.OvernightAllowance)</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.OvernightAllowance, new { @class = "OvernightAllowance form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.OvernightAllowance)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.BarrierPayment)</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.BarrierPayment, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.BarrierPayment)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.TotalTravelTime)</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.TotalTravelTime, new { @class = "totalTravelTime form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.TotalTravelTime)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.TotalOnsiteTime)</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.TotalOnsiteTime, new { @class = "totalOnsiteTime form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.TotalOnsiteTime)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.DailyReport)</div>
+                <div class="col-md-4">@Html.TextAreaFor(m => m.DailyReport, new { @class = "form-control", rows = "8" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.DailyReport)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.PartsSuppliedToday)</div>
+                <div class="col-md-4">@Html.TextAreaFor(m => m.PartsSuppliedToday, new { @class = "form-control", rows = "8" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.PartsSuppliedToday)</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#travelStart_@(Model.Id)").change(function () {
+            var travelStartElement = @Html.IdFor(m => m.TravelStartTime);
+            var travelStart = $(travelStartElement).val();
+            var arrivalOnsiteElement = @Html.IdFor(m => m.ArrivalOnsiteTime);
+            var arrivalOnsite = $(arrivalOnsiteElement).val();
+            var departureSiteElement = @Html.IdFor(m => m.DepartureSiteTime);
+            var departureSite = $(departureSiteElement).val();
+            var travelEndElement = @Html.IdFor(m => m.TravelEndTime);
+            var travelEnd = $(travelEndElement).val();
+
+            var travelToDiff = (new Date("1970-1-1 " + arrivalOnsite) - new Date("1970-1-1 " + travelStart)) / 1000 / 60 / 60;
+            var travelFromDiff = (new Date("1970-1-1 " + travelEnd) - new Date("1970-1-1 " + departureSite)) / 1000 / 60 / 60;
+
+            var totalTravel = travelToDiff + travelFromDiff;
+
+            $(@Html.IdFor(m => m.TotalTravelTime)).val(totalTravel);
+            CallUpdateTravelOnly();
+        });
+
+        $("#arrivalOnsite_@(Model.Id)").change(function () {
+            var travelStartElement = @Html.IdFor(m => m.TravelStartTime);
+            var travelStart = $(travelStartElement).val();
+            var arrivalOnsiteElement = @Html.IdFor(m => m.ArrivalOnsiteTime);
+            var arrivalOnsite = $(arrivalOnsiteElement).val();
+            var departureSiteElement = @Html.IdFor(m => m.DepartureSiteTime);
+            var departureSite = $(departureSiteElement).val();
+            var travelEndElement = @Html.IdFor(m => m.TravelEndTime);
+            var travelEnd = $(travelEndElement).val();
+
+            var travelToDiff = (new Date("1970-1-1 " + arrivalOnsite) - new Date("1970-1-1 " + travelStart)) / 1000 / 60 / 60;
+            var travelFromDiff = (new Date("1970-1-1 " + travelEnd) - new Date("1970-1-1 " + departureSite)) / 1000 / 60 / 60;
+            var onsiteTimeDiff = (new Date("1970-1-1 " + departureSite) - new Date("1970-1-1 " + arrivalOnsite)) / 1000 / 60 / 60;
+
+            var totalTravel = travelToDiff + travelFromDiff;
+
+            $(@Html.IdFor(m => m.TotalTravelTime)).val(totalTravel);
+            $(@Html.IdFor(m => m.TotalOnsiteTime)).val(onsiteTimeDiff);
+
+            CallUpdateTravelAndOnsiteTime();
+        });
+
+        $("#departureSite_@(Model.Id)").change(function () {
+            var travelStartElement = @Html.IdFor(m => m.TravelStartTime);
+            var travelStart = $(travelStartElement).val();
+            var arrivalOnsiteElement = @Html.IdFor(m => m.ArrivalOnsiteTime);
+            var arrivalOnsite = $(arrivalOnsiteElement).val();
+            var departureSiteElement = @Html.IdFor(m => m.DepartureSiteTime);
+            var departureSite = $(departureSiteElement).val();
+            var travelEndElement = @Html.IdFor(m => m.TravelEndTime);
+            var travelEnd = $(travelEndElement).val();
+
+            var travelToDiff = (new Date("1970-1-1 " + arrivalOnsite) - new Date("1970-1-1 " + travelStart)) / 1000 / 60 / 60;
+            var travelFromDiff = (new Date("1970-1-1 " + travelEnd) - new Date("1970-1-1 " + departureSite)) / 1000 / 60 / 60;
+            var onsiteTimeDiff = (new Date("1970-1-1 " + departureSite) - new Date("1970-1-1 " + arrivalOnsite)) / 1000 / 60 / 60;
+
+            var totalTravel = travelToDiff + travelFromDiff;
+
+            $(@Html.IdFor(m => m.TotalTravelTime)).val(totalTravel);
+            $(@Html.IdFor(m => m.TotalOnsiteTime)).val(onsiteTimeDiff);
+
+            CallUpdateTravelAndOnsiteTime();
+        });
+
+        $("#travelEnd_@(Model.Id)").change(function () {
+            var travelStartElement = @Html.IdFor(m => m.TravelStartTime);
+            var travelStart = $(travelStartElement).val();
+            var arrivalOnsiteElement = @Html.IdFor(m => m.ArrivalOnsiteTime);
+            var arrivalOnsite = $(arrivalOnsiteElement).val();
+            var departureSiteElement = @Html.IdFor(m => m.DepartureSiteTime);
+            var departureSite = $(departureSiteElement).val();
+            var travelEndElement = @Html.IdFor(m => m.TravelEndTime);
+            var travelEnd = $(travelEndElement).val();
+
+            var travelToDiff = (new Date("1970-1-1 " + arrivalOnsite) - new Date("1970-1-1 " + travelStart)) / 1000 / 60 / 60;
+            var travelFromDiff = (new Date("1970-1-1 " + travelEnd) - new Date("1970-1-1 " + departureSite)) / 1000 / 60 / 60;
+
+            var totalTravel = travelToDiff + travelFromDiff;
+
+            $(@Html.IdFor(m => m.TotalTravelTime)).val(totalTravel);
+            CallUpdateTravelOnly();
+        });
+
+        $(@Html.IdFor(m => m.DailyAllowance)).change(function () {
+            CallUpdateDailyAllowanceCount();
+        });
+
+        $(@Html.IdFor(m => m.OvernightAllowance)).change(function () {
+            CallUpdateOvernightAllowanceCount();
+        });
+
+        $(@Html.IdFor(m => m.Mileage)).change(function () {
+            CallUpdateMileage();
+        });
+
+        $(@Html.IdFor(m => m.DtReport)).change(function () {
+            CallUpdateTimeSheetOrder();
+        });
+
+        $(@Html.IdFor(m => m.DtReport)).datepicker({
+            dateFormat: "dd/mm/yy"
+        });
+
+        $(@Html.IdFor(m => m.DtReport)).change(function () {
+            var selectedDate = $(this).datepicker('getDate');
+            var weekday = new Array(7);
+            weekday[0] = "Sunday";
+            weekday[1] = "Monday";
+            weekday[2] = "Tuesday";
+            weekday[3] = "Wednesday";
+            weekday[4] = "Thursday";
+            weekday[5] = "Friday";
+            weekday[6] = "Saturday";
+            var selectedDay = selectedDate.getDay();
+            var dayName = weekday[selectedDay];
+            $(this).parent().parent().parent().find('.ReportDayOfWeek').val(dayName);
+        });
+
+        $('.timepicker').timepicker({ step: 15, timeFormat: 'h:i A'});
+
+    })
+</script>

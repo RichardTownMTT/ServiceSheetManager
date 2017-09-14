@@ -1,5 +1,5 @@
-﻿using ServiceSheetManager.Models;
-using ServiceSheetManager.Models.Helpers;
+﻿using ServiceSheetManager.Helpers;
+using ServiceSheetManager.Models;
 using ServiceSheetManager.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -93,7 +93,7 @@ namespace ServiceSheetManager.Controllers
             foreach (var day in vm.ServiceDayModels)
             {
                 //Verify that the totals, dates on the travel times, etc. are correct
-                updateServiceDayTimes(day.ServiceDayEntity);
+                UpdateServiceDayTimes(day.ServiceDayEntity);
                 day.ServiceDayEntity.ServiceSheet = serviceSheetAdd;
                 serviceDaysAdd.Add(day.ServiceDayEntity);
             }
@@ -101,7 +101,7 @@ namespace ServiceSheetManager.Controllers
             serviceSheetAdd.ServiceDays = serviceDaysAdd;
 
             //The mileage, allowance and time totals need to be updated on the service sheet
-            updateServiceSheetTotals(serviceSheetAdd);
+            ServiceSheetHelpers.UpdateServiceSheetTotals(serviceSheetAdd);
 
             //Add the entities to save to the db context
             db.ServiceSheets.Add(serviceSheetAdd);
@@ -127,35 +127,35 @@ namespace ServiceSheetManager.Controllers
             return RedirectToAction("Index");
         }
 
-        private void updateServiceSheetTotals(ServiceSheet serviceSheetAdd)
-        {
-            //Update all the totals held on the service sheet
-            int totalMileage = 0;
-            double totalTimeOnsite = 0;
-            double totalTravelTime = 0;
-            int totalDailyAllowances = 0;
-            int totalOvernightAllowances = 0;
-            int totalBarrierPayments = 0;
+        //private void updateServiceSheetTotals(ServiceSheet serviceSheetAdd)
+        //{
+        //    //Update all the totals held on the service sheet
+        //    int totalMileage = 0;
+        //    double totalTimeOnsite = 0;
+        //    double totalTravelTime = 0;
+        //    int totalDailyAllowances = 0;
+        //    int totalOvernightAllowances = 0;
+        //    int totalBarrierPayments = 0;
 
-            foreach (var day in serviceSheetAdd.ServiceDays)
-            {
-                totalMileage += day.Mileage;
-                totalTimeOnsite += day.TotalOnsiteTime;
-                totalTravelTime += day.TotalTravelTime;
-                totalDailyAllowances += day.DailyAllowance;
-                totalOvernightAllowances += day.OvernightAllowance;
-                totalBarrierPayments += day.BarrierPayment;
-            }
+        //    foreach (var day in serviceSheetAdd.ServiceDays)
+        //    {
+        //        totalMileage += day.Mileage;
+        //        totalTimeOnsite += day.TotalOnsiteTime;
+        //        totalTravelTime += day.TotalTravelTime;
+        //        totalDailyAllowances += day.DailyAllowance;
+        //        totalOvernightAllowances += day.OvernightAllowance;
+        //        totalBarrierPayments += day.BarrierPayment;
+        //    }
 
-            serviceSheetAdd.JobTotalMileage = totalMileage;
-            serviceSheetAdd.JobTotalTimeOnsite = totalTimeOnsite;
-            serviceSheetAdd.JobTotalTravelTime = totalTravelTime;
-            serviceSheetAdd.TotalDailyAllowances = totalDailyAllowances;
-            serviceSheetAdd.TotalOvernightAllowances = totalOvernightAllowances;
-            serviceSheetAdd.TotalBarrierPayments = totalBarrierPayments;
-        }
+        //    serviceSheetAdd.JobTotalMileage = totalMileage;
+        //    serviceSheetAdd.JobTotalTimeOnsite = totalTimeOnsite;
+        //    serviceSheetAdd.JobTotalTravelTime = totalTravelTime;
+        //    serviceSheetAdd.TotalDailyAllowances = totalDailyAllowances;
+        //    serviceSheetAdd.TotalOvernightAllowances = totalOvernightAllowances;
+        //    serviceSheetAdd.TotalBarrierPayments = totalBarrierPayments;
+        //}
 
-        private void updateServiceDayTimes(ServiceDay day)
+        private void UpdateServiceDayTimes(ServiceDay day)
         {
             //The travel times, etc will have todays date on, need to set to the dtReport date
             DateTime reportDate = day.DtReport;

@@ -20,7 +20,7 @@ namespace ServiceSheetManager.ViewModels
         public const string engineerSortAsc = "engineerSortAsc";
         public const string engineerSortDesc = "engineerSortDesc";
 
-        public IPagedList<ServiceSheet> ServiceSheets { get; set; }
+        public IPagedList<ServiceSheetVM> ServiceSheets { get; set; }
         
         public string SortOrder { get; set; }
         public string CurrentSortOrder { get; set; }
@@ -65,7 +65,7 @@ namespace ServiceSheetManager.ViewModels
 
         public ServiceSheetListVM ()
         {
-            ServiceSheets = new PagedList<ServiceSheet>(new List<ServiceSheet>(), 1, 1);
+            ServiceSheets = new PagedList<ServiceSheetVM>(new List<ServiceSheetVM>(), 1, 1);
         }
     }
 }

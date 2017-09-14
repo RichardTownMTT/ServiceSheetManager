@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using ServiceSheetManager.Models;
 using ServiceSheetManager.ViewModels;
-using ServiceSheetManager.ViewModels.Helpers;
+using ServiceSheetManager.Helpers;
 using ServiceSheetManager.Models.NonDbModels;
 using System.Globalization;
 
@@ -35,7 +35,7 @@ namespace ServiceSheetManager.Controllers
         
             var latestSheetDate = DateTime.Now.AddDays(7);
 
-            var weekNumbers = WeekNumberCreator.createWeekNumberDictionary(firstSheetDate, latestSheetDate);
+            var weekNumbers = WeekNumberCreator.CreateWeekNumberDictionary(firstSheetDate, latestSheetDate);
 
             EngineerCalendarVM calendarVm = new EngineerCalendarVM();
 

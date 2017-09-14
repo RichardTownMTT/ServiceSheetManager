@@ -1,4 +1,4 @@
-﻿@model ServiceSheetManager.Models.ServiceSheet
+﻿@model ServiceSheetManager.ViewModels.ServiceSheetVM
 
 @{
     ViewBag.Title = "View Submission";
@@ -80,7 +80,7 @@ else
         </div>
 
         <div class="panel-group" id="accordion-service-days">
-            @Html.DisplayFor(m => m.ServiceDays)
+            @Html.DisplayFor(m => m.ServiceDaysVM)
         </div>
 
         <div class="row page-header">
@@ -181,8 +181,10 @@ else
             <div class="col-md-4">@Html.DisplayFor(m => m.UserSurname)</div>
         </div>
         <div class="row form-group">
-            <div class="col-md-4"></div>
-            <div class="col-md-2">@Html.ActionLink("Back", "Index", "ServiceSheet", new { @class = "btn btn-default" })</div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-1">@Html.ActionLink("Edit", "Edit", "ServiceSheet", new { submissionNumber = Model.SubmissionNumber }, new { @class = "btn btn-default" })</div>
+            <div class="col-md-1">@Html.ActionLink("Back", "Index", "ServiceSheet", new { @class = "btn btn-default" })</div>
             <div class="col-md-6"></div>
         </div>
     </div>

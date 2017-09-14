@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using PagedList;
+using ServiceSheetManager.Helpers;
 
 namespace ServiceSheetManager.Controllers
 {
@@ -15,6 +16,53 @@ namespace ServiceSheetManager.Controllers
         private const int pageSize = 10;
         private ServiceSheetsEntities db = new ServiceSheetsEntities();
 
+        //Get
+        public async Task<ActionResult> Edit(int? submissionNumber)
+        {
+            if (!submissionNumber.HasValue)
+            {
+                return View(model: null);
+            }
+            else
+            {
+                ServiceSheet serviceSheetEdit = await db.ServiceSheets.Where(s => s.SubmissionNumber == submissionNumber.Value).Include(s => s.ServiceDays).FirstOrDefaultAsync();
+
+                //Create the view model from the Service sheet
+                ServiceSheetVM vm = new ServiceSheetVM(serviceSheetEdit);
+                return View(vm);
+            }
+        }
+
+        //Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(ServiceSheetVM submittedSheet)
+        {
+            //Validate the service sheet
+            if (!ModelState.IsValid)
+            {
+                return View(submittedSheet);
+            }
+
+            ServiceSheet updateSheet = await db.ServiceSheets.Where(s => s.Id == submittedSheet.Id).Include(s => s.ServiceDays).FirstOrDefaultAsync();
+
+            submittedSheet.UpdateModel(updateSheet);
+
+            //Update the totals, etc.
+            ServiceSheetHelpers.UpdateServiceSheetTotals(updateSheet); 
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Error saving changes to service sheet: " + submittedSheet.Id);
+            }
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult ListReports([Bind] int? page, int? submissionNumber, DateTime? sheetsFromDateSearch, DateTime? sheetsToDateSearch, string customerSearch,
                                             string mttJobNumberSearch, string selectedEngineer, string currentSortOrder)
         {
@@ -22,8 +70,14 @@ namespace ServiceSheetManager.Controllers
             ServiceSheetListVM vm = new ServiceSheetListVM();
 
             List<ServiceSheet> serviceSheetsFound = GetServiceSheets(submissionNumber, sheetsFromDateSearch, sheetsToDateSearch, customerSearch, mttJobNumberSearch, selectedEngineer).ToList();
+            List<ServiceSheetVM> serviceSheetsFoundVMs = new List<ServiceSheetVM>();
+            foreach (var sheet in serviceSheetsFound)
+            {
+                ServiceSheetVM sheetVM = new ServiceSheetVM(sheet);
+                serviceSheetsFoundVMs.Add(sheetVM);
+            }
 
-            IEnumerable<ServiceSheet> sortedServiceSheets;
+            IEnumerable<ServiceSheetVM> sortedServiceSheets;
 
             currentSortOrder = String.IsNullOrEmpty(currentSortOrder) ? ServiceSheetListVM.customerSortAsc : currentSortOrder;
 
@@ -31,37 +85,37 @@ namespace ServiceSheetManager.Controllers
             switch (currentSortOrder)
             {
                 case ServiceSheetListVM.customerSortAsc:
-                    sortedServiceSheets = serviceSheetsFound.OrderBy(s => s.Customer);
+                    sortedServiceSheets = serviceSheetsFoundVMs.OrderBy(s => s.Customer);
                     break;
                 case ServiceSheetListVM.customerSortDesc:
-                    sortedServiceSheets = serviceSheetsFound.OrderByDescending(s => s.Customer);
+                    sortedServiceSheets = serviceSheetsFoundVMs.OrderByDescending(s => s.Customer);
                     break;
                 case ServiceSheetListVM.submissionSortAsc:
-                    sortedServiceSheets = serviceSheetsFound.OrderBy(s => s.SubmissionNumber);
+                    sortedServiceSheets = serviceSheetsFoundVMs.OrderBy(s => s.SubmissionNumber);
                     break;
                 case ServiceSheetListVM.submissionSortDesc:
-                    sortedServiceSheets = serviceSheetsFound.OrderByDescending(s => s.SubmissionNumber);
+                    sortedServiceSheets = serviceSheetsFoundVMs.OrderByDescending(s => s.SubmissionNumber);
                     break;
                 case ServiceSheetListVM.jobNumberSortAsc:
-                    sortedServiceSheets = serviceSheetsFound.OrderBy(s => s.MttJobNumber);
+                    sortedServiceSheets = serviceSheetsFoundVMs.OrderBy(s => s.MttJobNumber);
                     break;
                 case ServiceSheetListVM.jobNumberSortDesc:
-                    sortedServiceSheets = serviceSheetsFound.OrderByDescending(s => s.MttJobNumber);
+                    sortedServiceSheets = serviceSheetsFoundVMs.OrderByDescending(s => s.MttJobNumber);
                     break;
                 case ServiceSheetListVM.machineSortAsc:
-                    sortedServiceSheets = serviceSheetsFound.OrderBy(m => m.MachineMakeModel);
+                    sortedServiceSheets = serviceSheetsFoundVMs.OrderBy(m => m.MachineMakeModel);
                     break;
                 case ServiceSheetListVM.machineSortDesc:
-                    sortedServiceSheets = serviceSheetsFound.OrderByDescending(m => m.MachineMakeModel);
+                    sortedServiceSheets = serviceSheetsFoundVMs.OrderByDescending(m => m.MachineMakeModel);
                     break;
                 case ServiceSheetListVM.engineerSortAsc:
-                    sortedServiceSheets = serviceSheetsFound.OrderBy(m => m.EngineerFullName);
+                    sortedServiceSheets = serviceSheetsFoundVMs.OrderBy(m => m.EngineerFullName);
                     break;
                 case ServiceSheetListVM.engineerSortDesc:
-                    sortedServiceSheets = serviceSheetsFound.OrderByDescending(m => m.EngineerFullName);
+                    sortedServiceSheets = serviceSheetsFoundVMs.OrderByDescending(m => m.EngineerFullName);
                     break;
                 default:
-                    sortedServiceSheets = serviceSheetsFound.OrderBy(s => s.Customer);
+                    sortedServiceSheets = serviceSheetsFoundVMs.OrderBy(s => s.Customer);
                     break;
             }
 
@@ -128,10 +182,11 @@ namespace ServiceSheetManager.Controllers
         {
             var engineers = await db.ServiceSheets.GroupBy(s => s.Username).Select(s => s.FirstOrDefault()).ToListAsync();
 
-            List<SelectListItem> engineerSL = new List<SelectListItem>();
-            //Add blank engineer
-            engineerSL.Add(new SelectListItem() { Text = "", Value = "" });
-
+            List<SelectListItem> engineerSL = new List<SelectListItem>
+            {
+                //Add blank engineer
+                new SelectListItem() { Text = "", Value = "" }
+            };
             foreach (var engineer in engineers)
             {
                 string engName = engineer.UserFirstName + " " + engineer.UserSurname;
@@ -148,7 +203,9 @@ namespace ServiceSheetManager.Controllers
             ServiceSheet sheet = await db.ServiceSheets.Where(s => s.SubmissionNumber.Equals(SubmissionNumber))
                 .Include(s => s.ServiceDays).FirstOrDefaultAsync();
 
-            return View(sheet);
+            ServiceSheetVM sheetVM = new ServiceSheetVM(sheet);
+
+            return View(sheetVM);
         }
     }
 }

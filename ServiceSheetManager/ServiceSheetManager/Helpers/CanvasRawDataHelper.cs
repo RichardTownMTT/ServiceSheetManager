@@ -1,10 +1,11 @@
-﻿using ServiceSheetManager.ViewModels;
+﻿using ServiceSheetManager.Models;
+using ServiceSheetManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ServiceSheetManager.Models.Helpers
+namespace ServiceSheetManager.Helpers
 {
     public class CanvasRawDataHelper
     {

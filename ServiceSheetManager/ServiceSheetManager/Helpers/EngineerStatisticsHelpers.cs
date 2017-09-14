@@ -5,11 +5,11 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 
-namespace ServiceSheetManager.ViewModels.Helpers
+namespace ServiceSheetManager.Helpers
 {
     public class WeekNumberCreator
     {
-        public static Dictionary<String, WeekNumber> createWeekNumberDictionary(DateTime startDate, DateTime endDate)
+        public static Dictionary<String, WeekNumber> CreateWeekNumberDictionary(DateTime startDate, DateTime endDate)
         {
             Dictionary<string, WeekNumber> retval = new Dictionary<string, WeekNumber>();
 

@@ -1,5 +1,5 @@
 ﻿using ServiceSheetManager.Models;
-using ServiceSheetManager.Models.Helpers;
+using ServiceSheetManager.Helpers;
 using ServiceSheetManager.Models.NonDbModels;
 using ServiceSheetManager.Models.NonDbModels.CanvasRawDataModels;
 using System;
