@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using PagedList;
 using ServiceSheetManager.Helpers;
+using System.IO;
+using PdfSharp.Pdf;
 
 namespace ServiceSheetManager.Controllers
 {
@@ -61,6 +63,30 @@ namespace ServiceSheetManager.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult GenerateServiceReport(int? SubmissionNumber, bool includeImage1, bool includeImage2, bool includeImage3, bool includeImage4, bool includeImage5, bool includeCustomerSignature)
+        {
+            if (!SubmissionNumber.HasValue)
+            {
+                return RedirectToAction("Error");
+            }
+
+            ServiceSheet sheet = db.ServiceSheets.Where(s => s.SubmissionNumber == SubmissionNumber.Value).Include(s => s.ServiceDays).FirstOrDefault();
+
+            if (sheet == null)
+            {
+                return RedirectToAction("Error");
+            }
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                PdfServiceSheetCreator creator = new PdfServiceSheetCreator();
+                PdfDocument pdfDoc = creator.CreatePdfSheetForSubmission(sheet, includeImage1, includeImage2, includeImage3, includeImage4, includeImage5, includeCustomerSignature);
+
+                pdfDoc.Save(stream, false);
+                return File(stream.ToArray(), "application/pdf");
+            }
         }
 
         public ActionResult ListReports([Bind] int? page, int? submissionNumber, DateTime? sheetsFromDateSearch, DateTime? sheetsToDateSearch, string customerSearch,
@@ -204,6 +230,7 @@ namespace ServiceSheetManager.Controllers
                 .Include(s => s.ServiceDays).FirstOrDefaultAsync();
 
             ServiceSheetVM sheetVM = new ServiceSheetVM(sheet);
+            sheetVM.LoadCanvasImages();
 
             return View(sheetVM);
         }

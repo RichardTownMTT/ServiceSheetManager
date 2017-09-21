@@ -134,31 +134,43 @@ else
             <h3 class="col-md-12">Follow-up Work Images</h3>
         </div>
         <div class="row form-group">
-            <div class="col-md-2">@Html.LabelFor(m => m.Image1Url)</div>
-            <div class="col-md-4">@Html.DisplayFor(m => m.Image1Url)</div>
+            <div class="col-md-2 control-label">Image 1</div>
+            <div class="col-md-4">
+                <img height="250" src="data:image/png; base64, @Model.Image1Base64String" />
+            </div>
         </div>
         <div class="row form-group">
-            <div class="col-md-2">@Html.LabelFor(m => m.Image2Url)</div>
-            <div class="col-md-4">@Html.DisplayFor(m => m.Image2Url)</div>
+            <div class="col-md-2 control-label">Image 2</div>
+            <div class="col-md-4">
+                <img height="250" src="data:image/png; base64, @Model.Image2Base64String" />
+            </div>
         </div>
         <div class="row form-group">
-            <div class="col-md-2">@Html.LabelFor(m => m.Image3Url)</div>
-            <div class="col-md-4">@Html.DisplayFor(m => m.Image3Url)</div>
+            <div class="col-md-2 control-label">Image 3</div>
+            <div class="col-md-4">
+                <img height="250" src="data:image/png; base64, @Model.Image3Base64String" />
+            </div>
         </div>
         <div class="row form-group">
-            <div class="col-md-2">@Html.LabelFor(m => m.Image4Url)</div>
-            <div class="col-md-4">@Html.DisplayFor(m => m.Image4Url)</div>
+            <div class="col-md-2 control-label">Image 4</div>
+            <div class="col-md-4">
+                <img height="250" src="data:image/png; base64, @Model.Image4Base64String" />
+            </div>
         </div>
         <div class="row form-group">
-            <div class="col-md-2">@Html.LabelFor(m => m.Image5Url)</div>
-            <div class="col-md-4">@Html.DisplayFor(m => m.Image5Url)</div>
+            <div class="col-md-2 control-label">Image 5</div>
+            <div class="col-md-4">
+                <img height="250" src="data:image/png; base64, @Model.Image5Base64String" />
+            </div>
         </div>
         <div class="row page-header">
             <h3 class="col-md-12">Job Signoff</h3>
         </div>
         <div class="row form-group">
-            <div class="col-md-2">@Html.LabelFor(m => m.CustomerSignatureUrl)</div>
-            <div class="col-md-4">@Html.DisplayFor(m => m.CustomerSignatureUrl)</div>
+            <div class="col-md-2 control-label">Customer Signature</div>
+            <div class="col-md-4">
+                <img height="50" src="data:image/png; base64, @Model.ImageCustomerSignatureBase64String" />
+            </div>
         </div>
         <div class="row form-group">
             <div class="col-md-2">@Html.LabelFor(m => m.CustomerName)</div>
@@ -169,8 +181,10 @@ else
             <div class="col-md-4">@Html.DisplayFor(m => m.DtSigned)</div>
         </div>
         <div class="row form-group">
-            <div class="col-md-2">@Html.LabelFor(m => m.MttEngSignatureUrl)</div>
-            <div class="col-md-4">@Html.DisplayFor(m => m.MttEngSignatureUrl)</div>
+            <div class="col-md-2 control-label">Engineer Signature</div>
+            <div class="col-md-4">
+                <img height="50" src="data:image/png; base64, @Model.ImageEngineerSignatureBase64String" />
+            </div>
         </div>
         <div class="row form-group">
             <div class="col-md-2">@Html.LabelFor(m => m.UserFirstName)</div>
@@ -186,6 +200,51 @@ else
             <div class="col-md-1">@Html.ActionLink("Edit", "Edit", "ServiceSheet", new { submissionNumber = Model.SubmissionNumber }, new { @class = "btn btn-default" })</div>
             <div class="col-md-1">@Html.ActionLink("Back", "Index", "ServiceSheet", new { @class = "btn btn-default" })</div>
             <div class="col-md-6"></div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Create Pdf</h4>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm("GenerateServiceReport", "ServiceSheet", FormMethod.Get, new { @class = "form-horizontal", target = "_blank" }))
+            {
+                @Html.HiddenFor(m => m.SubmissionNumber)
+                <div class="form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.IncludeImage1, new { @class = "control-label" })</div>
+                    <div class="col-md-2">@Html.CheckBoxFor(m => m.IncludeImage1, new { @class = "form-control" })</div>
+                    <div class="col-md-8"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.IncludeImage2, new { @class = "control-label" })</div>
+                    <div class="col-md-2">@Html.CheckBoxFor(m => m.IncludeImage2, new { @class = "form-control" })</div>
+                    <div class="col-md-8"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.IncludeImage3, new { @class = "control-label" })</div>
+                    <div class="col-md-2">@Html.CheckBoxFor(m => m.IncludeImage3, new { @class = "form-control" })</div>
+                    <div class="col-md-8"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.IncludeImage4, new { @class = "control-label" })</div>
+                    <div class="col-md-2">@Html.CheckBoxFor(m => m.IncludeImage4, new { @class = "form-control" })</div>
+                    <div class="col-md-8"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.IncludeImage4, new { @class = "control-label" })</div>
+                    <div class="col-md-2">@Html.CheckBoxFor(m => m.IncludeImage4, new { @class = "form-control" })</div>
+                    <div class="col-md-8"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">@Html.LabelFor(m => m.IncludeCustomerSignature, new { @class = "control-label" })</div>
+                    <div class="col-md-2">@Html.CheckBoxFor(m => m.IncludeCustomerSignature, new { @class = "form-control" })</div>
+                    <div class="col-md-8"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4"></div>
+                    <input type="submit" value="View Pdf" class="btn btn-default col-md-2" />
+                </div>
+            }
         </div>
     </div>
 }

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using ServiceSheetManager.Models;
+using ServiceSheetManager.Helpers;
 
 namespace ServiceSheetManager.ViewModels
 {
@@ -64,6 +65,14 @@ namespace ServiceSheetManager.ViewModels
                 ServiceDayVM dayVM = new ServiceDayVM(day);
                 this.ServiceDaysVM.Add(dayVM);
             }
+
+            //Default the include images on pdf to true
+            IncludeImage1 = true;
+            IncludeImage2 = true;
+            IncludeImage3 = true;
+            IncludeImage4 = true;
+            IncludeImage5 = true;
+            IncludeCustomerSignature = true;
         }
 
         //Updates all the properties on the servicesheet which can be updated.  Also call update on service days
@@ -224,7 +233,7 @@ namespace ServiceSheetManager.ViewModels
         [Required(ErrorMessage = "Total mileage is required")]
         [Display(Name = "Total Mileage")]
         public int JobTotalMileage { get; set; }
-
+        
         [Required(ErrorMessage = "Total daily allowances are required")]
         [Display(Name = "Total Daily Allowances")]
         public int TotalDailyAllowances { get; set; }
@@ -294,11 +303,48 @@ namespace ServiceSheetManager.ViewModels
         [Editable(false)]
         public string MttEngSignatureUrl { get; set; }
 
+        //Non db properties
+        //Options to include the images
+        [Display(Name = "Display Image 1")]
+        public bool IncludeImage1 { get; set; }
+        [Display(Name = "Display Image 2")]
+        public bool IncludeImage2 { get; set; }
+        [Display(Name = "Display Image 3")]
+        public bool IncludeImage3 { get; set; }
+        [Display(Name = "Display Image 4")]
+        public bool IncludeImage4 { get; set; }
+        [Display(Name = "Display Image 5")]
+        public bool IncludeImage5 { get; set; }
+        [Display(Name = "Display Customer Signature")]
+        public bool IncludeCustomerSignature { get; set; }
+
+        public string Image1Base64String { get; set; }
+        public string Image2Base64String { get; set; }
+        public string Image3Base64String { get; set; }
+        public string Image4Base64String { get; set; }
+        public string Image5Base64String { get; set; }
+        public string ImageCustomerSignatureBase64String { get; set; }
+        public string ImageEngineerSignatureBase64String { get; set; }
 
         //Utility methods
         [Display(Name = "Engineer")]
         public string EngineerFullName { get { return UserFirstName + " " + UserSurname; } }
 
+
+        public void LoadCanvasImages()
+        {
+            //These methods make calls to the canvas api
+            Image1Base64String = CanvasImageHelpers.LoadCanvasImageForUrl(Image1Url);
+            Image2Base64String = CanvasImageHelpers.LoadCanvasImageForUrl(Image2Url);
+            Image3Base64String = CanvasImageHelpers.LoadCanvasImageForUrl(Image3Url);
+            Image4Base64String = CanvasImageHelpers.LoadCanvasImageForUrl(Image4Url);
+            Image5Base64String = CanvasImageHelpers.LoadCanvasImageForUrl(Image5Url);
+
+            ImageEngineerSignatureBase64String = CanvasImageHelpers.LoadCanvasImageForUrl(MttEngSignatureUrl);
+            ImageCustomerSignatureBase64String = CanvasImageHelpers.LoadCanvasImageForUrl(CustomerSignatureUrl);
+        }
+
         public List<ServiceDayVM> ServiceDaysVM { get; set; }
+        
     }
 }
