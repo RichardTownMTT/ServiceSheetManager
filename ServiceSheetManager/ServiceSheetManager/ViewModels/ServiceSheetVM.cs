@@ -20,6 +20,12 @@ namespace ServiceSheetManager.ViewModels
         public ServiceSheetVM(ServiceSheet serviceSheetModel)
         {
             this.Id = serviceSheetModel.Id;
+            this.AppName = serviceSheetModel.AppName;
+            this.CanvasResponseId = serviceSheetModel.CanvasResponseId;
+            this.SubmissionFormName = serviceSheetModel.SubmissionFormName;
+            this.SubmissionFormVersion = serviceSheetModel.SubmissionFormVersion;
+            this.DtDevice = serviceSheetModel.DtDevice;
+            this.DtResponse = serviceSheetModel.DtResponse;
             this.SubmissionNumber = serviceSheetModel.SubmissionNumber;
             this.Username = serviceSheetModel.Username;
             this.UserFirstName = serviceSheetModel.UserFirstName;
@@ -75,8 +81,63 @@ namespace ServiceSheetManager.ViewModels
             IncludeCustomerSignature = true;
         }
 
+        public static ServiceSheet CreateServiceSheetFromVM(ServiceSheetApprovalVM vm)
+        {
+            //Creates a service sheet entity for saving to the database
+            ServiceSheetVM sheetVM = vm.ServiceSheetModel;
+            ServiceSheet retval = new ServiceSheet
+            {
+                AdditionalFaults = sheetVM.AdditionalFaults,
+                AddressLine1 = sheetVM.AddressLine1,
+                AddressLine2 = sheetVM.AddressLine2,
+                AppName = sheetVM.AppName,
+                CanvasResponseId = sheetVM.CanvasResponseId,
+                CncControl = sheetVM.CncControl,
+                Customer = sheetVM.Customer,
+                CustomerContact = sheetVM.CustomerContact,
+                CustomerName = sheetVM.CustomerName,
+                CustomerOrderNo = sheetVM.CustomerOrderNo,
+                CustomerPhoneNo = sheetVM.CustomerPhoneNo,
+                CustomerSignatureUrl = sheetVM.CustomerSignatureUrl,
+                DtDevice = sheetVM.DtDevice,
+                DtJobStart = sheetVM.DtJobStart,
+                DtResponse = sheetVM.DtResponse,
+                DtSigned = sheetVM.DtSigned,
+                FinalJobReport = sheetVM.FinalJobReport,
+                FollowUpPartsRequired = sheetVM.FollowUpPartsRequired,
+                Image1Url = sheetVM.Image1Url,
+                Image2Url = sheetVM.Image2Url,
+                Image3Url = sheetVM.Image3Url,
+                Image4Url = sheetVM.Image4Url,
+                Image5Url = sheetVM.Image5Url,
+                JobDescription = sheetVM.JobDescription,
+                JobStatus = sheetVM.JobStatus,
+                JobTotalMileage = sheetVM.JobTotalMileage,
+                JobTotalTimeOnsite = sheetVM.JobTotalTimeOnsite,
+                JobTotalTravelTime = sheetVM.JobTotalTravelTime,
+                MachineMakeModel = sheetVM.MachineMakeModel,
+                MachineSerial = sheetVM.MachineSerial,
+                MttEngSignatureUrl = sheetVM.MttEngSignatureUrl,
+                MttJobNumber = sheetVM.MttJobNumber,
+                Postcode = sheetVM.Postcode,
+                QuoteRequired = sheetVM.QuoteRequired,
+                SubmissionFormName = sheetVM.SubmissionFormName,
+                SubmissionFormVersion = sheetVM.SubmissionFormVersion,
+                SubmissionNumber = sheetVM.SubmissionNumber,
+                TotalBarrierPayments = sheetVM.TotalBarrierPayments,
+                TotalDailyAllowances = sheetVM.TotalDailyAllowances,
+                TotalOvernightAllowances = sheetVM.TotalOvernightAllowances,
+                TownCity = sheetVM.TownCity,
+                UserFirstName = sheetVM.UserFirstName,
+                Username = sheetVM.Username,
+                UserSurname = sheetVM.UserSurname
+            };
+
+            return retval;
+        }
+
         //Updates all the properties on the servicesheet which can be updated.  Also call update on service days
-        public void UpdateModel(ServiceSheet updateSheet)
+        public void UpdateSheetAndDayModels(ServiceSheet updateSheet)
         {
             updateSheet.AdditionalFaults = this.AdditionalFaults;
             updateSheet.AddressLine1 = this.AddressLine1;
@@ -128,9 +189,9 @@ namespace ServiceSheetManager.ViewModels
         [Required]
         public int SubmissionNumber { get; set; }
 
-        ////Internal use only - not displayed anywhere
-        //[Required]
-        //public string AppName { get; set; }
+        //Internal use only - not displayed anywhere
+        [Required]
+        public string AppName { get; set; }
 
         [Editable(false)]
         [Required]
@@ -145,25 +206,25 @@ namespace ServiceSheetManager.ViewModels
         [Required]
         public string UserSurname { get; set; }
 
-        //[Required]
-        ////Internal use only - not displayed anywhere
-        //public string CanvasResponseId { get; set; }
+        [Required]
+        //Internal use only - not displayed anywhere
+        public string CanvasResponseId { get; set; }
 
-        //[Required]
-        ////Internal use only - not displayed anywhere
-        //public System.DateTime DtResponse { get; set; }
+        [Required]
+        //Internal use only - not displayed anywhere
+        public System.DateTime DtResponse { get; set; }
 
-        //[Required]
-        ////Internal use only - not displayed anywhere
-        //public System.DateTime DtDevice { get; set; }
+        [Required]
+        //Internal use only - not displayed anywhere
+        public System.DateTime DtDevice { get; set; }
 
-        //[Required]
-        ////Internal use only - not displayed anywhere
-        //public string SubmissionFormName { get; set; }
+        [Required]
+        //Internal use only - not displayed anywhere
+        public string SubmissionFormName { get; set; }
 
-        //[Required]
-        ////Internal use only - not displayed anywhere
-        //public int SubmissionFormVersion { get; set; }
+        [Required]
+        //Internal use only - not displayed anywhere
+        public int SubmissionFormVersion { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Customer is required.")]
         [StringLength(255, ErrorMessage = "Maximum customer length is 255")]
@@ -318,12 +379,19 @@ namespace ServiceSheetManager.ViewModels
         [Display(Name = "Display Customer Signature")]
         public bool IncludeCustomerSignature { get; set; }
 
+        [Display(Name = "Image 1")]
         public string Image1Base64String { get; set; }
+        [Display(Name = "Image 2")]
         public string Image2Base64String { get; set; }
+        [Display(Name = "Image 3")]
         public string Image3Base64String { get; set; }
+        [Display(Name = "Image 4")]
         public string Image4Base64String { get; set; }
+        [Display(Name = "Image 5")]
         public string Image5Base64String { get; set; }
+        [Display(Name = "Customer Signature")]
         public string ImageCustomerSignatureBase64String { get; set; }
+        [Display(Name = "Engineer Signature")]
         public string ImageEngineerSignatureBase64String { get; set; }
 
         //Utility methods

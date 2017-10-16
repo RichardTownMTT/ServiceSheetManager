@@ -1,5 +1,7 @@
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.Properties.Resources.resources
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.csproj.GenerateResource.Cache
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.csproj.CoreCompileInputs.cache
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.csprojResolveAssemblyReference.cache
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\ApplicationInsights.config
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\roslyn\csc.exe
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\roslyn\csc.exe.config
@@ -89,4 +91,3 @@ C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceS
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\de\PdfSharp.Charting-gdi.resources.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.pdb
-C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.csprojResolveAssemblyReference.cache

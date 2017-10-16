@@ -16,7 +16,7 @@ namespace ServiceSheetManager.ViewModels
         }
 
         //This returns one service sheet and multiple service days for viewing / editing
-        public ServiceSheet ServiceSheetModel { get; set; }
+        public ServiceSheetVM ServiceSheetModel { get; set; }
         public List<ServiceDayCreateVM> ServiceDayModels { get; set; }
         public bool Errors { get; set; }
     }

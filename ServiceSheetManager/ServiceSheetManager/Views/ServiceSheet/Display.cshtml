@@ -134,31 +134,31 @@ else
             <h3 class="col-md-12">Follow-up Work Images</h3>
         </div>
         <div class="row form-group">
-            <div class="col-md-2 control-label">Image 1</div>
+            <div class="col-md-2 control-label">@Html.LabelFor(m => m.Image1Base64String)</div>
             <div class="col-md-4">
                 <img height="250" src="data:image/png; base64, @Model.Image1Base64String" />
             </div>
         </div>
         <div class="row form-group">
-            <div class="col-md-2 control-label">Image 2</div>
+            <div class="col-md-2 control-label">@Html.LabelFor(m => m.Image2Base64String)</div>
             <div class="col-md-4">
                 <img height="250" src="data:image/png; base64, @Model.Image2Base64String" />
             </div>
         </div>
         <div class="row form-group">
-            <div class="col-md-2 control-label">Image 3</div>
+            <div class="col-md-2 control-label">@Html.LabelFor(m => m.Image3Base64String)</div>
             <div class="col-md-4">
                 <img height="250" src="data:image/png; base64, @Model.Image3Base64String" />
             </div>
         </div>
         <div class="row form-group">
-            <div class="col-md-2 control-label">Image 4</div>
+            <div class="col-md-2 control-label">@Html.LabelFor(s => s.Image4Base64String)</div>
             <div class="col-md-4">
                 <img height="250" src="data:image/png; base64, @Model.Image4Base64String" />
             </div>
         </div>
         <div class="row form-group">
-            <div class="col-md-2 control-label">Image 5</div>
+            <div class="col-md-2 control-label">@Html.LabelFor(s => s.Image5Base64String)</div>
             <div class="col-md-4">
                 <img height="250" src="data:image/png; base64, @Model.Image5Base64String" />
             </div>
@@ -167,7 +167,7 @@ else
             <h3 class="col-md-12">Job Signoff</h3>
         </div>
         <div class="row form-group">
-            <div class="col-md-2 control-label">Customer Signature</div>
+            <div class="col-md-2 control-label">@Html.LabelFor(m => m.ImageCustomerSignatureBase64String)</div>
             <div class="col-md-4">
                 <img height="50" src="data:image/png; base64, @Model.ImageCustomerSignatureBase64String" />
             </div>
@@ -181,7 +181,7 @@ else
             <div class="col-md-4">@Html.DisplayFor(m => m.DtSigned)</div>
         </div>
         <div class="row form-group">
-            <div class="col-md-2 control-label">Engineer Signature</div>
+            <div class="col-md-2 control-label">@Html.LabelFor(m => m.ImageCustomerSignatureBase64String)</div>
             <div class="col-md-4">
                 <img height="50" src="data:image/png; base64, @Model.ImageEngineerSignatureBase64String" />
             </div>

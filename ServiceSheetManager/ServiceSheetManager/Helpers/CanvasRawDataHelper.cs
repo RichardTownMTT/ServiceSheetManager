@@ -11,54 +11,56 @@ namespace ServiceSheetManager.Helpers
     {
         public static CanvasRawData CopyEntity(CanvasRawData template)
         {
-            CanvasRawData retval = new CanvasRawData();
-            retval.AdditionalFaults = template.AdditionalFaults;
-            retval.AddressLine1 = template.AddressLine1;
-            retval.AddressLine2 = template.AddressLine2;
-            retval.AppName = template.AppName;
-            retval.Approved = template.Approved;
-            retval.CanvasResponseId = template.CanvasResponseId;
-            retval.CncControl = template.CncControl;
-            retval.Customer = template.Customer;
-            retval.CustomerContact = template.CustomerContact;
-            retval.CustomerName = template.CustomerName;
-            retval.CustomerOrderNo = template.CustomerOrderNo;
-            retval.CustomerPhoneNo = template.CustomerPhoneNo;
-            retval.CustomerSignatureUrl = template.CustomerSignatureUrl;
-            retval.DtDevice = template.DtDevice;
-            retval.DtEndSubmission = template.DtEndSubmission;
-            retval.DtJobStart = template.DtJobStart;
-            retval.DtResponse = template.DtResponse;
-            retval.DtSigned = template.DtSigned;
-            retval.DtStartSubmission = template.DtStartSubmission;
-            retval.FinalJobReport = template.FinalJobReport;
-            retval.FollowUpPartsRequired = template.FollowUpPartsRequired;
-            retval.Image1Url = template.Image1Url;
-            retval.Image2Url = template.Image2Url;
-            retval.Image3Url = template.Image3Url;
-            retval.Image4Url = template.Image4Url;
-            retval.Image5Url = template.Image5Url;
-            retval.JobDescription = template.JobDescription;
-            retval.JobStatus = template.JobStatus;
-            retval.JobTotalMileage = template.JobTotalMileage;
-            retval.JobTotalTimeOnsite = template.JobTotalTimeOnsite;
-            retval.JobTotalTravelTime = template.JobTotalTravelTime;
-            retval.MachineMakeModel = template.MachineMakeModel;
-            retval.MachineSerial = template.MachineSerial;
-            retval.MttEngSignatureUrl = template.MttEngSignatureUrl;
-            retval.MttJobNumber = template.MttJobNumber;
-            retval.Postcode = template.Postcode;
-            retval.QuoteRequired = template.QuoteRequired;
-            retval.SubmissionFormName = template.SubmissionFormName;
-            retval.SubmissionFormVersion = template.SubmissionFormVersion;
-            retval.SubmissionNumber = template.SubmissionNumber;
-            retval.TotalBarrierPayments = template.TotalBarrierPayments;
-            retval.TotalDailyAllowances = template.TotalDailyAllowances;
-            retval.TotalOvernightAllowances = template.TotalOvernightAllowances;
-            retval.TownCity = template.TownCity;
-            retval.UserFirstName = template.UserFirstName;
-            retval.Username = template.Username;
-            retval.UserSurname = template.UserSurname;
+            CanvasRawData retval = new CanvasRawData
+            {
+                AdditionalFaults = template.AdditionalFaults,
+                AddressLine1 = template.AddressLine1,
+                AddressLine2 = template.AddressLine2,
+                AppName = template.AppName,
+                Approved = template.Approved,
+                CanvasResponseId = template.CanvasResponseId,
+                CncControl = template.CncControl,
+                Customer = template.Customer,
+                CustomerContact = template.CustomerContact,
+                CustomerName = template.CustomerName,
+                CustomerOrderNo = template.CustomerOrderNo,
+                CustomerPhoneNo = template.CustomerPhoneNo,
+                CustomerSignatureUrl = template.CustomerSignatureUrl,
+                DtDevice = template.DtDevice,
+                DtEndSubmission = template.DtEndSubmission,
+                DtJobStart = template.DtJobStart,
+                DtResponse = template.DtResponse,
+                DtSigned = template.DtSigned,
+                DtStartSubmission = template.DtStartSubmission,
+                FinalJobReport = template.FinalJobReport,
+                FollowUpPartsRequired = template.FollowUpPartsRequired,
+                Image1Url = template.Image1Url,
+                Image2Url = template.Image2Url,
+                Image3Url = template.Image3Url,
+                Image4Url = template.Image4Url,
+                Image5Url = template.Image5Url,
+                JobDescription = template.JobDescription,
+                JobStatus = template.JobStatus,
+                JobTotalMileage = template.JobTotalMileage,
+                JobTotalTimeOnsite = template.JobTotalTimeOnsite,
+                JobTotalTravelTime = template.JobTotalTravelTime,
+                MachineMakeModel = template.MachineMakeModel,
+                MachineSerial = template.MachineSerial,
+                MttEngSignatureUrl = template.MttEngSignatureUrl,
+                MttJobNumber = template.MttJobNumber,
+                Postcode = template.Postcode,
+                QuoteRequired = template.QuoteRequired,
+                SubmissionFormName = template.SubmissionFormName,
+                SubmissionFormVersion = template.SubmissionFormVersion,
+                SubmissionNumber = template.SubmissionNumber,
+                TotalBarrierPayments = template.TotalBarrierPayments,
+                TotalDailyAllowances = template.TotalDailyAllowances,
+                TotalOvernightAllowances = template.TotalOvernightAllowances,
+                TownCity = template.TownCity,
+                UserFirstName = template.UserFirstName,
+                Username = template.Username,
+                UserSurname = template.UserSurname
+            };
 
             return retval;
         }
@@ -70,7 +72,8 @@ namespace ServiceSheetManager.Helpers
             CanvasRawData firstCanvasEntity = canvasEntities.First();
 
             ServiceSheet serviceSheetCreated = CreateServiceSheetForCanvasEntity(firstCanvasEntity);
-            approvalVM.ServiceSheetModel = serviceSheetCreated;
+            ServiceSheetVM sheetVM = new ServiceSheetVM(serviceSheetCreated);
+            approvalVM.ServiceSheetModel = sheetVM;
 
             List<ServiceDayCreateVM> createServiceDayVMs = new List<ServiceDayCreateVM>();
 
@@ -80,9 +83,12 @@ namespace ServiceSheetManager.Helpers
             {
                 ServiceDay day = CreateServiceDayForCanvasEntity(canvasEntity, serviceSheetCreated);
 
-                ServiceDayCreateVM vm = new ServiceDayCreateVM();
-                vm.ServiceDayEntity = day;
-                vm.TempId = tempIdCounter;
+                ServiceDayCreateVM vm = new ServiceDayCreateVM
+                {
+                    //vm.ServiceDayEntity = day;
+                    ServiceDayEntity = new ServiceDayVM(day),
+                    TempId = tempIdCounter
+                };
                 createServiceDayVMs.Add(vm);
                 
                 tempIdCounter++;
@@ -94,73 +100,77 @@ namespace ServiceSheetManager.Helpers
 
         private static ServiceDay CreateServiceDayForCanvasEntity(CanvasRawData template, ServiceSheet serviceSheetCreated)
         {
-            ServiceDay retval = new ServiceDay();
-            retval.ArrivalOnsiteTime = template.ArrivalOnsiteTime;
-            retval.BarrierPayment = template.BarrierPayment;
-            retval.DailyAllowance = template.DailyAllowance;
-            retval.DailyReport = template.DailyReport;
-            retval.DepartureSiteTime = template.DepartureSiteTime;
-            retval.DtReport = template.DtReport;
-            retval.Mileage = template.Mileage;
-            retval.OvernightAllowance = template.OvernightAllowance;
-            retval.PartsSuppliedToday = template.PartsSuppliedToday;
-            retval.TotalOnsiteTime = template.TotalOnsiteTime;
-            retval.TotalTravelTime = template.TotalTravelTime;
-            retval.TravelEndTime = template.TravelEndTime;
-            retval.TravelFromSiteTime = template.TravelFromSiteTime;
-            retval.TravelStartTime = template.TravelStartTime;
-            retval.TravelToSiteTime = template.TravelToSiteTime;
+            ServiceDay retval = new ServiceDay
+            {
+                ArrivalOnsiteTime = template.ArrivalOnsiteTime,
+                BarrierPayment = template.BarrierPayment,
+                DailyAllowance = template.DailyAllowance,
+                DailyReport = template.DailyReport,
+                DepartureSiteTime = template.DepartureSiteTime,
+                DtReport = template.DtReport,
+                Mileage = template.Mileage,
+                OvernightAllowance = template.OvernightAllowance,
+                PartsSuppliedToday = template.PartsSuppliedToday,
+                TotalOnsiteTime = template.TotalOnsiteTime,
+                TotalTravelTime = template.TotalTravelTime,
+                TravelEndTime = template.TravelEndTime,
+                TravelFromSiteTime = template.TravelFromSiteTime,
+                TravelStartTime = template.TravelStartTime,
+                TravelToSiteTime = template.TravelToSiteTime
+            };
 
             return retval;
         }
 
         private static ServiceSheet CreateServiceSheetForCanvasEntity(CanvasRawData template)
         {
-            ServiceSheet retval = new ServiceSheet();
-            retval.AdditionalFaults = template.AdditionalFaults;
-            retval.AddressLine1 = template.AddressLine1;
-            retval.AddressLine2 = template.AddressLine2;
-            retval.AppName = template.AppName;
-            retval.CanvasResponseId = template.CanvasResponseId;
-            retval.CncControl = template.CncControl;
-            retval.Customer = template.Customer;
-            retval.CustomerContact = template.CustomerContact;
-            retval.CustomerName = template.CustomerName;
-            retval.CustomerOrderNo = template.CustomerOrderNo;
-            retval.CustomerPhoneNo = template.CustomerPhoneNo;
-            retval.CustomerSignatureUrl = template.CustomerSignatureUrl;
-            retval.DtDevice = template.DtDevice;
-            retval.DtJobStart = template.DtJobStart;
-            retval.DtResponse = template.DtResponse;
-            retval.DtSigned = template.DtSigned;
-            retval.FinalJobReport = template.FinalJobReport;
-            retval.FollowUpPartsRequired = template.FollowUpPartsRequired;
-            retval.Image1Url = template.Image1Url;
-            retval.Image2Url = template.Image2Url;
-            retval.Image3Url = template.Image3Url;
-            retval.Image4Url = template.Image4Url;
-            retval.Image5Url = template.Image5Url;
-            retval.JobDescription = template.JobDescription;
-            retval.JobStatus = template.JobStatus;
-            retval.JobTotalMileage = template.JobTotalMileage;
-            retval.JobTotalTimeOnsite = template.JobTotalTimeOnsite;
-            retval.JobTotalTravelTime = template.JobTotalTravelTime;
-            retval.MachineMakeModel = template.MachineMakeModel;
-            retval.MachineSerial = template.MachineSerial;
-            retval.MttEngSignatureUrl = template.MttEngSignatureUrl;
-            retval.MttJobNumber = template.MttJobNumber;
-            retval.Postcode = template.Postcode;
-            retval.QuoteRequired = template.QuoteRequired;
-            retval.SubmissionFormName = template.SubmissionFormName;
-            retval.SubmissionFormVersion = template.SubmissionFormVersion;
-            retval.SubmissionNumber = template.SubmissionNumber;
-            retval.TotalBarrierPayments = template.TotalBarrierPayments;
-            retval.TotalDailyAllowances = template.TotalDailyAllowances;
-            retval.TotalOvernightAllowances = template.TotalOvernightAllowances;
-            retval.TownCity = template.TownCity;
-            retval.UserFirstName = template.UserFirstName;
-            retval.Username = template.Username;
-            retval.UserSurname = template.UserSurname;
+            ServiceSheet retval = new ServiceSheet
+            {
+                AdditionalFaults = template.AdditionalFaults,
+                AddressLine1 = template.AddressLine1,
+                AddressLine2 = template.AddressLine2,
+                AppName = template.AppName,
+                CanvasResponseId = template.CanvasResponseId,
+                CncControl = template.CncControl,
+                Customer = template.Customer,
+                CustomerContact = template.CustomerContact,
+                CustomerName = template.CustomerName,
+                CustomerOrderNo = template.CustomerOrderNo,
+                CustomerPhoneNo = template.CustomerPhoneNo,
+                CustomerSignatureUrl = template.CustomerSignatureUrl,
+                DtDevice = template.DtDevice,
+                DtJobStart = template.DtJobStart,
+                DtResponse = template.DtResponse,
+                DtSigned = template.DtSigned,
+                FinalJobReport = template.FinalJobReport,
+                FollowUpPartsRequired = template.FollowUpPartsRequired,
+                Image1Url = template.Image1Url,
+                Image2Url = template.Image2Url,
+                Image3Url = template.Image3Url,
+                Image4Url = template.Image4Url,
+                Image5Url = template.Image5Url,
+                JobDescription = template.JobDescription,
+                JobStatus = template.JobStatus,
+                JobTotalMileage = template.JobTotalMileage,
+                JobTotalTimeOnsite = template.JobTotalTimeOnsite,
+                JobTotalTravelTime = template.JobTotalTravelTime,
+                MachineMakeModel = template.MachineMakeModel,
+                MachineSerial = template.MachineSerial,
+                MttEngSignatureUrl = template.MttEngSignatureUrl,
+                MttJobNumber = template.MttJobNumber,
+                Postcode = template.Postcode,
+                QuoteRequired = template.QuoteRequired,
+                SubmissionFormName = template.SubmissionFormName,
+                SubmissionFormVersion = template.SubmissionFormVersion,
+                SubmissionNumber = template.SubmissionNumber,
+                TotalBarrierPayments = template.TotalBarrierPayments,
+                TotalDailyAllowances = template.TotalDailyAllowances,
+                TotalOvernightAllowances = template.TotalOvernightAllowances,
+                TownCity = template.TownCity,
+                UserFirstName = template.UserFirstName,
+                Username = template.Username,
+                UserSurname = template.UserSurname
+            };
 
             return retval;
         }

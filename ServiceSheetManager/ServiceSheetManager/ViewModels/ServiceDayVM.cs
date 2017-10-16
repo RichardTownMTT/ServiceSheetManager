@@ -1,9 +1,7 @@
-﻿using System;
+﻿using ServiceSheetManager.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using ServiceSheetManager.Models;
 
 namespace ServiceSheetManager.ViewModels
 {
@@ -110,10 +108,6 @@ namespace ServiceSheetManager.ViewModels
         [DataType(DataType.Date)]
         public System.DateTime DtReport { get; set; }
 
-        [Display(Name = "Day")]
-        [Editable(false)]
-        public string ReportDayOfWeek { get; }
-
         public Nullable<int> ServiceSheetId { get; set; }
 
 
@@ -139,6 +133,41 @@ namespace ServiceSheetManager.ViewModels
             day.TravelFromSiteTime = this.TravelFromSiteTime;
             day.TravelStartTime = this.TravelStartTime;
             day.TravelToSiteTime = this.TravelToSiteTime;
+        }
+
+        public static List<ServiceDay> CreateServiceDaysFromVM(ServiceSheetApprovalVM vm, ServiceSheet sheetToSave)
+        {
+            //Creates the service day entity to be saved to the database
+            List<ServiceDay> retval = new List<ServiceDay>();
+
+            foreach (var dayVM in vm.ServiceDayModels)
+            {
+                ServiceDay dayModel = new ServiceDay
+                {
+                    DtReport = dayVM.ServiceDayEntity.DtReport,
+                    BarrierPayment = dayVM.ServiceDayEntity.BarrierPayment,
+                    DailyAllowance = dayVM.ServiceDayEntity.DailyAllowance,
+                    DailyReport = dayVM.ServiceDayEntity.DailyReport,
+                    Mileage = dayVM.ServiceDayEntity.Mileage,
+                    OvernightAllowance = dayVM.ServiceDayEntity.OvernightAllowance,
+                    PartsSuppliedToday = dayVM.ServiceDayEntity.PartsSuppliedToday,
+                    ServiceSheet = sheetToSave,
+                    TotalOnsiteTime = dayVM.ServiceDayEntity.TotalOnsiteTime,
+                    TotalTravelTime = dayVM.ServiceDayEntity.TotalTravelTime,
+                    TravelFromSiteTime = dayVM.ServiceDayEntity.TravelFromSiteTime,
+                    TravelToSiteTime = dayVM.ServiceDayEntity.TravelToSiteTime
+                };
+                //Set the date portion of the times to the report date
+                dayModel.ArrivalOnsiteTime = dayModel.DtReport.Date + dayVM.ServiceDayEntity.ArrivalOnsiteTime.TimeOfDay;
+                dayModel.DepartureSiteTime = dayModel.DtReport.Date + dayVM.ServiceDayEntity.DepartureSiteTime.TimeOfDay;
+                dayModel.TravelEndTime = dayModel.DtReport.Date + dayVM.ServiceDayEntity.TravelEndTime.TimeOfDay;
+                dayModel.TravelStartTime = dayModel.DtReport.Date + dayVM.ServiceDayEntity.TravelStartTime.TimeOfDay;
+
+                retval.Add(dayModel);
+            }
+
+
+            return retval;
         }
     }
 }

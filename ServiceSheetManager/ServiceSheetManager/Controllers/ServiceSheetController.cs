@@ -48,7 +48,7 @@ namespace ServiceSheetManager.Controllers
 
             ServiceSheet updateSheet = await db.ServiceSheets.Where(s => s.Id == submittedSheet.Id).Include(s => s.ServiceDays).FirstOrDefaultAsync();
 
-            submittedSheet.UpdateModel(updateSheet);
+            submittedSheet.UpdateSheetAndDayModels(updateSheet);
 
             //Update the totals, etc.
             ServiceSheetHelpers.UpdateServiceSheetTotals(updateSheet); 

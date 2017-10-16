@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ServiceSheetManager.Controllers
@@ -29,18 +28,20 @@ namespace ServiceSheetManager.Controllers
 
                 if (sheetVM.Where(m => m.SubmissionNumber == submissionNumber).FirstOrDefault() == null)
                 {
-                    ServiceSheetApprovalIndexVM vmItem = new ServiceSheetApprovalIndexVM();
-                    vmItem.Id = canvasSheet.Id;
-                    vmItem.Approved = canvasSheet.Approved;
-                    vmItem.Customer = canvasSheet.Customer;
-                    vmItem.FirstName = canvasSheet.UserFirstName;
-                    vmItem.JobStart = canvasSheet.DtJobStart;
-                    vmItem.MachineMake = canvasSheet.MachineMakeModel;
-                    vmItem.MachineSerial = canvasSheet.MachineSerial;
-                    vmItem.MttJobNumber = canvasSheet.MttJobNumber;
-                    vmItem.SubmissionNumber = canvasSheet.SubmissionNumber;
-                    vmItem.Surname = canvasSheet.UserSurname;
-                    vmItem.Username = canvasSheet.Username;
+                    ServiceSheetApprovalIndexVM vmItem = new ServiceSheetApprovalIndexVM
+                    {
+                        Id = canvasSheet.Id,
+                        Approved = canvasSheet.Approved,
+                        Customer = canvasSheet.Customer,
+                        FirstName = canvasSheet.UserFirstName,
+                        JobStart = canvasSheet.DtJobStart,
+                        MachineMake = canvasSheet.MachineMakeModel,
+                        MachineSerial = canvasSheet.MachineSerial,
+                        MttJobNumber = canvasSheet.MttJobNumber,
+                        SubmissionNumber = canvasSheet.SubmissionNumber,
+                        Surname = canvasSheet.UserSurname,
+                        Username = canvasSheet.Username
+                    };
 
                     sheetVM.Add(vmItem);
                 }
@@ -61,6 +62,9 @@ namespace ServiceSheetManager.Controllers
 
             //Create the service sheet and day entities
             ServiceSheetApprovalVM vm = CanvasRawDataHelper.CreateServiceEntitiesForCanvasEntities(canvasEntities);
+
+            //Load the images
+            vm.ServiceSheetModel.LoadCanvasImages();
 
             //return the view
 
@@ -85,35 +89,29 @@ namespace ServiceSheetManager.Controllers
             {
                 item.Approved = true;
             }
+
+            //Create a service sheet entitiy
+            ServiceSheet sheetToSave = ServiceSheetVM.CreateServiceSheetFromVM(vm);
+
+            //Create service day entitites
+            List<ServiceDay> daysToSave = ServiceDayVM.CreateServiceDaysFromVM(vm, sheetToSave);
+            sheetToSave.ServiceDays = daysToSave;
             
-            var serviceSheetAdd = vm.ServiceSheetModel;
-
-            List<ServiceDay> serviceDaysAdd = new List<ServiceDay>();
-
-            foreach (var day in vm.ServiceDayModels)
+            //Update times for days.  Might not be correct if javascript is disabled on client
+            foreach (var day in daysToSave)
             {
                 //Verify that the totals, dates on the travel times, etc. are correct
-                UpdateServiceDayTimes(day.ServiceDayEntity);
-                day.ServiceDayEntity.ServiceSheet = serviceSheetAdd;
-                serviceDaysAdd.Add(day.ServiceDayEntity);
+                UpdateServiceDayTimes(day);
             }
-
-            serviceSheetAdd.ServiceDays = serviceDaysAdd;
-
             //The mileage, allowance and time totals need to be updated on the service sheet
-            ServiceSheetHelpers.UpdateServiceSheetTotals(serviceSheetAdd);
+            ServiceSheetHelpers.UpdateServiceSheetTotals(sheetToSave);
 
+
+            //Save
             //Add the entities to save to the db context
-            db.ServiceSheets.Add(serviceSheetAdd);
-            var serviceDaysToSave = vm.ServiceDayModels.Select(m => m.ServiceDayEntity).ToList();
-            db.ServiceDays.AddRange(serviceDaysToSave);
-            
-            //Link the service sheet to the service day
-            foreach (var daySave in serviceDaysAdd)
-            {
-                daySave.ServiceSheet = serviceSheetAdd;
-            }
-            
+            db.ServiceSheets.Add(sheetToSave);
+            db.ServiceDays.AddRange(daysToSave);
+
             try
             {
                 await db.SaveChangesAsync();
