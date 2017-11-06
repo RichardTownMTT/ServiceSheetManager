@@ -110,7 +110,7 @@ namespace ServiceSheetManager.ViewModels
 
         public Nullable<int> ServiceSheetId { get; set; }
 
-
+        [Display(Name = "Day")]
         public string ReportDayOfWeekName
         {
             get { return DtReport.DayOfWeek.ToString(); }

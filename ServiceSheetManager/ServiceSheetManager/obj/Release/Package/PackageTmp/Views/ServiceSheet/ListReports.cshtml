@@ -1,0 +1,63 @@
+﻿@model ServiceSheetManager.ViewModels.ServiceSheetListVM
+@using PagedList.Mvc;
+
+@{
+    Layout = null;
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Results</h3>
+    </div>
+    @if (Model.ServiceSheets.Count == 0)
+    {
+
+        <div class="panel-body">
+            <h3 class="col-md-12 text-center">There are no service sheets to view</h3>
+        </div>
+
+    }
+    else
+    {
+        var serviceSheet = Model.ServiceSheets.FirstOrDefault();
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.ActionLink("Submission Number", "ListReports", new { currentSortOrder = Model.SwitchSubmissionSort }, new { @class = "SortAction" })
+                </th>
+                <th>
+                    @Html.ActionLink("Customer", "ListReports", new { currentSortOrder = Model.SwitchCustomerSort }, new { @class = "SortAction" })
+                </th>
+                <th>
+                    @Html.ActionLink("MTT Job Number", "ListReports", new { currentSortOrder = Model.SwitchJobNumberSort }, new { @class = "SortAction" })
+                </th>
+                <th>
+                    @Html.ActionLink("Machine Make/Model", "ListReports", new { currentSortOrder = Model.SwitchMachineSort }, new { @class = "SortAction" })
+                </th>
+                <th>
+                    @Html.ActionLink("Engineer", "ListReports", new { currentSortOrder = Model.SwitchEngineerSort }, new { @class = "SortAction" })
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            @foreach (var sheet in Model.ServiceSheets)
+                {
+                <tr>
+                    <td>@Html.DisplayFor(m => sheet.SubmissionNumber)</td>
+                    <td>@Html.DisplayFor(m => sheet.Customer)</td>
+                    <td>@Html.DisplayFor(m => sheet.MttJobNumber)</td>
+                    <td>@Html.DisplayFor(m => sheet.MachineMakeModel)</td>
+                    <td>@Html.DisplayFor(m => sheet.EngineerFullName)</td>
+                    <td>
+                        <a href="@Url.Action("GenerateServiceReport", "ServiceSheet", new { SubmissionNumber = sheet.SubmissionNumber, includeImage1 = true, includeImage2 = true, includeImage3 = true,
+                                                                                        includeImage4 = true, includeImage5 = true, includeCustomerSignature = true })" target="_blank">Quick Pdf</a>
+                    <td>@Html.ActionLink("View", "Display", new { SubmissionNumber = sheet.SubmissionNumber })</td>
+                </tr>
+            }
+        </table>
+        <div id="tablePager">
+            @Html.PagedListPager(Model.ServiceSheets, page => Url.Action("ListReports", new { page, currentSortOrder = Model.CurrentSortOrder }))
+        </div>
+    }
+</div>

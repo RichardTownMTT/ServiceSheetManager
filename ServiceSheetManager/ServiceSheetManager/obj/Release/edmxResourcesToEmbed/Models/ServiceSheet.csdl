@@ -15,7 +15,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
     <Property Name="TravelStartTime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ArrivalOnsiteTime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="DepartureSiteTime" Type="DateTime" Nullable="false" Precision="3" />
@@ -38,7 +38,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
     <Property Name="SubmissionNumber" Type="Int32" Nullable="false" />
     <Property Name="AppName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />

@@ -69,6 +69,7 @@ namespace ServiceSheetManager.Controllers
         {
             if (!SubmissionNumber.HasValue)
             {
+                System.Diagnostics.Trace.TraceError("Submission number missing");
                 return RedirectToAction("Error");
             }
 
@@ -76,6 +77,7 @@ namespace ServiceSheetManager.Controllers
 
             if (sheet == null)
             {
+                System.Diagnostics.Trace.TraceError("Unable to load service sheet for submission number: " + SubmissionNumber);
                 return RedirectToAction("Error");
             }
 

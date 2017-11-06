@@ -83,7 +83,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TravelStartTime" Type="datetime" Nullable="false" />
     <Property Name="ArrivalOnsiteTime" Type="datetime" Nullable="false" />
     <Property Name="DepartureSiteTime" Type="datetime" Nullable="false" />
@@ -105,7 +105,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SubmissionNumber" Type="int" Nullable="false" />
     <Property Name="AppName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="Username" Type="nvarchar" MaxLength="100" Nullable="false" />

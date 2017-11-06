@@ -1,0 +1,67 @@
+﻿@model ServiceSheetManager.ViewModels.JobCostDetailsVM
+
+@{
+    ViewData["Title"] = "Job Costing";
+}
+
+<h1 class="page-header">Job Costing</h1>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form class="form-inline" asp-action="Index" method="get">
+            <div class="form-group">
+                @Html.LabelFor(m => m.ActiveJobDateFrom)
+                @Html.EditorFor(m => m.ActiveJobDateFrom, "", new { @name = "DateFrom" })
+                @Html.LabelFor(m => m.ActiveJobDateTo)
+                @Html.EditorFor(m => m.ActiveJobDateTo, "", new { @name = "DateTo" })
+            </div>
+            <input type="submit" value="Select Jobs" class="btn btn-default" />
+        </form>
+    </div>
+    <div class="panel-body">
+        <form class="form-inline" asp-action="Index" method="get">
+            <div class="form-group">
+                <label>Select job number </label>
+                @Html.DropDownListFor(m => m.SelectedJobNumber, new SelectList(Model.AllJobNumbers, "Text", "Value"), "", new { @name = "JobNumber" })
+                <input type="submit" value="Cost Job" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Costing for job number: @Model.SelectedJobNumber</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td class="text-center">@Html.LabelFor(m => m.NumberEngineers)</td>
+                    <td class="text-center">@Html.LabelFor(m => m.TotalDays)</td>
+                    <td class="text-center">@Html.LabelFor(m => m.TotalHoursOnsite)</td>
+                    <td class="text-center">@Html.LabelFor(m => m.TotalTravelTime)</td>
+                    <td class="text-center">@Html.LabelFor(m => m.TotalDailyAllowances)</td>
+                    <td class="text-center">@Html.LabelFor(m => m.TotalOvernightAllowances)</td>
+                    <td class="text-center">@Html.LabelFor(m => m.TotalMileage)</td>
+                    <td class="text-center">@Html.LabelFor(m => m.StandardHours)</td>
+                    <td class="text-center">@Html.LabelFor(m => m.OvertimeHours)</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">@Html.DisplayFor(m => m.NumberEngineers)</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.TotalDays)</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.TotalHoursOnsite)</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.TotalTravelTime)</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.TotalDailyAllowances)</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.TotalOvernightAllowances)</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.TotalMileage)</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.StandardHours)</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.OvertimeHours)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

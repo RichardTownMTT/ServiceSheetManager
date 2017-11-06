@@ -23,6 +23,7 @@ namespace ServiceSheetManager.ViewModels
         public string MachineSerial { get; set; }
         [Display(Name = "Job Start Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime JobStart { get; set; }
         [Display(Name = "Job Number")]
         public string MttJobNumber { get; set; }

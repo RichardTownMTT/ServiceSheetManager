@@ -1,0 +1,333 @@
+﻿@model ServiceSheetManager.ViewModels.ServiceSheetVM
+
+@{
+    ViewBag.Title = "Edit Submission";
+}
+
+<h2>Edit</h2>
+
+@if (Model == null)
+{
+    <h2>Service sheet not found</h2>
+}
+else
+{
+    using (Html.BeginForm("Edit", "ServiceSheet", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.SubmissionNumber)
+        @Html.HiddenFor(m => m.Username)
+
+        <h2>Service Report and Timesheet No. @Html.DisplayFor(m => m.SubmissionNumber)</h2>
+
+        @*if (Model.Errors)
+        {
+            <div class="panel panel-danger">
+                <div class="panel-heading">Warning</div>
+                <div class="panel-body">
+                    <p>There are errors that need fixing before the approval can be submitted.  Please see below.</p>
+                    <p>@Html.ValidationSummary()</p>
+                </div>
+            </div>
+        }*@
+
+        <div>
+            <div class="row page-header">
+                <h3 class="col-md-12">Job Details</h3>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.Customer, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.Customer, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.Customer)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.AddressLine1, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.AddressLine1, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.AddressLine1)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.AddressLine2, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.AddressLine2, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.AddressLine2)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.TownCity, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.TownCity, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.TownCity)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.Postcode, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.Postcode, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.Postcode)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.CustomerContact, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.CustomerContact, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.CustomerContact)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.CustomerPhoneNo, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.CustomerPhoneNo, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.CustomerPhoneNo)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.MachineMakeModel, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.MachineMakeModel, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.MachineMakeModel)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.MachineSerial, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.MachineSerial, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.MachineSerial)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.CncControl, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.CncControl, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.CncControl)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.DtJobStart, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.DtJobStart, "{0:dd/MM/yyyy}", new { @class = "form-control datepickerDtReport" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.DtJobStart)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.CustomerOrderNo, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.CustomerOrderNo, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.CustomerOrderNo)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.MttJobNumber, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.MttJobNumber, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.MttJobNumber)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.JobDescription, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextAreaFor(m => m.JobDescription, new { @class = "form-control", rows = "8" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.JobDescription)</div>
+            </div>
+
+            <div class="row"></div>
+
+            <div class="row page-header">
+                <h3 class="col-md-12">Timesheets</h3>
+            </div>
+
+            <div class="panel-group" id="accordion-service-days">
+                @Html.EditorFor(m => m.ServiceDaysVM)
+            </div>
+
+            <div class="row page-header">
+                <h3 class="col-md-12">Service Report</h3>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.JobTotalTravelTime, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.JobTotalTravelTime, new { @class = "JobTotalTravelTime form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.JobTotalTravelTime)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.JobTotalTimeOnsite, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.JobTotalTimeOnsite, new { @class = "JobTotalOnsiteTime form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.JobTotalTimeOnsite)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.JobTotalMileage, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.JobTotalMileage, new { @class = "JobTotalMileage form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.JobTotalMileage)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.TotalDailyAllowances, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.TotalDailyAllowances, new { @class = "JobTotalDailyAllowances form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.TotalDailyAllowances)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.TotalOvernightAllowances)</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.TotalOvernightAllowances, new { @class = "JobTotalOvernightAllowances form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.TotalOvernightAllowances)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.JobStatus, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.JobStatus, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.JobStatus)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.FinalJobReport, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextAreaFor(m => m.FinalJobReport, new { @class = "form-control", rows = "8" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.FinalJobReport)</div>
+            </div>
+
+            <div class="row page-header">
+                <h3 class="col-md-12">Follow-up Work</h3>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.AdditionalFaults, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextAreaFor(m => m.AdditionalFaults, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.AdditionalFaults)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.FollowUpPartsRequired)</div>
+                <div class="col-md-4">@Html.TextAreaFor(m => m.FollowUpPartsRequired, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.FollowUpPartsRequired)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.QuoteRequired)</div>
+                <div class="col-md-4">@Html.CheckBoxFor(m => m.QuoteRequired)</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.QuoteRequired)</div>
+            </div>
+            <div class="row page-header">
+                <h3 class="col-md-12">Follow-up Work Images</h3>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.Image1Url, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.Image1Url, new { @class = "form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.Image1Url)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.Image2Url, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.Image2Url, new { @class = "form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.Image2Url)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.Image3Url, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.Image3Url, new { @class = "form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.Image3Url)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.Image4Url, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.Image4Url, new { @class = "form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.Image4Url)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.Image5Url, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.Image5Url, new { @class = "form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.Image5Url)</div>
+            </div>
+            <div class="row page-header">
+                <h3 class="col-md-12">Job Signoff</h3>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.CustomerSignatureUrl, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.CustomerSignatureUrl, new { @class = "form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.CustomerSignatureUrl)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.CustomerName, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.CustomerName)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.DtSigned, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.DtSigned, "{0:dd/MM/yyyy}", new { @class = "form-control datepickerDtReport" })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.DtSigned)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.MttEngSignatureUrl, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.MttEngSignatureUrl, new { @class = "form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.MttEngSignatureUrl)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.UserFirstName, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.UserFirstName, new { @class = "form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.UserFirstName)</div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.UserSurname, new { @class = "control-label" })</div>
+                <div class="col-md-4">@Html.TextBoxFor(m => m.UserSurname, new { @class = "form-control", @readonly = true })</div>
+                <div class="col-md-6 text-danger">@Html.ValidationMessageFor(m => m.UserSurname)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-2">@Html.ActionLink("Back", "Index", "ServiceSheetApproval", new { @class = "btn btn-default" })</div>
+                <div class="col-md-2">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+        </div>
+    }
+}
+
+<script>
+    $(document).ready(function () {
+        CallUpdateTravelOnly = function () {
+            var sum = 0;
+            $('.totalTravelTime').each(function () {
+                sum += parseFloat(this.value);
+            });
+            $('.JobTotalTravelTime').val(sum);
+        }
+
+        CallUpdateOnsiteTime = function () {
+            var onsiteSum = 0;
+            $('.totalOnsiteTime').each(function () {
+                onsiteSum += parseFloat(this.value);
+            });
+            $('.JobTotalOnsiteTime').val(onsiteSum);
+        }
+
+        CallUpdateTravelAndOnsiteTime = function () {
+            CallUpdateTravelOnly();
+            CallUpdateOnsiteTime();
+        }
+
+        CallUpdateDailyAllowanceCount = function () {
+            var dailyAllowanceSum = 0;
+            $('.DailyAllowance').each(function () {
+                dailyAllowanceSum += parseInt(this.value);
+            });
+            $('.JobTotalDailyAllowances').val(dailyAllowanceSum);
+        }
+
+        CallUpdateOvernightAllowanceCount = function () {
+            var overnightSum = 0;
+            $('.OvernightAllowance').each(function () {
+                overnightSum += parseInt(this.value);
+            })
+            $(".JobTotalOvernightAllowances").val(overnightSum);
+        }
+
+        CallUpdateMileage = function () {
+            var mileageSum = 0;
+            $(".Mileage").each(function () {
+                mileageSum += parseInt(this.value);
+            })
+            $(".JobTotalMileage").val(mileageSum);
+        }
+
+        CallUpdateTimeSheetOrder = function () {
+
+            $('#ServiceDayPanel .serviceDayContainer').sort(sortAscending).appendTo("#ServiceDayPanel");
+
+            $(".serviceDayContainer").each(function () {
+                var day = $(this).find(".DtReport").val();
+                $(this).find(".panelDateHeaderText").text(day);
+            });
+        }
+
+        function sortAscending(a, b) {
+            var date1 = $(a).find(".DtReport").val();
+            var date2 = $(b).find(".DtReport").val();
+
+            return date1 > date2 ? 1 : -1;
+        }
+
+        $('.datepickerDtReport').datepicker({ dateFormat: 'dd/mm/yy' });
+
+        //Fix for the date validation failing due to not being US format
+        $.validator.addMethod('date', function (value, element) {
+            if (this.optional(element)) {
+                return true;
+            }
+            var valid = true;
+            try {
+                $.datepicker.parseDate('dd/mm/yy', value);
+            }
+            catch (err) {
+                valid = false;
+            }
+            return valid;
+        });
+
+    });
+</script>
+

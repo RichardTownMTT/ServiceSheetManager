@@ -47,34 +47,42 @@ namespace ServiceSheetManager.Helpers
 
         public PdfDocument CreatePdfSheetForSubmission(ServiceSheet serviceSubmissionSheet, bool includeImage1, bool includeImage2, bool includeImage3, bool includeImage4, bool includeImage5, bool includeCustomerSignature)
         {
-            currentSheet = serviceSubmissionSheet;
-
-            IdentifyUsaServiceReport();
-
-            //RT - Load all the images from the canvas api
-            LoadCanvasImages();
-
-            serviceSheetDoc = new Document();
-
-            DefineDocumentStyles();
-            CreateSheetTitle();
-            CreateJobDetailsSection();
-            CreateTimesheetSection();
-            CreateServiceReportSection();
-            CreateFollowupSection(includeImage1, includeImage2, includeImage3, includeImage4, includeImage5);
-            CreateSignoffSection(includeCustomerSignature);
-            CreateFooter();
-            CreateHeader();
-            CreateWatermark();
-            SetPageSize();
-
-            PdfDocumentRenderer docRenderer = new PdfDocumentRenderer()
+            try
             {
-                Document = serviceSheetDoc
-            };
-            docRenderer.RenderDocument();
+                currentSheet = serviceSubmissionSheet;
 
-            return docRenderer.PdfDocument;
+                IdentifyUsaServiceReport();
+
+                //RT - Load all the images from the canvas api
+                LoadCanvasImages();
+
+                serviceSheetDoc = new Document();
+
+                DefineDocumentStyles();
+                CreateSheetTitle();
+                CreateJobDetailsSection();
+                CreateTimesheetSection();
+                CreateServiceReportSection();
+                CreateFollowupSection(includeImage1, includeImage2, includeImage3, includeImage4, includeImage5);
+                CreateSignoffSection(includeCustomerSignature);
+                CreateFooter();
+                CreateHeader();
+                CreateWatermark();
+                SetPageSize();
+
+                PdfDocumentRenderer docRenderer = new PdfDocumentRenderer()
+                {
+                    Document = serviceSheetDoc
+                };
+                docRenderer.RenderDocument();
+
+                return docRenderer.PdfDocument;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceError(ex.ToString());
+            }
+            return null;
         }
 
         private void IdentifyUsaServiceReport()
