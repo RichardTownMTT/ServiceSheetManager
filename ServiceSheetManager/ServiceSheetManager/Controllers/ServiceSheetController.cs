@@ -48,13 +48,14 @@ namespace ServiceSheetManager.Controllers
 
             ServiceSheet updateSheet = await db.ServiceSheets.Where(s => s.Id == submittedSheet.Id).Include(s => s.ServiceDays).FirstOrDefaultAsync();
 
-            submittedSheet.UpdateSheetAndDayModels(updateSheet);
+            ServiceSheetVM.UpdateSheetAndDayModels(updateSheet, submittedSheet);
 
             //Update the totals, etc.
             ServiceSheetHelpers.UpdateServiceSheetTotals(updateSheet); 
 
             try
             {
+                TryUpdateModel(updateSheet);
                 await db.SaveChangesAsync();
             }
             catch (Exception)

@@ -137,41 +137,41 @@ namespace ServiceSheetManager.ViewModels
         }
 
         //Updates all the properties on the servicesheet which can be updated.  Also call update on service days
-        public void UpdateSheetAndDayModels(ServiceSheet updateSheet)
+        public static void UpdateSheetAndDayModels(ServiceSheet updateSheet, ServiceSheetVM sheetVM)
         {
-            updateSheet.AdditionalFaults = this.AdditionalFaults;
-            updateSheet.AddressLine1 = this.AddressLine1;
-            updateSheet.AddressLine2 = this.AddressLine2;
-            updateSheet.CncControl = this.CncControl;
-            updateSheet.Customer = this.Customer;
-            updateSheet.CustomerContact = this.CustomerContact;
-            updateSheet.CustomerName = this.CustomerName;
-            updateSheet.CustomerOrderNo = this.CustomerOrderNo;
-            updateSheet.CustomerPhoneNo = this.CustomerPhoneNo;
-            updateSheet.DtJobStart = this.DtJobStart;
-            updateSheet.DtSigned = this.DtSigned;
-            updateSheet.FinalJobReport = this.FinalJobReport;
-            updateSheet.FollowUpPartsRequired = this.FollowUpPartsRequired;
-            updateSheet.JobDescription = this.JobDescription;
-            updateSheet.JobStatus = this.JobStatus;
-            updateSheet.JobTotalMileage = this.JobTotalMileage;
-            updateSheet.JobTotalTimeOnsite = this.JobTotalTimeOnsite;
-            updateSheet.JobTotalTravelTime = this.JobTotalTravelTime;
-            updateSheet.MachineMakeModel = this.MachineMakeModel;
-            updateSheet.MachineSerial = this.MachineSerial;
-            updateSheet.MttJobNumber = this.MttJobNumber;
-            updateSheet.Postcode = this.Postcode;
-            updateSheet.QuoteRequired = this.QuoteRequired;
-            updateSheet.TotalBarrierPayments = this.TotalBarrierPayments;
-            updateSheet.TotalDailyAllowances = this.TotalDailyAllowances;
-            updateSheet.TotalOvernightAllowances = this.TotalOvernightAllowances;
-            updateSheet.TownCity = this.TownCity;
+            updateSheet.AdditionalFaults = sheetVM.AdditionalFaults;
+            updateSheet.AddressLine1 = sheetVM.AddressLine1;
+            updateSheet.AddressLine2 = sheetVM.AddressLine2;
+            updateSheet.CncControl = sheetVM.CncControl;
+            updateSheet.Customer = sheetVM.Customer;
+            updateSheet.CustomerContact = sheetVM.CustomerContact;
+            updateSheet.CustomerName = sheetVM.CustomerName;
+            updateSheet.CustomerOrderNo = sheetVM.CustomerOrderNo;
+            updateSheet.CustomerPhoneNo = sheetVM.CustomerPhoneNo;
+            updateSheet.DtJobStart = sheetVM.DtJobStart;
+            updateSheet.DtSigned = sheetVM.DtSigned;
+            updateSheet.FinalJobReport = sheetVM.FinalJobReport;
+            updateSheet.FollowUpPartsRequired = sheetVM.FollowUpPartsRequired;
+            updateSheet.JobDescription = sheetVM.JobDescription;
+            updateSheet.JobStatus = sheetVM.JobStatus;
+            updateSheet.JobTotalMileage = sheetVM.JobTotalMileage;
+            updateSheet.JobTotalTimeOnsite = sheetVM.JobTotalTimeOnsite;
+            updateSheet.JobTotalTravelTime = sheetVM.JobTotalTravelTime;
+            updateSheet.MachineMakeModel = sheetVM.MachineMakeModel;
+            updateSheet.MachineSerial = sheetVM.MachineSerial;
+            updateSheet.MttJobNumber = sheetVM.MttJobNumber;
+            updateSheet.Postcode = sheetVM.Postcode;
+            updateSheet.QuoteRequired = sheetVM.QuoteRequired;
+            updateSheet.TotalBarrierPayments = sheetVM.TotalBarrierPayments;
+            updateSheet.TotalDailyAllowances = sheetVM.TotalDailyAllowances;
+            updateSheet.TotalOvernightAllowances = sheetVM.TotalOvernightAllowances;
+            updateSheet.TownCity = sheetVM.TownCity;
 
             //Update the service days
             foreach (var dayModel in updateSheet.ServiceDays)
             {
                 int dayId = dayModel.Id;
-                ServiceDayVM dayVM = this.ServiceDaysVM.Where(d => d.Id == dayId).FirstOrDefault();
+                ServiceDayVM dayVM = sheetVM.ServiceDaysVM.Where(d => d.Id == dayId).FirstOrDefault();
                 if (dayVM == null)
                 {
                     throw new Exception("Day VM not found for id: " + dayId);
