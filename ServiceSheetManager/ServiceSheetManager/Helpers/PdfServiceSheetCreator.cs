@@ -10,7 +10,8 @@ using ServiceSheetManager.Properties;
 using System.Configuration;
 using System.Net;
 using System.Text;
-using System.Xml.Linq;
+using System.Linq;
+using System.Collections.Generic;
 //using PdfSharp.Drawing;
 
 namespace ServiceSheetManager.Helpers
@@ -668,7 +669,12 @@ namespace ServiceSheetManager.Helpers
             timesheetTable.Borders.Width = borderWidth;
 
             int counter = 0;
-            foreach (ServiceDay sd in currentSheet.ServiceDays)
+
+            //RT 22/12/17 - Order the service sheets
+            List<ServiceDay> orderedServiceDays = currentSheet.ServiceDays.OrderBy(s => s.DtReport).ToList();
+
+            //foreach (ServiceDay sd in currentSheet.ServiceDays)
+            foreach (ServiceDay sd in orderedServiceDays)
             {
                 if (counter == 0)
                 {

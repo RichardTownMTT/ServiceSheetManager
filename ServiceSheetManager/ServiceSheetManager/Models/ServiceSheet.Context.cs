@@ -29,5 +29,9 @@ namespace ServiceSheetManager.Models
         public virtual DbSet<ServiceDay> ServiceDays { get; set; }
         public virtual DbSet<ServiceSheet> ServiceSheets { get; set; }
         public virtual DbSet<CanvasRawData> CanvasRawDatas { get; set; }
+        public virtual DbSet<Equipment> Equipments { get; set; }
+        public virtual DbSet<EquipmentCalibration> EquipmentCalibrations { get; set; }
+        public virtual DbSet<EquipmentKit> EquipmentKits { get; set; }
+        public virtual DbSet<EquipmentLocation> EquipmentLocations { get; set; }
     }
 }

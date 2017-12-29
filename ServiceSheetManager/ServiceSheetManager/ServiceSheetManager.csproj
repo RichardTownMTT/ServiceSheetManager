@@ -190,6 +190,18 @@
       <DependentUpon>ServiceSheet.tt</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CanvasRawDataHelper.cs" />
+    <Compile Include="Models\Equipment.cs">
+      <DependentUpon>ServiceSheet.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EquipmentCalibration.cs">
+      <DependentUpon>ServiceSheet.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EquipmentKit.cs">
+      <DependentUpon>ServiceSheet.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EquipmentLocation.cs">
+      <DependentUpon>ServiceSheet.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MatrixServiceOverview.cs">
       <DependentUpon>ServiceSheet.tt</DependentUpon>
     </Compile>

@@ -72,6 +72,9 @@ namespace ServiceSheetManager.ViewModels
                 this.ServiceDaysVM.Add(dayVM);
             }
 
+            //RT 22/12/17 - Ordering the service days
+            this.ServiceDaysVM.OrderBy(s => s.DtReport);
+
             //Default the include images on pdf to true
             IncludeImage1 = true;
             IncludeImage2 = true;
