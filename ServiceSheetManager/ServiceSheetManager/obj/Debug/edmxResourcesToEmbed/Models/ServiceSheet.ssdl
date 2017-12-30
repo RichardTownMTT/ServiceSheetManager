@@ -68,6 +68,49 @@
     <Property Name="MttEngSignatureUrl" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="Approved" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="Equipment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Barcode" Type="nvarchar" MaxLength="10" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SerialNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="CalibrationPeriodDays" Type="int" />
+    <Property Name="EquipmentKitId" Type="int" />
+  </EntityType>
+  <EntityType Name="EquipmentCalibration">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EquipmentId" Type="int" Nullable="false" />
+    <Property Name="CertNumber" Type="nvarchar(max)" />
+    <Property Name="Passed" Type="bit" Nullable="false" />
+    <Property Name="DtCalibrated" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EquipmentKit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Barcode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EquipmentLocation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EquipmentId" Type="int" Nullable="false" />
+    <Property Name="ScannedUserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ScannedUserFirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ScannedUserSurname" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CanvasSubmissionNumber" Type="int" Nullable="false" />
+    <Property Name="LocationCode" Type="int" Nullable="false" />
+    <Property Name="DtScanned" Type="datetime" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="MatrixServiceOverview">
     <Key>
       <PropertyRef Name="Id" />
@@ -163,14 +206,66 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Equipment_EquipmentKit">
+    <End Role="EquipmentKit" Type="Self.EquipmentKit" Multiplicity="0..1" />
+    <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EquipmentKit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Equipment">
+        <PropertyRef Name="EquipmentKitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipmentCalibration_Equipment">
+    <End Role="Equipment" Type="Self.Equipment" Multiplicity="1" />
+    <End Role="EquipmentCalibration" Type="Self.EquipmentCalibration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EquipmentCalibration">
+        <PropertyRef Name="EquipmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipmentLocation_Equipment">
+    <End Role="Equipment" Type="Self.Equipment" Multiplicity="1" />
+    <End Role="EquipmentLocation" Type="Self.EquipmentLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EquipmentLocation">
+        <PropertyRef Name="EquipmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="ServiceSheetsLocalModelStoreContainer">
     <EntitySet Name="CanvasRawData" EntityType="Self.CanvasRawData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EquipmentCalibration" EntityType="Self.EquipmentCalibration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EquipmentKit" EntityType="Self.EquipmentKit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EquipmentLocation" EntityType="Self.EquipmentLocation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MatrixServiceOverview" EntityType="Self.MatrixServiceOverview" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ServiceDay" EntityType="Self.ServiceDay" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ServiceSheet" EntityType="Self.ServiceSheet" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__ServiceDa__Servi__47DBAE45" Association="Self.FK__ServiceDa__Servi__47DBAE45">
       <End Role="ServiceSheet" EntitySet="ServiceSheet" />
       <End Role="ServiceDay" EntitySet="ServiceDay" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Equipment_EquipmentKit" Association="Self.FK_Equipment_EquipmentKit">
+      <End Role="EquipmentKit" EntitySet="EquipmentKit" />
+      <End Role="Equipment" EntitySet="Equipment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipmentCalibration_Equipment" Association="Self.FK_EquipmentCalibration_Equipment">
+      <End Role="Equipment" EntitySet="Equipment" />
+      <End Role="EquipmentCalibration" EntitySet="EquipmentCalibration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipmentLocation_Equipment" Association="Self.FK_EquipmentLocation_Equipment">
+      <End Role="Equipment" EntitySet="Equipment" />
+      <End Role="EquipmentLocation" EntitySet="EquipmentLocation" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

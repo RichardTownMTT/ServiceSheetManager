@@ -26,7 +26,7 @@ namespace ServiceSheetManager.Models
         public string Description { get; set; }
         public string SerialNumber { get; set; }
         public Nullable<int> CalibrationPeriodDays { get; set; }
-        public int EquipmentKitId { get; set; }
+        public Nullable<int> EquipmentKitId { get; set; }
     
         public virtual EquipmentKit EquipmentKit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

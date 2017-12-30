@@ -221,18 +221,20 @@ namespace ServiceSheetManager.Controllers
         {
             try
             {
-                CanvasRawData retval = new CanvasRawData();
-                retval.Approved = false;
-                retval.CanvasResponseId = entitiyFromXml.CanvasResponseId;
-                retval.DtDevice = Convert.ToDateTime(entitiyFromXml.DtDevice);
-                retval.DtResponse = Convert.ToDateTime(entitiyFromXml.DtResponse);
-                retval.SubmissionNumber = entitiyFromXml.SubmissionNumber;
-                retval.UserFirstName = entitiyFromXml.UserFirstName;
-                retval.UserSurname = entitiyFromXml.UserSurname;
-                retval.Username = entitiyFromXml.UserName;
-                //These are the dates for when canvas reports are run.  Not really relevent for xml files
-                retval.DtStartSubmission = DateTime.Now;
-                retval.DtEndSubmission = DateTime.Now;
+                CanvasRawData retval = new CanvasRawData
+                {
+                    Approved = false,
+                    CanvasResponseId = entitiyFromXml.CanvasResponseId,
+                    DtDevice = Convert.ToDateTime(entitiyFromXml.DtDevice),
+                    DtResponse = Convert.ToDateTime(entitiyFromXml.DtResponse),
+                    SubmissionNumber = entitiyFromXml.SubmissionNumber,
+                    UserFirstName = entitiyFromXml.UserFirstName,
+                    UserSurname = entitiyFromXml.UserSurname,
+                    Username = entitiyFromXml.UserName,
+                    //These are the dates for when canvas reports are run.  Not really relevent for xml files
+                    DtStartSubmission = DateTime.Now,
+                    DtEndSubmission = DateTime.Now
+                };
 
                 //Fill in the Job details section
                 CompleteFormSection(retval, entitiyFromXml);

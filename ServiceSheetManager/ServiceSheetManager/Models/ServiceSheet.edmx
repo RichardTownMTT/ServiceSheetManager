@@ -82,7 +82,7 @@
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="SerialNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="CalibrationPeriodDays" Type="int" />
-          <Property Name="EquipmentKitId" Type="int" Nullable="false" />
+          <Property Name="EquipmentKitId" Type="int" />
         </EntityType>
         <EntityType Name="EquipmentCalibration">
           <Key>
@@ -212,7 +212,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Equipment_EquipmentKit">
-          <End Role="EquipmentKit" Type="Self.EquipmentKit" Multiplicity="1" />
+          <End Role="EquipmentKit" Type="Self.EquipmentKit" Multiplicity="0..1" />
           <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EquipmentKit">
@@ -399,7 +399,7 @@
             <End Role="Equipment" EntitySet="Equipments" />
             <End Role="EquipmentLocation" EntitySet="EquipmentLocations" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="CanvasRawData">
           <Key>
             <PropertyRef Name="Id" />
@@ -477,7 +477,7 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CalibrationPeriodDays" Type="Int32" />
-          <Property Name="EquipmentKitId" Type="Int32" Nullable="false" />
+          <Property Name="EquipmentKitId" Type="Int32" />
           <NavigationProperty Name="EquipmentKit" Relationship="ServiceSheetsLocalModel.FK_Equipment_EquipmentKit" FromRole="Equipment" ToRole="EquipmentKit" />
           <NavigationProperty Name="EquipmentCalibrations" Relationship="ServiceSheetsLocalModel.FK_EquipmentCalibration_Equipment" FromRole="Equipment" ToRole="EquipmentCalibration" />
           <NavigationProperty Name="EquipmentLocations" Relationship="ServiceSheetsLocalModel.FK_EquipmentLocation_Equipment" FromRole="Equipment" ToRole="EquipmentLocation" />
@@ -518,7 +518,7 @@
           <NavigationProperty Name="Equipment" Relationship="ServiceSheetsLocalModel.FK_EquipmentLocation_Equipment" FromRole="EquipmentLocation" ToRole="Equipment" />
         </EntityType>
         <Association Name="FK_Equipment_EquipmentKit">
-          <End Type="ServiceSheetsLocalModel.EquipmentKit" Role="EquipmentKit" Multiplicity="1" />
+          <End Type="ServiceSheetsLocalModel.EquipmentKit" Role="EquipmentKit" Multiplicity="0..1" />
           <End Type="ServiceSheetsLocalModel.Equipment" Role="Equipment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EquipmentKit">
@@ -553,7 +553,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
