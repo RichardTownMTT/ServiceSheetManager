@@ -8,6 +8,7 @@ using System.Net;
 using ServiceSheetManager.ViewModels.EquipmentVMs;
 using System.Web.Mvc;
 using ServiceSheetManager.Models;
+using ServiceSheetManager.ViewModels.EquipmentVMs.EquipmentVMBuilders;
 
 namespace ServiceSheetManager.Controllers
 {
@@ -65,15 +66,17 @@ namespace ServiceSheetManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                var viewModelBuilder = new EquipmentViewModelBuilder();
+
                 //Check that the barcode is unique
-                bool uniqueBarcode = BarcodeIsUnique(equipmentVM.Barcode);
+                bool uniqueBarcode = BarcodeIsUnique(equipmentVM.Barcode, null, true);
                 if (!uniqueBarcode)
                 {
                     return View(equipmentVM);
                 }
 
                 //Create the equipment db item
-                Equipment itemToSave = CreateEquipmentFromVM(equipmentVM);
+                Equipment itemToSave = viewModelBuilder.Map(equipmentVM);
                 db.Equipments.Add(itemToSave);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -82,54 +85,6 @@ namespace ServiceSheetManager.Controllers
             return View(equipmentVM);
         }
 
-        private bool BarcodeIsUnique(string barcode)
-        {
-            bool barcodeUnique = false;
-            var barcodeFoundEquipment = db.Equipments.FirstOrDefault(e => e.Barcode.Equals(barcode)).Barcode.ToString();
-            if (barcodeFoundEquipment == null)
-            {
-                //Try the equipment kit
-                var kitBarcodeFound = db.EquipmentKits.FirstOrDefault(e => e.Barcode.Equals(barcode)).Barcode.ToString();
-                if (kitBarcodeFound == null)
-                {
-                    barcodeUnique = true;
-                }
-                else
-                {
-                    barcodeUnique = false;
-                }
-            }
-            else
-            {
-                barcodeUnique = false;
-            }
-
-            return barcodeUnique;
-        }
-
-        private Equipment CreateEquipmentFromVM(CreateEquipmentItemVM equipmentVM)
-        {
-            Equipment retval = new Equipment
-            {
-                Barcode = equipmentVM.Barcode,
-                CalibrationPeriodDays = equipmentVM.CalibrationPeriodDays,
-                Description = equipmentVM.Description,
-                SerialNumber = equipmentVM.SerialNumber
-            };
-            return retval;
-        }
-        private Equipment CreateEquipmentFromVM(EditEquipmentItemVM equipmentVM)
-        {
-            Equipment retval = new Equipment
-            {
-                Id = equipmentVM.Id,
-                Barcode = equipmentVM.Barcode,
-                CalibrationPeriodDays = equipmentVM.CalibrationPeriodDays,
-                Description = equipmentVM.Description,
-                SerialNumber = equipmentVM.SerialNumber
-            };
-            return retval;
-        }
         // GET: Equipment/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -156,14 +111,19 @@ namespace ServiceSheetManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                var vmBuilder = new EquipmentViewModelBuilder();
+
                 //Check that the barcode is unique
-                bool uniqueBarcode = BarcodeIsUnique(equipmentVM.Barcode);
+                bool uniqueBarcode = BarcodeIsUnique(equipmentVM.Barcode, equipmentVM.Id, true);
                 if (!uniqueBarcode)
                 {
                     return View(equipmentVM);
                 }
-                Equipment saveEquipment = CreateEquipmentFromVM(equipmentVM);
-                db.Entry(saveEquipment).State = EntityState.Modified;
+
+                //Load the original
+                Equipment equipmentToUpdate = await db.Equipments.Where(e => e.Id == equipmentVM.Id).FirstOrDefaultAsync();
+                equipmentToUpdate = vmBuilder.Map(equipmentVM, equipmentToUpdate);
+                db.Entry(equipmentToUpdate).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -195,6 +155,67 @@ namespace ServiceSheetManager.Controllers
         //    await db.SaveChangesAsync();
         //    return RedirectToAction("Index");
         //}
+
+        private bool BarcodeIsUnique(string barcode, int? id, bool equipmentMode)
+        {
+            bool barcodeUnique = false;
+            int idCheck;
+            if(!id.HasValue)
+            {
+                idCheck = -1;
+            }
+            else
+            {
+                idCheck = id.Value;
+            }
+
+            //Find all equipment with barcode
+            List<Equipment> allEquipmentWithBarcode = db.Equipments.Where(e => e.Barcode.Equals(barcode)).ToList();
+            if (allEquipmentWithBarcode.Count == 0)
+            {
+                barcodeUnique = true;
+            }
+            else if (allEquipmentWithBarcode.Count == 1)
+            {
+                Equipment match = allEquipmentWithBarcode.First();
+                if (match.Id == idCheck && equipmentMode == true)
+                {
+                    barcodeUnique = true;
+                }
+                else
+                {
+                    barcodeUnique = false;
+                }
+            }
+            else
+            {
+                throw new Exception("Multiple items with barcode!");
+            }
+
+            List<EquipmentKit> allKitWithBarcode = db.EquipmentKits.Where(e => e.Barcode.Equals(barcode)).ToList();
+            if (allKitWithBarcode.Count == 0)
+            {
+                barcodeUnique = true;
+            }
+            else if (allKitWithBarcode.Count == 1)
+            {
+                EquipmentKit match = allKitWithBarcode.First();
+                if (match.Id == idCheck && equipmentMode == false)
+                {
+                    barcodeUnique = true;
+                }
+                else
+                {
+                    barcodeUnique = false;
+                }
+            }
+            else
+            {
+                throw new Exception("Multiple items with barcode!");
+            }
+
+            return barcodeUnique;
+        }
 
         protected override void Dispose(bool disposing)
         {

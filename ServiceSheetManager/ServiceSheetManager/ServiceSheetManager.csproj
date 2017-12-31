@@ -253,6 +253,7 @@
     <Compile Include="ViewModels\EquipmentVMs\DisplayEquipmentListItemVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\EditEquipmentItemVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\EquipmentListVM.cs" />
+    <Compile Include="ViewModels\EquipmentVMs\EquipmentVMBuilders\EquipmentViewModelBuilder.cs" />
     <Compile Include="ViewModels\JobCostDetailsVM.cs" />
     <Compile Include="ViewModels\MatrixServiceStatsVM.cs" />
     <Compile Include="ViewModels\ServiceDayCreateVM.cs" />
