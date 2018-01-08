@@ -24,7 +24,6 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             this.calibrationPeriodDays = equipmentModel.CalibrationPeriodDays;
         }
 
-
         public int Id
         {
             get { return id; }

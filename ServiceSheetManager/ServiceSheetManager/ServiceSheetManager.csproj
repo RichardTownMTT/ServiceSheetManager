@@ -250,10 +250,11 @@
     <Compile Include="Helpers\EngineerStatisticsHelpers.cs" />
     <Compile Include="ViewModels\EquipmentVMs\CreateEquipmentItemVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\DisplayEquipmentItemVM.cs" />
-    <Compile Include="ViewModels\EquipmentVMs\DisplayEquipmentListItemVM.cs" />
+    <Compile Include="ViewModels\EquipmentVMs\EquipmentIndexEquipmentItemVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\EditEquipmentItemVM.cs" />
-    <Compile Include="ViewModels\EquipmentVMs\EquipmentListVM.cs" />
-    <Compile Include="ViewModels\EquipmentVMs\EquipmentVMBuilders\EquipmentViewModelBuilder.cs" />
+    <Compile Include="ViewModels\EquipmentVMs\EquipmentIndexKitItemVM.cs" />
+    <Compile Include="ViewModels\EquipmentVMs\EquipmentIndexVM.cs" />
+    <Compile Include="ViewModelAssemblers\EquipmentVMAssembler.cs" />
     <Compile Include="ViewModels\JobCostDetailsVM.cs" />
     <Compile Include="ViewModels\MatrixServiceStatsVM.cs" />
     <Compile Include="ViewModels\ServiceDayCreateVM.cs" />

@@ -8,7 +8,7 @@ using System.Net;
 using ServiceSheetManager.ViewModels.EquipmentVMs;
 using System.Web.Mvc;
 using ServiceSheetManager.Models;
-using ServiceSheetManager.ViewModels.EquipmentVMs.EquipmentVMBuilders;
+using ServiceSheetManager.ViewModelAssemblers;
 
 namespace ServiceSheetManager.Controllers
 {
@@ -19,17 +19,15 @@ namespace ServiceSheetManager.Controllers
         // GET: Equipment
         public async Task<ActionResult> Index()
         {
-            var equipments = db.Equipments.Include(e => e.EquipmentKit);
+            var equipments = db.Equipments.Include(e => e.EquipmentKit)
+                                            .Include(e => e.EquipmentLocations)
+                                            .Include(e => e.EquipmentKit.Equipments.Select(loc => loc.EquipmentLocations));
             //Create the VMs
-            EquipmentListVM displayVm = new EquipmentListVM();
-            await equipments.ToListAsync();
+            EquipmentVMAssembler vMAssembler = new EquipmentVMAssembler();
 
-            foreach (var equipmentItem in equipments)
-            {
-                DisplayEquipmentListItemVM item = new DisplayEquipmentListItemVM(equipmentItem);
-                displayVm.AllItems.Add(item);
-            }
-            return View(displayVm);
+            EquipmentIndexVM indexVM = await vMAssembler.CreateEquipmentIndex(equipments);
+
+            return View(indexVM);
         }
 
         // GET: Equipment/Details/5
@@ -46,7 +44,9 @@ namespace ServiceSheetManager.Controllers
                 return HttpNotFound();
             }
 
-            DisplayEquipmentItemVM displayVM = new DisplayEquipmentItemVM(equipment);
+            EquipmentVMAssembler vmAssembler = new EquipmentVMAssembler();
+
+            DisplayEquipmentItemVM displayVM = vmAssembler.DisplayEquipmentVM(equipment);
 
             return View(displayVM);
         }
@@ -66,12 +66,13 @@ namespace ServiceSheetManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var viewModelBuilder = new EquipmentViewModelBuilder();
+                var viewModelBuilder = new EquipmentVMAssembler();
 
                 //Check that the barcode is unique
-                bool uniqueBarcode = BarcodeIsUnique(equipmentVM.Barcode, null, true);
+                bool uniqueBarcode = viewModelBuilder.BarcodeIsUnique(equipmentVM.Barcode, null, true, db);
                 if (!uniqueBarcode)
                 {
+                    ModelState.AddModelError("", "Barcode already exists");
                     return View(equipmentVM);
                 }
 
@@ -97,7 +98,10 @@ namespace ServiceSheetManager.Controllers
             {
                 return HttpNotFound();
             }
-            EditEquipmentItemVM editVM = new EditEquipmentItemVM(equipment);
+
+            EquipmentVMAssembler vmAssembler = new EquipmentVMAssembler();
+
+            EditEquipmentItemVM editVM = vmAssembler.EditEquipmentVM(equipment);
             //ViewBag.EquipmentKitId = new SelectList(db.EquipmentKits, "Id", "Barcode", equipment.EquipmentKitId);
             return View(editVM);
         }
@@ -111,12 +115,13 @@ namespace ServiceSheetManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var vmBuilder = new EquipmentViewModelBuilder();
+                var vmBuilder = new EquipmentVMAssembler();
 
                 //Check that the barcode is unique
-                bool uniqueBarcode = BarcodeIsUnique(equipmentVM.Barcode, equipmentVM.Id, true);
+                bool uniqueBarcode = vmBuilder.BarcodeIsUnique(equipmentVM.Barcode, equipmentVM.Id, true, db);
                 if (!uniqueBarcode)
                 {
+                    ModelState.AddModelError("", "Barcode already exists");
                     return View(equipmentVM);
                 }
 
@@ -130,20 +135,20 @@ namespace ServiceSheetManager.Controllers
             return View(equipmentVM);
         }
 
-        // GET: Equipment/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Equipment equipment = await db.Equipments.FindAsync(id);
-            if (equipment == null)
-            {
-                return HttpNotFound();
-            }
-            return View(equipment);
-        }
+        //// GET: Equipment/Delete/5
+        //public async Task<ActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Equipment equipment = await db.Equipments.FindAsync(id);
+        //    if (equipment == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(equipment);
+        //}
 
         // POST: Equipment/Delete/5
         //[HttpPost, ActionName("Delete")]
@@ -156,66 +161,7 @@ namespace ServiceSheetManager.Controllers
         //    return RedirectToAction("Index");
         //}
 
-        private bool BarcodeIsUnique(string barcode, int? id, bool equipmentMode)
-        {
-            bool barcodeUnique = false;
-            int idCheck;
-            if(!id.HasValue)
-            {
-                idCheck = -1;
-            }
-            else
-            {
-                idCheck = id.Value;
-            }
-
-            //Find all equipment with barcode
-            List<Equipment> allEquipmentWithBarcode = db.Equipments.Where(e => e.Barcode.Equals(barcode)).ToList();
-            if (allEquipmentWithBarcode.Count == 0)
-            {
-                barcodeUnique = true;
-            }
-            else if (allEquipmentWithBarcode.Count == 1)
-            {
-                Equipment match = allEquipmentWithBarcode.First();
-                if (match.Id == idCheck && equipmentMode == true)
-                {
-                    barcodeUnique = true;
-                }
-                else
-                {
-                    barcodeUnique = false;
-                }
-            }
-            else
-            {
-                throw new Exception("Multiple items with barcode!");
-            }
-
-            List<EquipmentKit> allKitWithBarcode = db.EquipmentKits.Where(e => e.Barcode.Equals(barcode)).ToList();
-            if (allKitWithBarcode.Count == 0)
-            {
-                barcodeUnique = true;
-            }
-            else if (allKitWithBarcode.Count == 1)
-            {
-                EquipmentKit match = allKitWithBarcode.First();
-                if (match.Id == idCheck && equipmentMode == false)
-                {
-                    barcodeUnique = true;
-                }
-                else
-                {
-                    barcodeUnique = false;
-                }
-            }
-            else
-            {
-                throw new Exception("Multiple items with barcode!");
-            }
-
-            return barcodeUnique;
-        }
+        
 
         protected override void Dispose(bool disposing)
         {
