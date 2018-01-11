@@ -18,7 +18,7 @@ namespace ServiceSheetManager.Controllers
 
         // GET: Equipment
         public async Task<ActionResult> Index()
-        {
+        { 
             var equipments = db.Equipments.Include(e => e.EquipmentKit)
                                             .Include(e => e.EquipmentLocations)
                                             .Include(e => e.EquipmentKit.Equipments.Select(loc => loc.EquipmentLocations));
@@ -64,6 +64,11 @@ namespace ServiceSheetManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateEquipmentItemVM equipmentVM)
         {
+            if (String.IsNullOrEmpty(equipmentVM.Barcode))
+            {
+                ModelState.AddModelError("Barcode", "Barcode is required");
+            }
+
             if (ModelState.IsValid)
             {
                 var viewModelBuilder = new EquipmentVMAssembler();

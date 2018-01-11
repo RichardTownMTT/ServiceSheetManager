@@ -10,7 +10,7 @@
     @Html.ActionLink("Create New Equipment", "Create")
 </p>
 <p>
-    @Html.ActionLink("Create New Equipment Kit", "Create", "EquipmentKit")
+    @Html.ActionLink("Create New Equipment Kit", "Create", "EquipmentKits")
 </p>
 @if (Model.AllKits.Count == 0 && Model.AllEquipmentNotInKitItems.Count == 0)
 {
@@ -45,8 +45,8 @@ else
                     @Html.DisplayFor(modelItem => kitItem.CurrentLocation)
                 </td>
                 <td>
-                    @Html.ActionLink(linkText: "Edit", actionName: "Edit", controllerName: "EquipmentKit", routeValues: new { id = kitItem.Id}, htmlAttributes: null) |
-                    @Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "EquipmentKit", routeValues: new { id = kitItem.Id }, htmlAttributes: null) @*|
+                    @*@Html.ActionLink(linkText: "Edit", actionName: "Edit", controllerName: "EquipmentKits", routeValues: new { id = kitItem.Id}, htmlAttributes: null) |*@
+                    @Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "EquipmentKits", routeValues: new { id = kitItem.Id }, htmlAttributes: null) @*|
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
                 </td>
             </tr>

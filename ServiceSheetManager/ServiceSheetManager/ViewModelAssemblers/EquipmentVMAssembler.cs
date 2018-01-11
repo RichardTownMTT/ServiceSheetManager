@@ -35,7 +35,7 @@ namespace ServiceSheetManager.ViewModelAssemblers
         public async Task<EquipmentIndexVM> CreateEquipmentIndex(IQueryable<Equipment> equipments)
         {
             //Go through all the equipment that is in a kit first
-            List<EquipmentKit> equipmentInKit = await equipments.Where(e => e.EquipmentKitId.HasValue).Select(k => k.EquipmentKit).ToListAsync();
+            List<EquipmentKit> equipmentInKit = await equipments.Where(e => e.EquipmentKitId.HasValue).Select(k => k.EquipmentKit).Distinct().ToListAsync();
 
             EquipmentIndexVM retval = new EquipmentIndexVM();
             foreach (var kitEquipment in equipmentInKit)
@@ -84,6 +84,19 @@ namespace ServiceSheetManager.ViewModelAssemblers
             }
 
             return barcodeUnique;
+        }
+
+        public List<Equipment> Map(List<CreateEquipmentItemVM> equipmentItemVMs)
+        {
+            List<Equipment> retval = new List<Equipment>();
+
+            foreach (var item in equipmentItemVMs)
+            {
+                Equipment itemCreated = Map(item);
+                retval.Add(itemCreated);
+            }
+
+            return retval;
         }
 
         private bool CheckEquipmentKitBarcodeUnique(string barcode, int idCheck, bool equipmentMode, ServiceSheetsEntities db)

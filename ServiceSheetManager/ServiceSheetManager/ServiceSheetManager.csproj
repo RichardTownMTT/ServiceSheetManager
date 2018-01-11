@@ -176,6 +176,7 @@
     <Compile Include="Controllers\CanvasSubmissionController.cs" />
     <Compile Include="Controllers\EngineerStatisticsController.cs" />
     <Compile Include="Controllers\EquipmentController.cs" />
+    <Compile Include="Controllers\EquipmentKitsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobCostController.cs" />
     <Compile Include="Controllers\MatrixServiceStatsController.cs" />
@@ -245,11 +246,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelAssemblers\EquipmentKitVMAssembler.cs" />
     <Compile Include="ViewModels\EngineerCalendarVM.cs" />
     <Compile Include="Helpers\JobCostHelpers.cs" />
     <Compile Include="Helpers\EngineerStatisticsHelpers.cs" />
     <Compile Include="ViewModels\EquipmentVMs\CreateEquipmentItemVM.cs" />
+    <Compile Include="ViewModels\EquipmentVMs\CreateEquipmentKitVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\DisplayEquipmentItemVM.cs" />
+    <Compile Include="ViewModels\EquipmentVMs\DisplayEquipmentKitVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\EquipmentIndexEquipmentItemVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\EditEquipmentItemVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\EquipmentIndexKitItemVM.cs" />
@@ -390,6 +394,11 @@
     <Content Include="Views\Equipment\Details.cshtml" />
     <Content Include="Views\Equipment\Edit.cshtml" />
     <Content Include="Views\Equipment\Index.cshtml" />
+    <Content Include="Views\EquipmentKits\Create.cshtml" />
+    <Content Include="Views\EquipmentKits\Delete.cshtml" />
+    <Content Include="Views\EquipmentKits\Details.cshtml" />
+    <Content Include="Views\EquipmentKits\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CreateEquipmentItemVM.cshtml" />
     <None Include="Web.SECRETS.config" />
   </ItemGroup>
   <ItemGroup>

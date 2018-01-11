@@ -13,7 +13,6 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string serialNumber;
         private int? calibrationPeriodDays;
 
-        [Required]
         public string Barcode
         {
             get { return barcode; }
