@@ -76,7 +76,7 @@
     <Property Name="Barcode" Type="nvarchar" MaxLength="10" />
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="SerialNumber" Type="nvarchar" MaxLength="50" />
-    <Property Name="CalibrationPeriodDays" Type="int" />
+    <Property Name="CalibrationPeriodYears" Type="int" />
     <Property Name="EquipmentKitId" Type="int" />
   </EntityType>
   <EntityType Name="EquipmentCalibration">

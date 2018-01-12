@@ -25,7 +25,7 @@ namespace ServiceSheetManager.Models
         public string Barcode { get; set; }
         public string Description { get; set; }
         public string SerialNumber { get; set; }
-        public Nullable<int> CalibrationPeriodDays { get; set; }
+        public Nullable<int> CalibrationPeriodYears { get; set; }
         public Nullable<int> EquipmentKitId { get; set; }
     
         public virtual EquipmentKit EquipmentKit { get; set; }

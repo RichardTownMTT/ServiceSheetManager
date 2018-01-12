@@ -160,7 +160,7 @@
       <EntityTypeMapping TypeName="ServiceSheetsLocalModel.Equipment">
         <MappingFragment StoreEntitySet="Equipment">
           <ScalarProperty Name="EquipmentKitId" ColumnName="EquipmentKitId" />
-          <ScalarProperty Name="CalibrationPeriodDays" ColumnName="CalibrationPeriodDays" />
+          <ScalarProperty Name="CalibrationPeriodYears" ColumnName="CalibrationPeriodYears" />
           <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Barcode" ColumnName="Barcode" />

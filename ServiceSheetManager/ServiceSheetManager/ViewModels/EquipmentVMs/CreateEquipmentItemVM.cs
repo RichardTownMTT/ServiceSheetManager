@@ -11,7 +11,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string barcode;
         private string description;
         private string serialNumber;
-        private int? calibrationPeriodDays;
+        private int? calibrationPeriodYears;
 
         public string Barcode
         {
@@ -32,11 +32,11 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             set { serialNumber = value; }
         }
         [Required]
-        [Display(Name = "Calibration Period (Days)")]
-        public Nullable<int> CalibrationPeriodDays
+        [Display(Name = "Calibration Period (Years)")]
+        public Nullable<int> CalibrationPeriodYears
         {
-            get { return calibrationPeriodDays; }
-            set { calibrationPeriodDays = value; }
+            get { return calibrationPeriodYears; }
+            set { calibrationPeriodYears = value; }
         }
     }
 }

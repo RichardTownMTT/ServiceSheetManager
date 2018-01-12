@@ -13,7 +13,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string barcode;
         private string description;
         private string serialNumber;
-        private int? calibrationPeriodDays;
+        private int? calibrationPeriodYears;
 
         public DisplayEquipmentItemVM(Equipment equipmentModel)
         {
@@ -21,7 +21,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             this.barcode = equipmentModel.Barcode;
             this.description = equipmentModel.Description;
             this.serialNumber = equipmentModel.SerialNumber;
-            this.calibrationPeriodDays = equipmentModel.CalibrationPeriodDays;
+            this.CalibrationPeriodYears = equipmentModel.CalibrationPeriodYears;
         }
 
         public int Id
@@ -44,11 +44,11 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             get { return serialNumber; }
             set { serialNumber = value; }
         }
-        [Display(Name = "Calibration Period (Days)")]
-        public Nullable<int> CalibrationPeriodDays
+        [Display(Name = "Calibration Period (Years)")]
+        public Nullable<int> CalibrationPeriodYears
         {
-            get { return calibrationPeriodDays; }
-            set { calibrationPeriodDays = value; }
+            get { return calibrationPeriodYears; }
+            set { calibrationPeriodYears = value; }
         }
     }
 }

@@ -15,7 +15,7 @@ namespace ServiceSheetManager.ViewModelAssemblers
             Equipment retval = new Equipment
             {
                 Barcode = equipmentVM.Barcode,
-                CalibrationPeriodDays = equipmentVM.CalibrationPeriodDays,
+                CalibrationPeriodYears = equipmentVM.CalibrationPeriodYears,
                 Description = equipmentVM.Description,
                 SerialNumber = equipmentVM.SerialNumber
             };
@@ -25,7 +25,7 @@ namespace ServiceSheetManager.ViewModelAssemblers
         public Equipment Map(EditEquipmentItemVM equipmentVM, Equipment originalEquipment)
         {
             originalEquipment.Barcode = equipmentVM.Barcode;
-            originalEquipment.CalibrationPeriodDays = equipmentVM.CalibrationPeriodDays;
+            originalEquipment.CalibrationPeriodYears = equipmentVM.CalibrationPeriodYears;
             originalEquipment.Description = equipmentVM.Description;
             originalEquipment.SerialNumber = equipmentVM.SerialNumber;
 

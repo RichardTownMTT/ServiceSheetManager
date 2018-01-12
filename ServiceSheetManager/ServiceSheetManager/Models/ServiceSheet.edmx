@@ -81,7 +81,7 @@
           <Property Name="Barcode" Type="nvarchar" MaxLength="10" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="SerialNumber" Type="nvarchar" MaxLength="50" />
-          <Property Name="CalibrationPeriodDays" Type="int" />
+          <Property Name="CalibrationPeriodYears" Type="int" />
           <Property Name="EquipmentKitId" Type="int" />
         </EntityType>
         <EntityType Name="EquipmentCalibration">
@@ -476,7 +476,7 @@
           <Property Name="Barcode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CalibrationPeriodDays" Type="Int32" />
+          <Property Name="CalibrationPeriodYears" Type="Int32" />
           <Property Name="EquipmentKitId" Type="Int32" />
           <NavigationProperty Name="EquipmentKit" Relationship="ServiceSheetsLocalModel.FK_Equipment_EquipmentKit" FromRole="Equipment" ToRole="EquipmentKit" />
           <NavigationProperty Name="EquipmentCalibrations" Relationship="ServiceSheetsLocalModel.FK_EquipmentCalibration_Equipment" FromRole="Equipment" ToRole="EquipmentCalibration" />
@@ -718,7 +718,7 @@
             <EntityTypeMapping TypeName="ServiceSheetsLocalModel.Equipment">
               <MappingFragment StoreEntitySet="Equipment">
                 <ScalarProperty Name="EquipmentKitId" ColumnName="EquipmentKitId" />
-                <ScalarProperty Name="CalibrationPeriodDays" ColumnName="CalibrationPeriodDays" />
+                <ScalarProperty Name="CalibrationPeriodYears" ColumnName="CalibrationPeriodYears" />
                 <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
