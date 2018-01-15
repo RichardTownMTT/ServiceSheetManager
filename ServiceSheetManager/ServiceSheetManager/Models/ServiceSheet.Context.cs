@@ -33,5 +33,6 @@ namespace ServiceSheetManager.Models
         public virtual DbSet<EquipmentCalibration> EquipmentCalibrations { get; set; }
         public virtual DbSet<EquipmentKit> EquipmentKits { get; set; }
         public virtual DbSet<EquipmentLocation> EquipmentLocations { get; set; }
+        public virtual DbSet<EquipmentType> EquipmentTypes { get; set; }
     }
 }

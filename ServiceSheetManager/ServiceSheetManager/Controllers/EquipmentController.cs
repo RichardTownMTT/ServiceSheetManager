@@ -37,8 +37,10 @@ namespace ServiceSheetManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Equipment equipment = await db.Equipments.FindAsync(id);
-            
+            //RT 15/1/18 - Adding in equipment type
+            //Equipment equipment = await db.Equipments.FindAsync(id);
+            Equipment equipment = await db.Equipments.Where(e => e.Id == id.Value).Include(e => e.EquipmentType).FirstOrDefaultAsync();
+
             if (equipment == null)
             {
                 return HttpNotFound();
@@ -52,9 +54,16 @@ namespace ServiceSheetManager.Controllers
         }
 
         // GET: Equipment/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            //Need to load the equipment Types to the view
+            EquipmentVMAssembler assembler = new EquipmentVMAssembler();
+
+            List<SelectListItem> equipmentTypes = await EquipmentTypeVMAssembler.GetAllTypes(db);
+
+            CreateEquipmentItemVM equipmentVM = assembler.CreateEquipmentItem(equipmentTypes);
+
+            return View(equipmentVM);
         }
 
         // POST: Equipment/Create
@@ -98,15 +107,20 @@ namespace ServiceSheetManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Equipment equipment = await db.Equipments.FindAsync(id);
+            //Adding in equipment type
+            //Equipment equipment = await db.Equipments.FindAsync(id);
+            Equipment equipment = await db.Equipments.Where(e => e.Id == id.Value).Include(e => e.EquipmentType).FirstOrDefaultAsync();
+
             if (equipment == null)
             {
                 return HttpNotFound();
             }
 
             EquipmentVMAssembler vmAssembler = new EquipmentVMAssembler();
+            
+            List<SelectListItem> equipmentTypes = await EquipmentTypeVMAssembler.GetAllTypes(db);
 
-            EditEquipmentItemVM editVM = vmAssembler.EditEquipmentVM(equipment);
+            EditEquipmentItemVM editVM = vmAssembler.EditEquipmentVM(equipment, equipmentTypes);
             //ViewBag.EquipmentKitId = new SelectList(db.EquipmentKits, "Id", "Barcode", equipment.EquipmentKitId);
             return View(editVM);
         }

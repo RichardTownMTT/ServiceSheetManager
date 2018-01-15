@@ -12,6 +12,12 @@
 <p>
     @Html.ActionLink("Create New Equipment Kit", "Create", "EquipmentKits")
 </p>
+<p>
+    @using (Html.BeginForm("Submit", "CanvasEquipmentSubmission", FormMethod.Post))
+            {
+    <input type="submit" />
+}
+</p>>
 @if (Model.AllKits.Count == 0 && Model.AllEquipmentNotInKitItems.Count == 0)
 {
     <h2>There is no equipment to display</h2>
@@ -22,6 +28,9 @@ else
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.AllKits.FirstOrDefault().Barcode)
+            </th>
+            <th>
+                @Html.Display("Type - REPLACE")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AllKits.FirstOrDefault().Description)
@@ -37,6 +46,9 @@ else
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => kitItem.Barcode)
+                </td>
+                <td>
+                    @Html.DisplayText("KIT TYPE - REPLACE")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => kitItem.Description)
@@ -56,6 +68,9 @@ else
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => equipmentItem.Barcode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => equipmentItem.EquipmentTypeDescription)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => equipmentItem.Description)

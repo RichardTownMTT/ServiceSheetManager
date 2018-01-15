@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ServiceSheetManager.ViewModels.EquipmentVMs
 {
@@ -12,6 +13,8 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string description;
         private string serialNumber;
         private int? calibrationPeriodYears;
+        private SelectList equipmentTypes;
+        private string equipmentTypeSelected;
 
         public string Barcode
         {
@@ -37,6 +40,18 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get { return calibrationPeriodYears; }
             set { calibrationPeriodYears = value; }
+        }
+        [Display(Name = "Equipment Type")]
+        public SelectList EquipmentTypes
+        {
+            get { return equipmentTypes; }
+            set
+            { equipmentTypes = value; }
+        }
+        public string EquipmentTypeSelected
+        {
+            get { return equipmentTypeSelected; }
+            set { equipmentTypeSelected = value; }
         }
     }
 }

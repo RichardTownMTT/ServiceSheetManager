@@ -27,11 +27,13 @@ namespace ServiceSheetManager.Models
         public string SerialNumber { get; set; }
         public Nullable<int> CalibrationPeriodYears { get; set; }
         public Nullable<int> EquipmentKitId { get; set; }
+        public Nullable<int> EquipmentTypeId { get; set; }
     
         public virtual EquipmentKit EquipmentKit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipmentCalibration> EquipmentCalibrations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipmentLocation> EquipmentLocations { get; set; }
+        public virtual EquipmentType EquipmentType { get; set; }
     }
 }

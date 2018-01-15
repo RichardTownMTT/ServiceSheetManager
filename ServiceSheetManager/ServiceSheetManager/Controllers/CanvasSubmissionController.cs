@@ -42,10 +42,10 @@ namespace ServiceSheetManager.Controllers
                 return httpResponse;
             }
 
-            CanvasApiSubmission apiSubmission = DeserialiseApiSubmission(xmlInput);
+            CanvasApiSubmission apiSubmission = CanvasSubmissionHelpers.DeserialiseApiSubmission(xmlInput);
             System.Diagnostics.Trace.TraceError("Guid = " + apiSubmission.guid);
 
-            XDocument canvasDataXml = DownloadXmlForGuid(apiSubmission.guid);
+            XDocument canvasDataXml = CanvasSubmissionHelpers.DownloadXmlForGuid(apiSubmission.guid);
 
             if (canvasDataXml == null)
             {
@@ -98,44 +98,45 @@ namespace ServiceSheetManager.Controllers
             return httpResponse;
         }
 
-        private XDocument DownloadXmlForGuid(string guid)
-        {
-            string canvasUsername = ConfigurationManager.AppSettings["canvasUserName"];
-            string canvasPassword = ConfigurationManager.AppSettings["canvasPassword"];
-            string canvasUrl = "https://www.gocanvas.com/apiv2/submissions.xml?username=" + canvasUsername + "&password=" + canvasPassword + "&submission_guid=" + guid;
-            try
-            {
-                XDocument retval = XDocument.Load(canvasUrl);
-                return retval;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Trace.TraceError(ex.ToString());
-                return null;
-            }
-        }
+        //RT 12/1/18 - Moving to helper class
+        //private XDocument DownloadXmlForGuid(string guid)
+        //{
+        //    string canvasUsername = ConfigurationManager.AppSettings["canvasUserName"];
+        //    string canvasPassword = ConfigurationManager.AppSettings["canvasPassword"];
+        //    string canvasUrl = "https://www.gocanvas.com/apiv2/submissions.xml?username=" + canvasUsername + "&password=" + canvasPassword + "&submission_guid=" + guid;
+        //    try
+        //    {
+        //        XDocument retval = XDocument.Load(canvasUrl);
+        //        return retval;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        System.Diagnostics.Trace.TraceError(ex.ToString());
+        //        return null;
+        //    }
+        //}
 
-        private CanvasApiSubmission DeserialiseApiSubmission(XDocument xmlInput)
-        {
-            XElement firstNode = xmlInput.Element("submission-notification");
+        //private CanvasApiSubmission DeserialiseApiSubmission(XDocument xmlInput)
+        //{
+        //    XElement firstNode = xmlInput.Element("submission-notification");
 
-            CanvasApiSubmission retval = new CanvasApiSubmission();
-            var serializer = new XmlSerializer(typeof(CanvasApiSubmission));
+        //    CanvasApiSubmission retval = new CanvasApiSubmission();
+        //    var serializer = new XmlSerializer(typeof(CanvasApiSubmission));
 
-            try
-            {
-                retval = (CanvasApiSubmission)serializer.Deserialize(firstNode.Element("submission").CreateReader());
-            }
-            catch (Exception ex)
-            {
-                //Log error and XML
-                System.Diagnostics.Trace.TraceError("Error occured serialising data: " + ex.ToString());
-                System.Diagnostics.Trace.TraceError("XML: " + xmlInput.ToString());
-                return null;
-            }
+        //    try
+        //    {
+        //        retval = (CanvasApiSubmission)serializer.Deserialize(firstNode.Element("submission").CreateReader());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Log error and XML
+        //        System.Diagnostics.Trace.TraceError("Error occured serialising data: " + ex.ToString());
+        //        System.Diagnostics.Trace.TraceError("XML: " + xmlInput.ToString());
+        //        return null;
+        //    }
 
-            return retval;
-        }
+        //    return retval;
+        //}
 
         private void ValidateEntities(List<CanvasRawData> canvasEntities)
         {

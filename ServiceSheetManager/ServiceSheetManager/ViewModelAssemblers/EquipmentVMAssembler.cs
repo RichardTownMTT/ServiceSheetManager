@@ -5,6 +5,7 @@ using System.Linq;
 using ServiceSheetManager.ViewModels.EquipmentVMs;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace ServiceSheetManager.ViewModelAssemblers
 {
@@ -17,7 +18,8 @@ namespace ServiceSheetManager.ViewModelAssemblers
                 Barcode = equipmentVM.Barcode,
                 CalibrationPeriodYears = equipmentVM.CalibrationPeriodYears,
                 Description = equipmentVM.Description,
-                SerialNumber = equipmentVM.SerialNumber
+                SerialNumber = equipmentVM.SerialNumber,
+                EquipmentTypeId = int.Parse(equipmentVM.EquipmentTypeSelected)
             };
             return retval;
         }
@@ -35,7 +37,10 @@ namespace ServiceSheetManager.ViewModelAssemblers
         public async Task<EquipmentIndexVM> CreateEquipmentIndex(IQueryable<Equipment> equipments)
         {
             //Go through all the equipment that is in a kit first
-            List<EquipmentKit> equipmentInKit = await equipments.Where(e => e.EquipmentKitId.HasValue).Select(k => k.EquipmentKit).Distinct().ToListAsync();
+            //RT 15/1/17 - Adding in location
+            //List<EquipmentKit> equipmentInKit = await equipments.Where(e => e.EquipmentKitId.HasValue).Select(k => k.EquipmentKit).Distinct().ToListAsync();
+            List<EquipmentKit> equipmentInKit = await equipments.Where(e => e.EquipmentKitId.HasValue).Select(k => k.EquipmentKit).Distinct().Include(k => k.EquipmentLocations).ToListAsync();
+
 
             EquipmentIndexVM retval = new EquipmentIndexVM();
             foreach (var kitEquipment in equipmentInKit)
@@ -44,12 +49,26 @@ namespace ServiceSheetManager.ViewModelAssemblers
                 retval.AllKits.Add(kitItem);
             }
 
-            List<Equipment> equipmentOnly = await equipments.Where(e => e.EquipmentKitId.HasValue == false).ToListAsync();
+            //RT 15/1/17 - Adding in location
+            //List<Equipment> equipmentOnly = await equipments.Where(e => e.EquipmentKitId.HasValue == false).ToListAsync();
+            //Adding in type
+            //List<Equipment> equipmentOnly = await equipments.Where(e => e.EquipmentKitId.HasValue == false).Include(e => e.EquipmentLocations).ToListAsync();
+            List<Equipment> equipmentOnly = await equipments.Where(e => e.EquipmentKitId.HasValue == false).Include(e => e.EquipmentLocations).Include(e => e.EquipmentType).ToListAsync();
+
             foreach (var equipmentNotInKit in equipmentOnly)
             {
                 EquipmentIndexEquipmentItemVM equipmentItem = new EquipmentIndexEquipmentItemVM(equipmentNotInKit);
                 retval.AllEquipmentNotInKitItems.Add(equipmentItem);
             }
+
+            return retval;
+        }
+
+        public CreateEquipmentItemVM CreateEquipmentItem(List<SelectListItem> equipmentTypes)
+        {
+            CreateEquipmentItemVM retval = new CreateEquipmentItemVM();
+            SelectList sl = new SelectList(equipmentTypes, "Value", "Text");
+            retval.EquipmentTypes = sl;
 
             return retval;
         }
@@ -127,9 +146,9 @@ namespace ServiceSheetManager.ViewModelAssemblers
             return barcodeUnique;
         }
 
-        public EditEquipmentItemVM EditEquipmentVM(Equipment equipment)
+        public EditEquipmentItemVM EditEquipmentVM(Equipment equipment, List<SelectListItem> equipmentTypes)
         {
-            EditEquipmentItemVM vm = new EditEquipmentItemVM(equipment);
+            EditEquipmentItemVM vm = new EditEquipmentItemVM(equipment, equipmentTypes);
             return vm;
         }
 

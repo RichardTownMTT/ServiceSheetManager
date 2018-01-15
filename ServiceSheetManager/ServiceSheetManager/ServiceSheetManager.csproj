@@ -65,6 +65,9 @@
     <Reference Include="MigraDoc.RtfRendering-wpf, Version=1.50.4619.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp-MigraDoc-wpf.1.50.4619-beta4c\lib\net30\MigraDoc.RtfRendering-wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -78,6 +81,9 @@
       <HintPath>..\packages\PDFsharp-MigraDoc-wpf.1.50.4619-beta4c\lib\net30\PdfSharp.Charting-wpf.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="SendGrid, Version=9.8.0.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.9.9.0\lib\net452\SendGrid.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -144,9 +150,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.ApplicationInsights">
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
     </Reference>
@@ -173,6 +176,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CanvasEquipmentSubmissionController.cs" />
     <Compile Include="Controllers\CanvasSubmissionController.cs" />
     <Compile Include="Controllers\EngineerStatisticsController.cs" />
     <Compile Include="Controllers\EquipmentController.cs" />
@@ -185,13 +189,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CanvasEquipmentHelper.cs" />
     <Compile Include="Helpers\CanvasImageHelpers.cs" />
+    <Compile Include="Helpers\CanvasSubmissionHelpers.cs" />
     <Compile Include="Helpers\PdfServiceSheetCreator.cs" />
+    <Compile Include="Helpers\SendGridEmail.cs" />
     <Compile Include="Helpers\ServiceSheetHelpers.cs" />
+    <Compile Include="Helpers\CanvasRawDataHelper.cs" />
     <Compile Include="Models\CanvasRawData.cs">
       <DependentUpon>ServiceSheet.tt</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\CanvasRawDataHelper.cs" />
     <Compile Include="Models\Equipment.cs">
       <DependentUpon>ServiceSheet.tt</DependentUpon>
     </Compile>
@@ -204,14 +211,20 @@
     <Compile Include="Models\EquipmentLocation.cs">
       <DependentUpon>ServiceSheet.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EquipmentType.cs">
+      <DependentUpon>ServiceSheet.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MatrixServiceOverview.cs">
       <DependentUpon>ServiceSheet.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasApiSubmission.cs" />
+    <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasEquipmentSubmission.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasForm.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasRawXmlItem.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasResponseGroup.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasResponse.cs" />
+    <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasResponses.cs" />
+    <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasSection.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasSections.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasScreen.cs" />
     <Compile Include="Models\NonDbModels\EngineerCalendarDay.cs" />
@@ -247,6 +260,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModelAssemblers\EquipmentKitVMAssembler.cs" />
+    <Compile Include="ViewModelAssemblers\EquipmentLocationVMAssembler.cs" />
+    <Compile Include="ViewModelAssemblers\EquipmentTypeVMAssembler.cs" />
     <Compile Include="ViewModels\EngineerCalendarVM.cs" />
     <Compile Include="Helpers\JobCostHelpers.cs" />
     <Compile Include="Helpers\EngineerStatisticsHelpers.cs" />
@@ -403,6 +418,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\CanvasEquipmentSubmission\" />
     <Folder Include="Views\CanvasSubmission\" />
   </ItemGroup>
   <ItemGroup>

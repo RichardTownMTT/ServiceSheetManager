@@ -15,7 +15,7 @@ namespace ServiceSheetManager.Models
     public partial class EquipmentLocation
     {
         public int Id { get; set; }
-        public int EquipmentId { get; set; }
+        public Nullable<int> EquipmentId { get; set; }
         public string ScannedUserName { get; set; }
         public string ScannedUserFirstName { get; set; }
         public string ScannedUserSurname { get; set; }
@@ -23,7 +23,9 @@ namespace ServiceSheetManager.Models
         public int LocationCode { get; set; }
         public System.DateTime DtScanned { get; set; }
         public string Notes { get; set; }
+        public Nullable<int> EquipmentKitId { get; set; }
     
         public virtual Equipment Equipment { get; set; }
+        public virtual EquipmentKit EquipmentKit { get; set; }
     }
 }

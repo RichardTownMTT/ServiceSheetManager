@@ -48,6 +48,14 @@
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.EquipmentTypes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.EquipmentTypeSelected, Model.EquipmentTypes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EquipmentTypes, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         @*<div class="form-group">
             @Html.LabelFor(model => model.EquipmentKitId, "EquipmentKitId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

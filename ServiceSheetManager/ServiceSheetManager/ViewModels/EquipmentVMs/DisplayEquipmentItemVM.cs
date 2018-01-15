@@ -14,6 +14,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string description;
         private string serialNumber;
         private int? calibrationPeriodYears;
+        private string equipmentTypeDescription;
 
         public DisplayEquipmentItemVM(Equipment equipmentModel)
         {
@@ -22,6 +23,16 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             this.description = equipmentModel.Description;
             this.serialNumber = equipmentModel.SerialNumber;
             this.CalibrationPeriodYears = equipmentModel.CalibrationPeriodYears;
+
+            if (equipmentModel.EquipmentType != null)
+            {
+                this.equipmentTypeDescription = equipmentModel.EquipmentType.Description;
+            }
+            else
+            {
+                this.equipmentTypeDescription = "Not Set";
+                System.Diagnostics.Trace.TraceError("Equipment Type not loaded!");
+            }
         }
 
         public int Id
@@ -49,6 +60,12 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get { return calibrationPeriodYears; }
             set { calibrationPeriodYears = value; }
+        }
+        [Display(Name = "Equipment Type")]
+        public string EquipmentTypeDescription
+        {
+            get { return equipmentTypeDescription; }
+            set { equipmentTypeDescription = value; }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using ServiceSheetManager.Models;
+using System.Web.Mvc;
 
 namespace ServiceSheetManager.ViewModels.EquipmentVMs
 {
@@ -13,13 +14,24 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
         }
 
-        public EditEquipmentItemVM(Equipment equipment)
+        public EditEquipmentItemVM(Equipment equipment, List<SelectListItem> equipmentTypes)
         {
             this.id = equipment.Id;
             this.Barcode = equipment.Barcode;
             this.Description = equipment.Description;
             this.SerialNumber = equipment.SerialNumber;
             this.CalibrationPeriodYears = equipment.CalibrationPeriodYears;
+
+            if (equipment.EquipmentType != null)
+            {
+                this.EquipmentTypeSelected = equipment.EquipmentType.Id.ToString();
+            }
+            else
+            {
+                throw new Exception("Equipment Type not loaded!");
+            }
+
+            this.EquipmentTypes = new SelectList(equipmentTypes, equipment.EquipmentType.Id.ToString());
         }
 
         private int id;
@@ -27,6 +39,8 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string description;
         private string serialNumber;
         private Nullable<int> calibrationPeriodDays;
+        private SelectList equipmentTypes;
+        private string equipmentTypeSelected;
 
         [Required]
         public int Id
@@ -59,6 +73,18 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get { return calibrationPeriodDays; }
             set { calibrationPeriodDays = value; }
+        }
+        [Display(Name = "Equipment Type")]
+        public SelectList EquipmentTypes
+        {
+            get { return equipmentTypes; }
+            set
+            { equipmentTypes = value; }
+        }
+        public string EquipmentTypeSelected
+        {
+            get { return equipmentTypeSelected; }
+            set { equipmentTypeSelected = value; }
         }
     }
 }

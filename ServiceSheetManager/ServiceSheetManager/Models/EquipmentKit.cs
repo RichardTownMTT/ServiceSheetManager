@@ -18,13 +18,18 @@ namespace ServiceSheetManager.Models
         public EquipmentKit()
         {
             this.Equipments = new HashSet<Equipment>();
+            this.EquipmentLocations = new HashSet<EquipmentLocation>();
         }
     
         public int Id { get; set; }
         public string Barcode { get; set; }
         public string Description { get; set; }
+        public Nullable<int> EquipmentTypeId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Equipment> Equipments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EquipmentLocation> EquipmentLocations { get; set; }
+        public virtual EquipmentType EquipmentType { get; set; }
     }
 }

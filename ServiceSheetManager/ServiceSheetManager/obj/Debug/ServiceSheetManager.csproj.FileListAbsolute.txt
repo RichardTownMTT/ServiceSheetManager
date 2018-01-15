@@ -1,3 +1,7 @@
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.csprojResolveAssemblyReference.cache
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.Properties.Resources.resources
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.csproj.GenerateResource.Cache
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.csproj.CoreCompileInputs.cache
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\ApplicationInsights.config
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\roslyn\csc.exe
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\roslyn\csc.exe.config
@@ -48,6 +52,7 @@ C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceS
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\PagedList.Mvc.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\PdfSharp-wpf.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\PdfSharp.Charting-wpf.dll
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\SendGrid.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\System.Web.Helpers.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\System.Web.Mvc.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\System.Web.Optimization.dll
@@ -62,10 +67,13 @@ C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceS
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\MigraDoc.DocumentObjectModel-wpf.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\MigraDoc.Rendering-wpf.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\MigraDoc.RtfRendering-wpf.xml
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\Newtonsoft.Json.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\PagedList.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\PagedList.Mvc.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\PdfSharp-wpf.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\PdfSharp.Charting-wpf.xml
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\SendGrid.pdb
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\SendGrid.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\System.Web.Helpers.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\System.Web.Mvc.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\System.Web.Optimization.xml
@@ -74,7 +82,6 @@ C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceS
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\System.Web.WebPages.Deployment.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\System.Web.WebPages.Razor.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\Antlr3.Runtime.pdb
-C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\Newtonsoft.Json.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\Microsoft.ApplicationInsights.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\Microsoft.AI.DependencyCollector.xml
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\Microsoft.AI.ServerTelemetryChannel.xml
@@ -85,9 +92,5 @@ C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceS
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\de\MigraDoc.RtfRendering-wpf.resources.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\de\PdfSharp-wpf.resources.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\de\PdfSharp.Charting-wpf.resources.dll
-C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.csprojResolveAssemblyReference.cache
-C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.Properties.Resources.resources
-C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.csproj.GenerateResource.Cache
-C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.csproj.CoreCompileInputs.cache
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\obj\Debug\ServiceSheetManager.pdb

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using ServiceSheetManager.Models;
+using ServiceSheetManager.ViewModelAssemblers;
 
 namespace ServiceSheetManager.ViewModels.EquipmentVMs
 {
@@ -19,7 +20,17 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             id = kitEquipment.Id;
             Barcode = kitEquipment.Barcode;
             Description = kitEquipment.Description;
-            CurrentLocation = "To do";
+
+            EquipmentLocation currentLocation = kitEquipment.EquipmentLocations.OrderByDescending(e => e.DtScanned).FirstOrDefault();
+
+            if (currentLocation != null)
+            {
+                CurrentLocation = EquipmentLocationVMAssembler.GetLocationDescription(currentLocation);
+            }
+            else
+            {
+                CurrentLocation = "Location Not Set";
+            }
         }
 
         public int Id

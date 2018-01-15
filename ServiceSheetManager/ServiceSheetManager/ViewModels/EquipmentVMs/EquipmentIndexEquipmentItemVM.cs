@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ServiceSheetManager.Models;
 using System.ComponentModel.DataAnnotations;
+using ServiceSheetManager.ViewModelAssemblers;
 
 namespace ServiceSheetManager.ViewModels.EquipmentVMs
 {
@@ -12,6 +13,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string barcode;
         private string description;
         private string currentLocation;
+        private string equipmentTypeDescription;
 
         public EquipmentIndexEquipmentItemVM(Equipment equipmentModel)
         {
@@ -19,13 +21,25 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             this.Barcode = equipmentModel.Barcode;
             this.Description = equipmentModel.Description;
 
-            if (equipmentModel.EquipmentLocations.FirstOrDefault() != null)
+            if (equipmentModel.EquipmentType != null)
             {
-                CurrentLocation = equipmentModel.EquipmentLocations.FirstOrDefault().ScannedUserFirstName.ToString();
+                this.equipmentTypeDescription = equipmentModel.EquipmentType.Description;
             }
             else
             {
-                CurrentLocation = "Error";
+                this.equipmentTypeDescription = "Not Set";
+                System.Diagnostics.Trace.TraceError("Equipment Type not loaded!");
+            }
+
+            EquipmentLocation currentLocation = equipmentModel.EquipmentLocations.OrderByDescending(e => e.DtScanned).FirstOrDefault();
+
+            if (currentLocation  != null)
+            {
+                CurrentLocation = EquipmentLocationVMAssembler.GetLocationDescription(currentLocation);
+            }
+            else
+            {
+                CurrentLocation = "Location Not Set";
             }
         }
 
@@ -48,6 +62,12 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get { return currentLocation; }
             set { currentLocation = value; }
+        }
+        [Display(Name = "Equipment Type")]
+        public string EquipmentTypeDescription
+        {
+            get { return equipmentTypeDescription; }
+            set { equipmentTypeDescription = value; }
         }
     }
 }
