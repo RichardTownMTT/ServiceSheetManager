@@ -14,12 +14,22 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string barcode;
         private string description;
         private string currentLocation;
+        private string equipmentType;
 
         public EquipmentIndexKitItemVM(EquipmentKit kitEquipment)
         {
             id = kitEquipment.Id;
             Barcode = kitEquipment.Barcode;
             Description = kitEquipment.Description;
+            if (kitEquipment.EquipmentType != null)
+            {
+                EquipmentType = kitEquipment.EquipmentType.Description;
+            }
+            else
+            {
+                EquipmentType = "Type Not Set";
+            }
+            
 
             EquipmentLocation currentLocation = kitEquipment.EquipmentLocations.OrderByDescending(e => e.DtScanned).FirstOrDefault();
 
@@ -52,6 +62,12 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get { return currentLocation; }
             set { currentLocation = value; }
+        }
+        [Display(Name = "Equipment Type")]
+        public string EquipmentType
+        {
+            get { return equipmentType; }
+            set { equipmentType = value; }
         }
     }
 }

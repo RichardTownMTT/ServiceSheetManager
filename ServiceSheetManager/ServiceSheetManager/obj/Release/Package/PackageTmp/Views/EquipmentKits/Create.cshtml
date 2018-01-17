@@ -1,0 +1,75 @@
+﻿@model ServiceSheetManager.ViewModels.EquipmentVMs.CreateEquipmentKitVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Equipment Kit</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Barcode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Barcode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedEquipmentTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SelectedEquipmentTypeId, Model.EquipmentTypes, htmlAttributes: new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SelectedEquipmentTypeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="allEquipmentItems">
+            @Html.EditorFor(i => Model.EquipmentItems)
+        </div>
+
+        @*<input type="button" value="Add Equipment" class="btn btn-default" id="addEquipmentItem" />*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#addEquipmentItem").on('click', function () {
+            alert('Hello');
+            $.ajax({
+                async: false,
+                url: '/EquipmentKits/AddNewEquipment'
+            }).success(function (partialView) {
+
+                $('#allEquipmentItems').append(partialView);
+
+            });
+        });
+    });
+</script>
+

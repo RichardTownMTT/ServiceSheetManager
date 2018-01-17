@@ -63,13 +63,11 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             get { return equipmentTypes; }
             set { equipmentTypes = value; }
         }
-        [Required]
         public string EquipmentTypeSelected
         {
             get { return equipmentTypeSelected; }
             set { equipmentTypeSelected = value; }
         }
-
         public async Task RepopulateSelectLists(ServiceSheetsEntities db)
         {
             SelectList equipmentTypesSL = await EquipmentTypeVMAssembler.GetAllTypes(db, int.Parse(this.EquipmentTypeSelected));

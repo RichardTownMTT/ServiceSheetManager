@@ -18,9 +18,15 @@ namespace ServiceSheetManager.ViewModelAssemblers
                 Barcode = equipmentVM.Barcode,
                 CalibrationPeriodYears = equipmentVM.CalibrationPeriodYears,
                 Description = equipmentVM.Description,
-                SerialNumber = equipmentVM.SerialNumber,
-                //EquipmentTypeId = int.Parse(equipmentVM.EquipmentTypeSelected)
+                SerialNumber = equipmentVM.SerialNumber
             };
+
+            //If part of a kit, then we won't set the equipment type
+            if (!string.IsNullOrEmpty(equipmentVM.EquipmentTypeSelected))
+            {
+                retval.EquipmentTypeId = int.Parse(equipmentVM.EquipmentTypeSelected);
+            }
+                
             return retval;
         }
 
@@ -38,9 +44,13 @@ namespace ServiceSheetManager.ViewModelAssemblers
         public async Task<EquipmentIndexVM> CreateEquipmentIndex(IQueryable<Equipment> equipments)
         {
             //Go through all the equipment that is in a kit first
-            //RT 15/1/17 - Adding in location
+            //RT 15/1/18 - Adding in location
             //List<EquipmentKit> equipmentInKit = await equipments.Where(e => e.EquipmentKitId.HasValue).Select(k => k.EquipmentKit).Distinct().ToListAsync();
-            List<EquipmentKit> equipmentInKit = await equipments.Where(e => e.EquipmentKitId.HasValue).Select(k => k.EquipmentKit).Distinct().Include(k => k.EquipmentLocations).ToListAsync();
+            //RT 17/1/18 - Adding in type
+            //List<EquipmentKit> equipmentInKit = await equipments.Where(e => e.EquipmentKitId.HasValue).Select(k => k.EquipmentKit).Distinct().Include(k => k.EquipmentLocations).ToListAsync();
+            List<EquipmentKit> equipmentInKit = await equipments.Where(e => e.EquipmentKitId.HasValue).Select(k => k.EquipmentKit).Distinct()
+                                                    .Include(k => k.EquipmentLocations).Include(e => e.EquipmentType).ToListAsync();
+
 
 
             EquipmentIndexVM retval = new EquipmentIndexVM();
@@ -50,7 +60,7 @@ namespace ServiceSheetManager.ViewModelAssemblers
                 retval.AllKits.Add(kitItem);
             }
 
-            //RT 15/1/17 - Adding in location
+            //RT 15/1/18 - Adding in location
             //List<Equipment> equipmentOnly = await equipments.Where(e => e.EquipmentKitId.HasValue == false).ToListAsync();
             //Adding in type
             //List<Equipment> equipmentOnly = await equipments.Where(e => e.EquipmentKitId.HasValue == false).Include(e => e.EquipmentLocations).ToListAsync();

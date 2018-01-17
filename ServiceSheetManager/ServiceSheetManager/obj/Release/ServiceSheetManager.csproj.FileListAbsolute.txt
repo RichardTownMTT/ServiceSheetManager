@@ -91,3 +91,6 @@ C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceS
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\de\MigraDoc.RtfRendering-wpf.resources.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\de\PdfSharp-wpf.resources.dll
 C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\de\PdfSharp.Charting-wpf.resources.dll
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\SendGrid.dll
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\SendGrid.pdb
+C:\Users\rtown\Documents\Coding\ServiceSheetManager\ServiceSheetManager\ServiceSheetManager\bin\SendGrid.xml

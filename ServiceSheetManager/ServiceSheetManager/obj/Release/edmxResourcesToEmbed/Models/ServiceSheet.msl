@@ -156,5 +156,64 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Equipments">
+      <EntityTypeMapping TypeName="ServiceSheetsLocalModel.Equipment">
+        <MappingFragment StoreEntitySet="Equipment">
+          <ScalarProperty Name="EquipmentTypeId" ColumnName="EquipmentTypeId" />
+          <ScalarProperty Name="EquipmentKitId" ColumnName="EquipmentKitId" />
+          <ScalarProperty Name="CalibrationPeriodYears" ColumnName="CalibrationPeriodYears" />
+          <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EquipmentCalibrations">
+      <EntityTypeMapping TypeName="ServiceSheetsLocalModel.EquipmentCalibration">
+        <MappingFragment StoreEntitySet="EquipmentCalibration">
+          <ScalarProperty Name="DtCalibrated" ColumnName="DtCalibrated" />
+          <ScalarProperty Name="Passed" ColumnName="Passed" />
+          <ScalarProperty Name="CertNumber" ColumnName="CertNumber" />
+          <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EquipmentKits">
+      <EntityTypeMapping TypeName="ServiceSheetsLocalModel.EquipmentKit">
+        <MappingFragment StoreEntitySet="EquipmentKit">
+          <ScalarProperty Name="EquipmentTypeId" ColumnName="EquipmentTypeId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EquipmentLocations">
+      <EntityTypeMapping TypeName="ServiceSheetsLocalModel.EquipmentLocation">
+        <MappingFragment StoreEntitySet="EquipmentLocation">
+          <ScalarProperty Name="EquipmentKitId" ColumnName="EquipmentKitId" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="DtScanned" ColumnName="DtScanned" />
+          <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+          <ScalarProperty Name="CanvasSubmissionNumber" ColumnName="CanvasSubmissionNumber" />
+          <ScalarProperty Name="ScannedUserSurname" ColumnName="ScannedUserSurname" />
+          <ScalarProperty Name="ScannedUserFirstName" ColumnName="ScannedUserFirstName" />
+          <ScalarProperty Name="ScannedUserName" ColumnName="ScannedUserName" />
+          <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EquipmentTypes">
+      <EntityTypeMapping TypeName="ServiceSheetsLocalModel.EquipmentType">
+        <MappingFragment StoreEntitySet="EquipmentType">
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

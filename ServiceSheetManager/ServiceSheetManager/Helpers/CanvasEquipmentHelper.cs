@@ -113,11 +113,12 @@ namespace ServiceSheetManager.Helpers
                 //Email the missing barcodes
                 if (barcodesNotFound.Count > 0)
                 {
-                    string messageBarcodes = "User: " + username + ". Equipment not found for barcode(s): ";
+                    string messageBarcodes = "User: " + username + ".  Submission Number: " + submissionNumber + ". Equipment not found for barcode(s): ";
                     foreach (var code in barcodesNotFound)
                     {
                         messageBarcodes = messageBarcodes + code + ", ";
                     }
+                    System.Diagnostics.Trace.TraceError("Email: " + messageBarcodes);
                     await SendGridEmail.SendEmail(messageBarcodes);
                 }
             }

@@ -4,13 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7b4da87ec3004491be2a86e0f3205a66" Name="Diagram1" ZoomLevel="72">
+      <Diagram DiagramId="7b4da87ec3004491be2a86e0f3205a66" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="ServiceSheetsLocalModel.MatrixServiceOverview" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ServiceSheetsLocalModel.ServiceDay" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="ServiceSheetsLocalModel.ServiceSheet" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="ServiceSheetsLocalModel.FK__ServiceDa__Servi__47DBAE45" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ServiceSheetsLocalModel.CanvasRawData" Width="1.5" PointX="5.375" PointY="0.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="ServiceSheetsLocalModel.Equipment" Width="1.5" PointX="9.75" PointY="3.875" />
+        <EntityTypeShape EntityType="ServiceSheetsLocalModel.EquipmentCalibration" Width="1.5" PointX="9.625" PointY="8.125" />
+        <EntityTypeShape EntityType="ServiceSheetsLocalModel.EquipmentKit" Width="1.5" PointX="7.375" PointY="4" />
+        <EntityTypeShape EntityType="ServiceSheetsLocalModel.EquipmentLocation" Width="1.5" PointX="13.625" PointY="2.25" />
+        <AssociationConnector Association="ServiceSheetsLocalModel.FK_Equipment_EquipmentKit" />
+        <AssociationConnector Association="ServiceSheetsLocalModel.FK_EquipmentCalibration_Equipment" />
+        <AssociationConnector Association="ServiceSheetsLocalModel.FK_EquipmentLocation_Equipment" />
+        <AssociationConnector Association="ServiceSheetsLocalModel.FK_EquipmentLocation_EquipmentKit" />
+        <EntityTypeShape EntityType="ServiceSheetsLocalModel.EquipmentType" Width="1.5" PointX="8.5" PointY="0.5" />
+        <AssociationConnector Association="ServiceSheetsLocalModel.FK_Equipment_EquipmentType" />
+        <AssociationConnector Association="ServiceSheetsLocalModel.FK_EquipmentKit_EquipmentType" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

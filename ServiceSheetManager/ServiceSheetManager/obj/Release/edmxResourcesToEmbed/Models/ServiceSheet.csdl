@@ -106,6 +106,35 @@
       <End Role="ServiceDay" EntitySet="ServiceDays" />
     </AssociationSet>
     <EntitySet Name="CanvasRawDatas" EntityType="ServiceSheetsLocalModel.CanvasRawData" />
+    <EntitySet Name="Equipments" EntityType="ServiceSheetsLocalModel.Equipment" />
+    <EntitySet Name="EquipmentCalibrations" EntityType="ServiceSheetsLocalModel.EquipmentCalibration" />
+    <EntitySet Name="EquipmentKits" EntityType="ServiceSheetsLocalModel.EquipmentKit" />
+    <EntitySet Name="EquipmentLocations" EntityType="ServiceSheetsLocalModel.EquipmentLocation" />
+    <AssociationSet Name="FK_Equipment_EquipmentKit" Association="ServiceSheetsLocalModel.FK_Equipment_EquipmentKit">
+      <End Role="EquipmentKit" EntitySet="EquipmentKits" />
+      <End Role="Equipment" EntitySet="Equipments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipmentCalibration_Equipment" Association="ServiceSheetsLocalModel.FK_EquipmentCalibration_Equipment">
+      <End Role="Equipment" EntitySet="Equipments" />
+      <End Role="EquipmentCalibration" EntitySet="EquipmentCalibrations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipmentLocation_Equipment" Association="ServiceSheetsLocalModel.FK_EquipmentLocation_Equipment">
+      <End Role="Equipment" EntitySet="Equipments" />
+      <End Role="EquipmentLocation" EntitySet="EquipmentLocations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipmentLocation_EquipmentKit" Association="ServiceSheetsLocalModel.FK_EquipmentLocation_EquipmentKit">
+      <End Role="EquipmentKit" EntitySet="EquipmentKits" />
+      <End Role="EquipmentLocation" EntitySet="EquipmentLocations" />
+    </AssociationSet>
+    <EntitySet Name="EquipmentTypes" EntityType="ServiceSheetsLocalModel.EquipmentType" />
+    <AssociationSet Name="FK_Equipment_EquipmentType" Association="ServiceSheetsLocalModel.FK_Equipment_EquipmentType">
+      <End Role="EquipmentType" EntitySet="EquipmentTypes" />
+      <End Role="Equipment" EntitySet="Equipments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipmentKit_EquipmentType" Association="ServiceSheetsLocalModel.FK_EquipmentKit_EquipmentType">
+      <End Role="EquipmentType" EntitySet="EquipmentTypes" />
+      <End Role="EquipmentKit" EntitySet="EquipmentKits" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="CanvasRawData">
     <Key>
@@ -175,4 +204,142 @@
     <Property Name="MttEngSignatureUrl" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Approved" Type="Boolean" Nullable="false" />
   </EntityType>
+  <EntityType Name="Equipment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Barcode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CalibrationPeriodYears" Type="Int32" />
+    <Property Name="EquipmentKitId" Type="Int32" />
+    <NavigationProperty Name="EquipmentKit" Relationship="ServiceSheetsLocalModel.FK_Equipment_EquipmentKit" FromRole="Equipment" ToRole="EquipmentKit" />
+    <NavigationProperty Name="EquipmentCalibrations" Relationship="ServiceSheetsLocalModel.FK_EquipmentCalibration_Equipment" FromRole="Equipment" ToRole="EquipmentCalibration" />
+    <NavigationProperty Name="EquipmentLocations" Relationship="ServiceSheetsLocalModel.FK_EquipmentLocation_Equipment" FromRole="Equipment" ToRole="EquipmentLocation" />
+    <Property Name="EquipmentTypeId" Type="Int32" />
+    <NavigationProperty Name="EquipmentType" Relationship="ServiceSheetsLocalModel.FK_Equipment_EquipmentType" FromRole="Equipment" ToRole="EquipmentType" />
+  </EntityType>
+  <EntityType Name="EquipmentCalibration">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EquipmentId" Type="Int32" Nullable="false" />
+    <Property Name="CertNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Passed" Type="Boolean" Nullable="false" />
+    <Property Name="DtCalibrated" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Equipment" Relationship="ServiceSheetsLocalModel.FK_EquipmentCalibration_Equipment" FromRole="EquipmentCalibration" ToRole="Equipment" />
+  </EntityType>
+  <EntityType Name="EquipmentKit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Barcode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Equipments" Relationship="ServiceSheetsLocalModel.FK_Equipment_EquipmentKit" FromRole="EquipmentKit" ToRole="Equipment" />
+    <NavigationProperty Name="EquipmentLocations" Relationship="ServiceSheetsLocalModel.FK_EquipmentLocation_EquipmentKit" FromRole="EquipmentKit" ToRole="EquipmentLocation" />
+    <Property Name="EquipmentTypeId" Type="Int32" />
+    <NavigationProperty Name="EquipmentType" Relationship="ServiceSheetsLocalModel.FK_EquipmentKit_EquipmentType" FromRole="EquipmentKit" ToRole="EquipmentType" />
+  </EntityType>
+  <EntityType Name="EquipmentLocation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EquipmentId" Type="Int32" />
+    <Property Name="ScannedUserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ScannedUserFirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ScannedUserSurname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CanvasSubmissionNumber" Type="Int32" Nullable="false" />
+    <Property Name="LocationCode" Type="Int32" Nullable="false" />
+    <Property Name="DtScanned" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EquipmentKitId" Type="Int32" />
+    <NavigationProperty Name="Equipment" Relationship="ServiceSheetsLocalModel.FK_EquipmentLocation_Equipment" FromRole="EquipmentLocation" ToRole="Equipment" />
+    <NavigationProperty Name="EquipmentKit" Relationship="ServiceSheetsLocalModel.FK_EquipmentLocation_EquipmentKit" FromRole="EquipmentLocation" ToRole="EquipmentKit" />
+  </EntityType>
+  <Association Name="FK_Equipment_EquipmentKit">
+    <End Type="ServiceSheetsLocalModel.EquipmentKit" Role="EquipmentKit" Multiplicity="0..1" />
+    <End Type="ServiceSheetsLocalModel.Equipment" Role="Equipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EquipmentKit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Equipment">
+        <PropertyRef Name="EquipmentKitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipmentCalibration_Equipment">
+    <End Type="ServiceSheetsLocalModel.Equipment" Role="Equipment" Multiplicity="1" />
+    <End Type="ServiceSheetsLocalModel.EquipmentCalibration" Role="EquipmentCalibration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EquipmentCalibration">
+        <PropertyRef Name="EquipmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipmentLocation_Equipment">
+    <End Type="ServiceSheetsLocalModel.Equipment" Role="Equipment" Multiplicity="0..1" />
+    <End Type="ServiceSheetsLocalModel.EquipmentLocation" Role="EquipmentLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EquipmentLocation">
+        <PropertyRef Name="EquipmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipmentLocation_EquipmentKit">
+    <End Type="ServiceSheetsLocalModel.EquipmentKit" Role="EquipmentKit" Multiplicity="0..1" />
+    <End Type="ServiceSheetsLocalModel.EquipmentLocation" Role="EquipmentLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EquipmentKit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EquipmentLocation">
+        <PropertyRef Name="EquipmentKitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="EquipmentType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Deleted" Type="DateTime" Precision="7" />
+    <NavigationProperty Name="Equipments" Relationship="ServiceSheetsLocalModel.FK_Equipment_EquipmentType" FromRole="EquipmentType" ToRole="Equipment" />
+    <NavigationProperty Name="EquipmentKits" Relationship="ServiceSheetsLocalModel.FK_EquipmentKit_EquipmentType" FromRole="EquipmentType" ToRole="EquipmentKit" />
+  </EntityType>
+  <Association Name="FK_Equipment_EquipmentType">
+    <End Type="ServiceSheetsLocalModel.EquipmentType" Role="EquipmentType" Multiplicity="0..1" />
+    <End Type="ServiceSheetsLocalModel.Equipment" Role="Equipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EquipmentType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Equipment">
+        <PropertyRef Name="EquipmentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipmentKit_EquipmentType">
+    <End Type="ServiceSheetsLocalModel.EquipmentType" Role="EquipmentType" Multiplicity="0..1" />
+    <End Type="ServiceSheetsLocalModel.EquipmentKit" Role="EquipmentKit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EquipmentType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EquipmentKit">
+        <PropertyRef Name="EquipmentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

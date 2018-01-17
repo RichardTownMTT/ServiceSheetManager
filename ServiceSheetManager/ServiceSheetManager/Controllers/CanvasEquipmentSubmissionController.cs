@@ -45,6 +45,7 @@ namespace ServiceSheetManager.Controllers
             if (canvasDataXml == null)
             {
                 response = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                System.Diagnostics.Trace.TraceError("Canvas Data XML null");
                 return response;
             }
 
@@ -53,6 +54,7 @@ namespace ServiceSheetManager.Controllers
             if (submissions == null)
             {
                 response = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                System.Diagnostics.Trace.TraceError("Submissions null");
                 return response;
             }
 
@@ -62,6 +64,7 @@ namespace ServiceSheetManager.Controllers
             if (locationEntities == null)
             {
                 response = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                System.Diagnostics.Trace.TraceError("Location Entities null");
                 return response;
             }
 

@@ -52,7 +52,6 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             set { equipmentTypes = value; }
         }
         [Display(Name = "Equipment Type")]
-        [Required]
         public string SelectedEquipmentTypeId
         {
             get { return selectedEquipmentTypeId; }
