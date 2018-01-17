@@ -12,6 +12,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string description;
         private string barcode;
         private List<DisplayEquipmentItemVM> equipmentItems;
+        private string equipmentType;
 
         public DisplayEquipmentKitVM(EquipmentKit kit)
         {
@@ -20,6 +21,15 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             this.Id = kit.Id;
             this.Description = kit.Description;
             this.Barcode = kit.Barcode;
+            
+            if(kit.EquipmentType != null)
+            {
+                this.EquipmentType = kit.EquipmentType.Description;
+            }
+            else
+            {
+                this.equipmentType = "Equipment Type not set";
+            }
 
             foreach (var equipment in kit.Equipments)
             {
@@ -47,6 +57,11 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get { return equipmentItems; }
             set { equipmentItems = value; }
+        }
+        public string EquipmentType
+        {
+            get { return equipmentType; }
+            set { equipmentType = value; }
         }
     }
 }

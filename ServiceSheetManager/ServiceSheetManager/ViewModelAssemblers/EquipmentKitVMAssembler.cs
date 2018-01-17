@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ServiceSheetManager.Models;
+using System.Web.Mvc;
 
 namespace ServiceSheetManager.ViewModelAssemblers
 {
     public class EquipmentKitVMAssembler
     {
-        public CreateEquipmentKitVM Create()
+        public CreateEquipmentKitVM Create(SelectList equipmentTypesSL)
         {
-            return new CreateEquipmentKitVM();
+            return new CreateEquipmentKitVM(equipmentTypesSL);
         }
 
         public EquipmentKit Map(CreateEquipmentKitVM equipmentVM)
@@ -19,7 +20,8 @@ namespace ServiceSheetManager.ViewModelAssemblers
             EquipmentKit retval = new EquipmentKit()
             {
                 Barcode = equipmentVM.Barcode,
-                Description = equipmentVM.Description
+                Description = equipmentVM.Description,
+                EquipmentTypeId = int.Parse(equipmentVM.SelectedEquipmentTypeId)
             };
             return retval;
         }

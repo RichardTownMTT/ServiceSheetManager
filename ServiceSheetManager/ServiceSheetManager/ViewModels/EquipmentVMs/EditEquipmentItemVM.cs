@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using ServiceSheetManager.Models;
 using System.Web.Mvc;
+using System.Threading.Tasks;
+using ServiceSheetManager.ViewModelAssemblers;
 
 namespace ServiceSheetManager.ViewModels.EquipmentVMs
 {
@@ -14,7 +16,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
         }
 
-        public EditEquipmentItemVM(Equipment equipment, List<SelectListItem> equipmentTypes)
+        public EditEquipmentItemVM(Equipment equipment, SelectList equipmentTypesSL)
         {
             this.id = equipment.Id;
             this.Barcode = equipment.Barcode;
@@ -31,7 +33,8 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
                 throw new Exception("Equipment Type not loaded!");
             }
 
-            this.EquipmentTypes = new SelectList(equipmentTypes, equipment.EquipmentType.Id.ToString());
+            this.EquipmentTypes = equipmentTypesSL;
+            
         }
 
         private int id;
@@ -85,6 +88,12 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get { return equipmentTypeSelected; }
             set { equipmentTypeSelected = value; }
+        }
+
+        public async Task RepopulateSelectLists(ServiceSheetsEntities db)
+        {
+            SelectList equipmentTypesSL = await EquipmentTypeVMAssembler.GetAllTypes(db, int.Parse(this.EquipmentTypeSelected));
+            this.EquipmentTypes = equipmentTypesSL;
         }
     }
 }

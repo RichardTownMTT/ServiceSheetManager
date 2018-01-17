@@ -19,7 +19,7 @@ namespace ServiceSheetManager.ViewModelAssemblers
                 CalibrationPeriodYears = equipmentVM.CalibrationPeriodYears,
                 Description = equipmentVM.Description,
                 SerialNumber = equipmentVM.SerialNumber,
-                EquipmentTypeId = int.Parse(equipmentVM.EquipmentTypeSelected)
+                //EquipmentTypeId = int.Parse(equipmentVM.EquipmentTypeSelected)
             };
             return retval;
         }
@@ -30,6 +30,7 @@ namespace ServiceSheetManager.ViewModelAssemblers
             originalEquipment.CalibrationPeriodYears = equipmentVM.CalibrationPeriodYears;
             originalEquipment.Description = equipmentVM.Description;
             originalEquipment.SerialNumber = equipmentVM.SerialNumber;
+            originalEquipment.EquipmentTypeId = int.Parse(equipmentVM.EquipmentTypeSelected);
 
             return originalEquipment;
         }
@@ -64,12 +65,9 @@ namespace ServiceSheetManager.ViewModelAssemblers
             return retval;
         }
 
-        public CreateEquipmentItemVM CreateEquipmentItem(List<SelectListItem> equipmentTypes)
+        public CreateEquipmentItemVM CreateEquipmentItem(SelectList equipmentTypesSL)
         {
-            CreateEquipmentItemVM retval = new CreateEquipmentItemVM();
-            SelectList sl = new SelectList(equipmentTypes, "Value", "Text");
-            retval.EquipmentTypes = sl;
-
+            CreateEquipmentItemVM retval = new CreateEquipmentItemVM(equipmentTypesSL);
             return retval;
         }
 
@@ -146,9 +144,9 @@ namespace ServiceSheetManager.ViewModelAssemblers
             return barcodeUnique;
         }
 
-        public EditEquipmentItemVM EditEquipmentVM(Equipment equipment, List<SelectListItem> equipmentTypes)
+        public EditEquipmentItemVM EditEquipmentVM(Equipment equipment, SelectList equipmentTypesSL)
         {
-            EditEquipmentItemVM vm = new EditEquipmentItemVM(equipment, equipmentTypes);
+            EditEquipmentItemVM vm = new EditEquipmentItemVM(equipment, equipmentTypesSL);
             return vm;
         }
 

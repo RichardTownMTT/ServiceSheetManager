@@ -59,9 +59,9 @@ namespace ServiceSheetManager.Controllers
             //Need to load the equipment Types to the view
             EquipmentVMAssembler assembler = new EquipmentVMAssembler();
 
-            List<SelectListItem> equipmentTypes = await EquipmentTypeVMAssembler.GetAllTypes(db);
+            SelectList equipmentTypesSL = await EquipmentTypeVMAssembler.GetAllTypes(db, null);
 
-            CreateEquipmentItemVM equipmentVM = assembler.CreateEquipmentItem(equipmentTypes);
+            CreateEquipmentItemVM equipmentVM = assembler.CreateEquipmentItem(equipmentTypesSL);
 
             return View(equipmentVM);
         }
@@ -87,6 +87,8 @@ namespace ServiceSheetManager.Controllers
                 if (!uniqueBarcode)
                 {
                     ModelState.AddModelError("", "Barcode already exists");
+                    await equipmentVM.RepopulateSelectLists(db);
+
                     return View(equipmentVM);
                 }
 
@@ -97,6 +99,7 @@ namespace ServiceSheetManager.Controllers
                 return RedirectToAction("Index");
             }
 
+            await equipmentVM.RepopulateSelectLists(db);
             return View(equipmentVM);
         }
 
@@ -118,9 +121,9 @@ namespace ServiceSheetManager.Controllers
 
             EquipmentVMAssembler vmAssembler = new EquipmentVMAssembler();
             
-            List<SelectListItem> equipmentTypes = await EquipmentTypeVMAssembler.GetAllTypes(db);
+            SelectList equipmentTypesSL = await EquipmentTypeVMAssembler.GetAllTypes(db, equipment.EquipmentTypeId);
 
-            EditEquipmentItemVM editVM = vmAssembler.EditEquipmentVM(equipment, equipmentTypes);
+            EditEquipmentItemVM editVM = vmAssembler.EditEquipmentVM(equipment, equipmentTypesSL);
             //ViewBag.EquipmentKitId = new SelectList(db.EquipmentKits, "Id", "Barcode", equipment.EquipmentKitId);
             return View(editVM);
         }
@@ -141,6 +144,7 @@ namespace ServiceSheetManager.Controllers
                 if (!uniqueBarcode)
                 {
                     ModelState.AddModelError("", "Barcode already exists");
+                    await equipmentVM.RepopulateSelectLists(db);
                     return View(equipmentVM);
                 }
 
@@ -151,6 +155,8 @@ namespace ServiceSheetManager.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
+            await equipmentVM.RepopulateSelectLists(db);
             return View(equipmentVM);
         }
 

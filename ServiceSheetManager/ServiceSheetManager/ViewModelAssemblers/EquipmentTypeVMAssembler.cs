@@ -11,9 +11,9 @@ namespace ServiceSheetManager.ViewModelAssemblers
 {
     public class EquipmentTypeVMAssembler
     {
-        public static async Task<List<SelectListItem>> GetAllTypes(ServiceSheetsEntities db)
+        public static async Task<SelectList> GetAllTypes(ServiceSheetsEntities db, int? selectedItemId)
         {
-            List<SelectListItem> retval = new List<SelectListItem>();
+            List<SelectListItem> sl = new List<SelectListItem>();
 
             List<EquipmentType> allTypes = await db.EquipmentTypes.Where(t => t.Deleted.HasValue == false).ToListAsync();
             foreach (var type in allTypes)
@@ -23,9 +23,16 @@ namespace ServiceSheetManager.ViewModelAssemblers
                     Text = type.Description,
                     Value = type.Id.ToString()
                 };
-                retval.Add(ss);
+
+                if (selectedItemId != null && type.Id == selectedItemId.Value)
+                {
+                    ss.Selected = true;
+                }
+
+                sl.Add(ss);
             }
 
+            SelectList retval = new SelectList(sl, "Value", "Text");
             return retval;
         }
     }

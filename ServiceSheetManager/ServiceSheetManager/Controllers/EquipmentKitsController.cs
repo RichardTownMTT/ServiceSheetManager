@@ -28,7 +28,10 @@ namespace ServiceSheetManager.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            EquipmentKit equipmentKit = await db.EquipmentKits.Where(k => k.Id == id.Value).Include(e => e.Equipments).FirstOrDefaultAsync();
+            //RT 16/1/17 - Changing to include the equipment type
+            //EquipmentKit equipmentKit = await db.EquipmentKits.Where(k => k.Id == id.Value).Include(e => e.Equipments).FirstOrDefaultAsync();
+            EquipmentKit equipmentKit = await db.EquipmentKits.Where(k => k.Id == id.Value).Include(e => e.Equipments).Include(k => k.EquipmentType).FirstOrDefaultAsync();
+
             if (equipmentKit == null)
             {
                 return HttpNotFound();
@@ -41,16 +44,21 @@ namespace ServiceSheetManager.Controllers
         }
 
         // GET: EquipmentKits/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             EquipmentKitVMAssembler assembler = new EquipmentKitVMAssembler();
-            CreateEquipmentKitVM vm = assembler.Create();
-            vm.EquipmentItems.Add(new CreateEquipmentItemVM());
-            vm.EquipmentItems.Add(new CreateEquipmentItemVM());
-            vm.EquipmentItems.Add(new CreateEquipmentItemVM());
-            vm.EquipmentItems.Add(new CreateEquipmentItemVM());
-            vm.EquipmentItems.Add(new CreateEquipmentItemVM());
-            vm.EquipmentItems.Add(new CreateEquipmentItemVM());
+
+            //Load the available equipment types
+            SelectList equipmentTypes = await EquipmentTypeVMAssembler.GetAllTypes(db, null);
+
+            CreateEquipmentKitVM vm = assembler.Create(equipmentTypes);
+
+            vm.EquipmentItems.Add(new CreateEquipmentItemVM(null));
+            vm.EquipmentItems.Add(new CreateEquipmentItemVM(null));
+            vm.EquipmentItems.Add(new CreateEquipmentItemVM(null));
+            vm.EquipmentItems.Add(new CreateEquipmentItemVM(null));
+            vm.EquipmentItems.Add(new CreateEquipmentItemVM(null));
+            vm.EquipmentItems.Add(new CreateEquipmentItemVM(null));
             return View(vm);
         }
 
@@ -71,6 +79,9 @@ namespace ServiceSheetManager.Controllers
                 if (!uniqueBarcode)
                 {
                     ModelState.AddModelError("", "Barcode already exists");
+
+                    await equipmentVM.RepopulateSelectLists(db, int.Parse(equipmentVM.SelectedEquipmentTypeId));
+
                     return View(equipmentVM);
                 }
 
@@ -78,10 +89,11 @@ namespace ServiceSheetManager.Controllers
 
                 //Map the equipment and kit from the view model.  Each is handled by a separate assessmbler
                 EquipmentKit kitToSave = kitViewModelAssembler.Map(equipmentVM);
-                List<CreateEquipmentItemVM> equipmentItemVMs = equipmentVM.EquipmentItems;
-                List<Equipment> equipmentToSave = equipmentViewModelAssembler.Map(equipmentItemVMs);
 
                 db.EquipmentKits.Add(kitToSave);
+
+                List<CreateEquipmentItemVM> equipmentItemVMs = equipmentVM.EquipmentItems;
+                List<Equipment> equipmentToSave = equipmentViewModelAssembler.Map(equipmentItemVMs);
 
                 foreach (var equipmentItem in equipmentToSave)
                 {
@@ -93,12 +105,15 @@ namespace ServiceSheetManager.Controllers
                 return RedirectToAction("Index", "Equipment");
             }
 
+            //If not valid, we have to re-populate the select list
+            await equipmentVM.RepopulateSelectLists(db, int.Parse(equipmentVM.SelectedEquipmentTypeId));
+
             return View(equipmentVM);
         }
 
         public ActionResult AddNewEquipment()
         {
-            var equipmentVM = new CreateEquipmentItemVM();
+            var equipmentVM = new CreateEquipmentItemVM(null);
 
             return PartialView("~/Views/Shared/EditorTemplates/CreateEquipmentItemVM.cshtml", equipmentVM);
         }
