@@ -40,7 +40,7 @@ namespace ServiceSheetManager.Helpers
                     return null;
                 }
 
-                List<CanvasResponse> equipmentResponsesToProcess = LoadEquipmentResponses(submission);
+                List<CanvasEquipmentResponse> equipmentResponsesToProcess = LoadEquipmentResponses(submission);
                 if (equipmentResponsesToProcess == null)
                 {
                     return null;
@@ -138,27 +138,41 @@ namespace ServiceSheetManager.Helpers
             return match;
         }
 
-        private static List<CanvasResponse> LoadEquipmentResponses(CanvasEquipmentSubmission submission)
+        private static List<CanvasEquipmentResponse> LoadEquipmentResponses(CanvasEquipmentSubmission submission)
         {
             //Load the equipment section and find each item checkout
-            CanvasSection equipmentSection = submission.Sections.Where(s => s.Name.Equals("Equipment")).FirstOrDefault();
+            CanvasEquipmentSection equipmentSection = submission.Sections.Where(s => s.Name.Equals("Equipment")).FirstOrDefault();
             if (equipmentSection == null)
             {
                 System.Diagnostics.Trace.TraceError("Unable to find equipment section from xml");
                 return null;
             }
 
-            CanvasScreen equipmentScreen = equipmentSection.CanvasScreenDetail.Where(s => s.Name.Equals("Equipment")).FirstOrDefault();
+            CanvasEquipmentScreen equipmentScreen = equipmentSection.CanvasScreenDetail.Where(s => s.Name.Equals("Equipment")).FirstOrDefault();
 
             //There may be one or multiple responses.  These are handled separately.
-            List<CanvasResponse> equipmentResponses = equipmentScreen.Responses;
+            CanvasEquipmentResponses equipmentResponses = equipmentScreen.Responses;
             if (equipmentResponses == null)
             {
                 System.Diagnostics.Trace.TraceError("Unable to find responses.  No barcodes submitted?");
                 return null;
             }
 
-            List<CanvasResponse> equipmentResponsesToProcess = new List<CanvasResponse>();
+            List<CanvasEquipmentResponse> equipmentResponsesToProcess = new List<CanvasEquipmentResponse>();
+
+            CanvasEquipmentResponse singleResponse = equipmentResponses.SingleResponse;
+            if (singleResponse != null)
+            {
+                equipmentResponsesToProcess.Add(singleResponse);
+            }
+
+            List<CanvasEquipmentResponse> multipleResponses = equipmentResponses.Responses;
+            if (multipleResponses != null)
+            {
+                equipmentResponsesToProcess.AddRange(multipleResponses);
+            }
+
+
             //if (equipmentResponses.Response != null)
             //{
             //    equipmentResponsesToProcess.Add(equipmentResponses.Response);
@@ -167,7 +181,7 @@ namespace ServiceSheetManager.Helpers
             //{
             //    equipmentResponsesToProcess.AddRange(equipmentResponses.Responses);
             //}
-            equipmentResponsesToProcess.AddRange(equipmentResponses);
+            //equipmentResponsesToProcess.AddRange(equipmentResponses);
 
             return equipmentResponsesToProcess;
         }
@@ -175,14 +189,14 @@ namespace ServiceSheetManager.Helpers
         private static string GetLocationFromSubmission(CanvasEquipmentSubmission submission)
         {
             //Load the checkout section and find the end location
-            CanvasSection location = submission.Sections.Where(s => s.Name.Equals("Check out")).FirstOrDefault();
+            CanvasEquipmentSection location = submission.Sections.Where(s => s.Name.Equals("Check out")).FirstOrDefault();
             if (location == null)
             {
                 System.Diagnostics.Trace.TraceError("Unable to find location section from xml");
                 return null;
             }
 
-            CanvasScreen locationScreen = location.CanvasScreenDetail.Where(s => s.Name.Equals("Check out")).FirstOrDefault();
+            CanvasEquipmentScreen locationScreen = location.CanvasScreenDetail.Where(s => s.Name.Equals("Check out")).FirstOrDefault();
             if (locationScreen == null)
             {
                 System.Diagnostics.Trace.TraceError("Unable to find location screen from xml");
@@ -190,7 +204,7 @@ namespace ServiceSheetManager.Helpers
             }
 
             //Location always has one response
-            CanvasResponse locationResponse = locationScreen.Responses.FirstOrDefault();
+            CanvasEquipmentResponse locationResponse = locationScreen.Responses.SingleResponse;
             string destination = locationResponse.Value;
             return destination;
         }

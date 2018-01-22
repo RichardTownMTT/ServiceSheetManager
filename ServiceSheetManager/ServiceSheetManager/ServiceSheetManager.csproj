@@ -218,15 +218,20 @@
       <DependentUpon>ServiceSheet.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasApiSubmission.cs" />
+    <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasEquipmentResponses.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasEquipmentSubmission.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasForm.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasRawXmlItem.cs" />
+    <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasEquipmentResponse.cs" />
+    <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasEquipmentResponseGroup.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasResponseGroup.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasResponse.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasResponses.cs" />
+    <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasEquipmentScreen.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasSection.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasSections.cs" />
     <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasScreen.cs" />
+    <Compile Include="Models\NonDbModels\CanvasRawDataModels\CanvasEquipmentSection.cs" />
     <Compile Include="Models\NonDbModels\EngineerCalendarDay.cs" />
     <Compile Include="Models\NonDbModels\EngineerCalendarDayDetails.cs" />
     <Compile Include="Models\NonDbModels\JobDetails.cs" />

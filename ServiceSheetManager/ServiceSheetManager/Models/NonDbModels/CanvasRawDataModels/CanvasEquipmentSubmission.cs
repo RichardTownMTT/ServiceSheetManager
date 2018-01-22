@@ -11,7 +11,7 @@ namespace ServiceSheetManager.Models.NonDbModels.CanvasRawDataModels
     {
         public CanvasEquipmentSubmission()
         {
-            Sections = new List<CanvasSection>();
+            Sections = new List<CanvasEquipmentSection>();
         }
 
         [XmlElement(ElementName = "SubmissionNumber")]
@@ -21,7 +21,7 @@ namespace ServiceSheetManager.Models.NonDbModels.CanvasRawDataModels
 
         [XmlArray("Sections")]
         [XmlArrayItem(ElementName = "Section")]
-        public List<CanvasSection> Sections { get; set; }
+        public List<CanvasEquipmentSection> Sections { get; set; }
 
         [XmlElement(ElementName = "UserName")]
         public string Username { get; set; }
