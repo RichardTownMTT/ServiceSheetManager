@@ -28,7 +28,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             else
             {
                 this.equipmentTypeDescription = "Not Set";
-                System.Diagnostics.Trace.TraceError("Equipment Type not loaded!");
+                System.Diagnostics.Trace.TraceError("Equipment Type not loaded! - Equipment Model id = " + equipmentModel.Id.ToString());
             }
 
             EquipmentLocation currentLocation = equipmentModel.EquipmentLocations.OrderByDescending(e => e.DtScanned).FirstOrDefault();

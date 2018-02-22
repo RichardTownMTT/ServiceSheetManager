@@ -30,7 +30,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             }
             else
             {
-                throw new Exception("Equipment Type not loaded!");
+                throw new Exception("Equipment Type not loaded! for equipment model - " + equipment.Id.ToString());
             }
 
             this.EquipmentTypes = equipmentTypesSL;

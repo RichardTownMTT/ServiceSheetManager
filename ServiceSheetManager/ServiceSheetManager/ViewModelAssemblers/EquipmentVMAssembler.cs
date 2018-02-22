@@ -41,7 +41,7 @@ namespace ServiceSheetManager.ViewModelAssemblers
             return originalEquipment;
         }
 
-        public async Task<EquipmentIndexVM> CreateEquipmentIndex(IQueryable<Equipment> equipments)
+        public async Task<EquipmentIndexVM> CreateEquipmentIndex(IQueryable<Equipment> equipments, List<EquipmentType> allEquipmentTypes)
         {
             //Go through all the equipment that is in a kit first
             //RT 15/1/18 - Adding in location
@@ -71,6 +71,9 @@ namespace ServiceSheetManager.ViewModelAssemblers
                 EquipmentIndexEquipmentItemVM equipmentItem = new EquipmentIndexEquipmentItemVM(equipmentNotInKit);
                 retval.AllEquipmentNotInKitItems.Add(equipmentItem);
             }
+
+            //Set the filter lists
+            retval.EquipmentTypes = EquipmentTypeVMAssembler.GetFilterList(allEquipmentTypes);
 
             return retval;
         }

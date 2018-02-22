@@ -31,7 +31,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             else
             {
                 this.equipmentTypeDescription = "Not Set";
-                System.Diagnostics.Trace.TraceError("Equipment Type not loaded!");
+                System.Diagnostics.Trace.TraceError("Equipment Type not loaded! - equipment model is " + equipmentModel.Id.ToString());
             }
         }
 

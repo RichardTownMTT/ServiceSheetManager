@@ -17,15 +17,23 @@ namespace ServiceSheetManager.Controllers
         private ServiceSheetsEntities db = new ServiceSheetsEntities();
 
         // GET: Equipment
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index([Bind] int? SelectedEquipmentTypeId)
         { 
             var equipments = db.Equipments.Include(e => e.EquipmentKit)
                                             .Include(e => e.EquipmentLocations)
                                             .Include(e => e.EquipmentKit.Equipments.Select(loc => loc.EquipmentLocations));
+
+            //Apply the filters
+            if (SelectedEquipmentTypeId.HasValue && SelectedEquipmentTypeId.Value != -1)
+            {
+                equipments = equipments.Where(e => e.EquipmentTypeId == SelectedEquipmentTypeId.Value || e.EquipmentKit.EquipmentTypeId == SelectedEquipmentTypeId.Value);
+            }
+
+            var equipmentTypes = await db.EquipmentTypes.ToListAsync();
             //Create the VMs
             EquipmentVMAssembler vMAssembler = new EquipmentVMAssembler();
 
-            EquipmentIndexVM indexVM = await vMAssembler.CreateEquipmentIndex(equipments);
+            EquipmentIndexVM indexVM = await vMAssembler.CreateEquipmentIndex(equipments, equipmentTypes);
 
             return View(indexVM);
         }

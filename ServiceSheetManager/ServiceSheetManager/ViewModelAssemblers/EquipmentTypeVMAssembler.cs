@@ -35,5 +35,20 @@ namespace ServiceSheetManager.ViewModelAssemblers
             SelectList retval = new SelectList(sl, "Value", "Text");
             return retval;
         }
+
+        public static SelectList GetFilterList(List<EquipmentType> allEquipmentTypes)
+        {
+            List<SelectListItem> retval = new List<SelectListItem>
+            {
+                new SelectListItem() { Text = "All", Value = "-1" }
+            };
+
+            foreach (var item in allEquipmentTypes)
+            {
+                retval.Add(new SelectListItem() { Text = item.Description, Value = item.Id.ToString()});
+            }
+
+            return new SelectList(retval, "Value", "Text");
+        }
     }
 }

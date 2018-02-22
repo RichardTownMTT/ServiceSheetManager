@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ServiceSheetManager.ViewModels.EquipmentVMs
 {
@@ -9,6 +11,10 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
     {
         private List<EquipmentIndexEquipmentItemVM> allEquipmentNotInKit;
         private List<EquipmentIndexKitItemVM> allKits;
+
+        //Filter options
+        private int selectedEquipmentTypeId;
+        private SelectList equipmentTypes;
 
         public EquipmentIndexVM()
         {
@@ -25,6 +31,17 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get { return allKits; }
             set { allKits = value; }
+        }
+        [Display(Name = "Equipment Type")]
+        public int SelectedEquipmentTypeId
+        {
+            get { return selectedEquipmentTypeId; }
+            set { selectedEquipmentTypeId = value; }
+        }
+        public SelectList EquipmentTypes
+        {
+            get { return equipmentTypes; }
+            set { equipmentTypes = value; }
         }
     }
 }
