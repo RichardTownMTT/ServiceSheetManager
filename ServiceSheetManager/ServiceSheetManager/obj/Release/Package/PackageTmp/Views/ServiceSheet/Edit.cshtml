@@ -12,7 +12,7 @@
 }
 else
 {
-    using (Html.BeginForm("Edit", "ServiceSheet", FormMethod.Post, new { @class = "form-horizontal" }))
+    using (Html.BeginForm("Edit", "ServiceSheet", FormMethod.Post, new { @class = "form-horizontal"}))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.Id)
@@ -242,7 +242,7 @@ else
                 <div class="col-md-2"></div>
                 <div class="col-md-2">@Html.ActionLink("Back", "Index", "ServiceSheetApproval", new { @class = "btn btn-default" })</div>
                 <div class="col-md-2">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                    <input type="submit" value="Save" class="btn btn-default"/>
                 </div>
                 <div class="col-md-6"></div>
             </div>
@@ -252,6 +252,7 @@ else
 
 <script>
     $(document).ready(function () {
+
         CallUpdateTravelOnly = function () {
             var sum = 0;
             $('.totalTravelTime').each(function () {
@@ -330,7 +331,6 @@ else
             }
             return valid;
         });
-
     });
 </script>
 
