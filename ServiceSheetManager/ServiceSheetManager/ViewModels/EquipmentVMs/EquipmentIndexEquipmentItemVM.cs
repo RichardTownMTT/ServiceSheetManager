@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using ServiceSheetManager.Helpers;
 using System.Linq;
 using ServiceSheetManager.Models;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +14,9 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string description;
         private string currentLocation;
         private string equipmentTypeDescription;
+        private bool calibrated;
+
+        private string calibrationCssClass;
 
         public EquipmentIndexEquipmentItemVM(Equipment equipmentModel)
         {
@@ -41,6 +44,12 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             {
                 CurrentLocation = "Location Not Set";
             }
+
+            EquipmentCalibration calibrationRecord = equipmentModel.EquipmentCalibrations.OrderByDescending(c => c.DtCalibrated).FirstOrDefault();
+            int? calibrationPeriodYears = equipmentModel.CalibrationPeriodYears;
+
+            Calibrated = EquipmentHelpers.IsItemCalibrated(calibrationRecord, calibrationPeriodYears);
+            
         }
 
         public int Id
@@ -68,6 +77,38 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get { return equipmentTypeDescription; }
             set { equipmentTypeDescription = value; }
+        }
+        public bool Calibrated
+        {
+            get { return calibrated; }
+            set { calibrated = value; }
+        }
+        [Display(Name = "Calibration Status")]
+        public String CalibrationText
+        {
+            get
+            {
+                if (Calibrated)
+                {
+                    return "Calibrated";
+                }
+                else
+                {
+                    return "Out of Calibration";
+                }
+            }
+        }
+
+        public string GetCalibrationCssClass
+        {
+            get
+            {
+                if (!Calibrated)
+                {
+                    return "danger";
+                }
+                return "";
+            }
         }
     }
 }

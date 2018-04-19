@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using ServiceSheetManager.Models;
 using ServiceSheetManager.ViewModelAssemblers;
+using ServiceSheetManager.Helpers;
 
 namespace ServiceSheetManager.ViewModels.EquipmentVMs
 {
@@ -15,6 +16,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string description;
         private string currentLocation;
         private string equipmentType;
+        private bool allCalibrated;
 
         public EquipmentIndexKitItemVM(EquipmentKit kitEquipment)
         {
@@ -40,6 +42,21 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             else
             {
                 CurrentLocation = "Location Not Set";
+            }
+
+            AllCalibrated = true;
+
+            foreach (var item in kitEquipment.Equipments)
+            {
+                int? calibrationPeriodYears = item.CalibrationPeriodYears;
+
+                EquipmentCalibration calibrationRecord = item.EquipmentCalibrations.OrderByDescending(c => c.DtCalibrated).FirstOrDefault();
+                bool calibrated = EquipmentHelpers.IsItemCalibrated(calibrationRecord, calibrationPeriodYears);
+
+                if (!calibrated)
+                {
+                    AllCalibrated = false;
+                }
             }
         }
 
@@ -68,6 +85,38 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get { return equipmentType; }
             set { equipmentType = value; }
+        }
+        public bool AllCalibrated
+        {
+            get { return allCalibrated; }
+            set { allCalibrated = value; }
+        }
+        [Display(Name = "Calibration Status")]
+        public String CalibrationText
+        {
+            get
+            {
+                if (AllCalibrated)
+                {
+                    return "Calibrated";
+                }
+                else
+                {
+                    return "Out of Calibration";
+                }
+            }
+        }
+
+        public string GetCalibrationCssClass
+        {
+            get
+            {
+                if (!AllCalibrated)
+                {
+                    return "danger";
+                }
+                return "";
+            }
         }
     }
 }

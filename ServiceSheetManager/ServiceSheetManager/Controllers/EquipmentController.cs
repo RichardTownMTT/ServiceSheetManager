@@ -21,7 +21,8 @@ namespace ServiceSheetManager.Controllers
         { 
             var equipments = db.Equipments.Include(e => e.EquipmentKit)
                                             .Include(e => e.EquipmentLocations)
-                                            .Include(e => e.EquipmentKit.Equipments.Select(loc => loc.EquipmentLocations));
+                                            .Include(e => e.EquipmentKit.Equipments.Select(loc => loc.EquipmentLocations))
+                                            .Include(e => e.EquipmentCalibrations);
 
             //Apply the filters
             if (SelectedEquipmentTypeId.HasValue && SelectedEquipmentTypeId.Value != -1)

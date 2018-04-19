@@ -60,6 +60,9 @@ else
                 @Html.DisplayNameFor(model => model.AllKits.FirstOrDefault().Description)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.AllKits.FirstOrDefault().CalibrationText)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.AllKits.FirstOrDefault().CurrentLocation)
             </th>
             <th></th>
@@ -67,7 +70,7 @@ else
 
         @foreach (var kitItem in Model.AllKits)
         {
-            <tr>
+            <tr class="@kitItem.GetCalibrationCssClass">
                 <td>
                     @Html.DisplayFor(modelItem => kitItem.Barcode)
                 </td>
@@ -76,6 +79,9 @@ else
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => kitItem.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => kitItem.CalibrationText)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => kitItem.CurrentLocation)
@@ -89,7 +95,7 @@ else
         }
         @foreach (var equipmentItem in Model.AllEquipmentNotInKitItems)
         {
-            <tr>
+            <tr class="@equipmentItem.GetCalibrationCssClass">
                 <td>
                     @Html.DisplayFor(modelItem => equipmentItem.Barcode)
                 </td>
@@ -98,6 +104,9 @@ else
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => equipmentItem.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => equipmentItem.CalibrationText)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => equipmentItem.CurrentLocation)

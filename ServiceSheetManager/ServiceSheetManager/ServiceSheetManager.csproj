@@ -192,6 +192,7 @@
     <Compile Include="Helpers\CanvasEquipmentHelper.cs" />
     <Compile Include="Helpers\CanvasImageHelpers.cs" />
     <Compile Include="Helpers\CanvasSubmissionHelpers.cs" />
+    <Compile Include="Helpers\EquipmentHelpers.cs" />
     <Compile Include="Helpers\PdfServiceSheetCreator.cs" />
     <Compile Include="Helpers\SendGridEmail.cs" />
     <Compile Include="Helpers\ServiceSheetHelpers.cs" />

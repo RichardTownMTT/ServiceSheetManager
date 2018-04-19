@@ -49,7 +49,8 @@ namespace ServiceSheetManager.ViewModelAssemblers
             //RT 17/1/18 - Adding in type
             //List<EquipmentKit> equipmentInKit = await equipments.Where(e => e.EquipmentKitId.HasValue).Select(k => k.EquipmentKit).Distinct().Include(k => k.EquipmentLocations).ToListAsync();
             List<EquipmentKit> equipmentInKit = await equipments.Where(e => e.EquipmentKitId.HasValue).Select(k => k.EquipmentKit).Distinct()
-                                                    .Include(k => k.EquipmentLocations).Include(e => e.EquipmentType).ToListAsync();
+                                                    .Include(k => k.EquipmentLocations).Include(e => e.EquipmentType)
+                                                    .Include(e => e.Equipments.Select(c => c.EquipmentCalibrations)).ToListAsync();
 
 
 
@@ -64,7 +65,8 @@ namespace ServiceSheetManager.ViewModelAssemblers
             //List<Equipment> equipmentOnly = await equipments.Where(e => e.EquipmentKitId.HasValue == false).ToListAsync();
             //Adding in type
             //List<Equipment> equipmentOnly = await equipments.Where(e => e.EquipmentKitId.HasValue == false).Include(e => e.EquipmentLocations).ToListAsync();
-            List<Equipment> equipmentOnly = await equipments.Where(e => e.EquipmentKitId.HasValue == false).Include(e => e.EquipmentLocations).Include(e => e.EquipmentType).ToListAsync();
+            List<Equipment> equipmentOnly = await equipments.Where(e => e.EquipmentKitId.HasValue == false).Include(e => e.EquipmentLocations).Include(e => e.EquipmentType)
+                                                    .Include(e => e.EquipmentCalibrations).ToListAsync();
 
             foreach (var equipmentNotInKit in equipmentOnly)
             {
