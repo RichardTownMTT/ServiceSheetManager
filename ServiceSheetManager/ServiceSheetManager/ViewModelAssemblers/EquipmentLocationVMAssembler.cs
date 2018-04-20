@@ -10,8 +10,10 @@ namespace ServiceSheetManager.ViewModelAssemblers
     {
         public const string ASSIGN_TO_ME = "Assign to me";
         public const string RETURN_TO_UNIT = "Return to Unit";
+        public const string AWAY_FOR_CALIBRATION = "Away for Calibration";
         public const int ASSIGN_TO_ME_INT = 1;
         public const int RETURN_TO_UNIT_INT = 2;
+        public const int AWAY_FOR_CALIBRATION_INT = 3;
 
         public static int SetLocationCodeForLocation(string location)
         {
@@ -23,6 +25,9 @@ namespace ServiceSheetManager.ViewModelAssemblers
                     break;
                 case RETURN_TO_UNIT:
                     retval = RETURN_TO_UNIT_INT;
+                    break;
+                case AWAY_FOR_CALIBRATION:
+                    retval = AWAY_FOR_CALIBRATION_INT;
                     break;
                 default:
                     retval = -1;
@@ -42,6 +47,9 @@ namespace ServiceSheetManager.ViewModelAssemblers
                     break;
                 case RETURN_TO_UNIT_INT:
                     retval = "Unit";
+                    break;
+                case AWAY_FOR_CALIBRATION_INT:
+                    retval = AWAY_FOR_CALIBRATION;
                     break;
                 default:
                     retval = "Unknown Location Code";
