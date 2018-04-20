@@ -34,5 +34,30 @@ namespace ServiceSheetManager.Helpers
             }
 
         }
+
+        public static DateTime? CalculateCalibrationDueDate(Equipment item)
+        {
+            if (item.EquipmentCalibrations.Count == 0)
+            {
+                return null;
+            }
+
+            EquipmentCalibration lastCalibration = item.EquipmentCalibrations.OrderByDescending(c => c.DtCalibrated).FirstOrDefault();
+            int? calPeriodYears = item.CalibrationPeriodYears;
+
+            DateTime calDue = lastCalibration.DtCalibrated.AddYears(calPeriodYears.Value);
+            return calDue;
+        }
+
+        public static DateTime? GetLastCalibratedDate(Equipment item)
+        {
+            if (item.EquipmentCalibrations.Count == 0)
+            {
+                return null;
+            }
+
+            EquipmentCalibration lastCal = item.EquipmentCalibrations.OrderByDescending(m => m.DtCalibrated).FirstOrDefault();
+            return lastCal.DtCalibrated;
+        }
     }
 }

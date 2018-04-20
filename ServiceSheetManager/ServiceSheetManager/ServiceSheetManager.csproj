@@ -181,6 +181,7 @@
     <Compile Include="Controllers\EngineerStatisticsController.cs" />
     <Compile Include="Controllers\EquipmentController.cs" />
     <Compile Include="Controllers\EquipmentKitsController.cs" />
+    <Compile Include="Controllers\EquipmentReportsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobCostController.cs" />
     <Compile Include="Controllers\MatrixServiceStatsController.cs" />
@@ -267,6 +268,7 @@
     </Compile>
     <Compile Include="ViewModelAssemblers\EquipmentKitVMAssembler.cs" />
     <Compile Include="ViewModelAssemblers\EquipmentLocationVMAssembler.cs" />
+    <Compile Include="ViewModelAssemblers\EquipmentReportsVMAssembler.cs" />
     <Compile Include="ViewModelAssemblers\EquipmentTypeVMAssembler.cs" />
     <Compile Include="ViewModels\EngineerCalendarVM.cs" />
     <Compile Include="Helpers\JobCostHelpers.cs" />
@@ -275,6 +277,8 @@
     <Compile Include="ViewModels\EquipmentVMs\CreateEquipmentKitVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\DisplayEquipmentItemVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\DisplayEquipmentKitVM.cs" />
+    <Compile Include="ViewModels\EquipmentVMs\EquipmentCalibrationDueItemVM.cs" />
+    <Compile Include="ViewModels\EquipmentVMs\EquipmentCalibrationDueReportVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\EquipmentIndexEquipmentItemVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\EditEquipmentItemVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\EquipmentIndexKitItemVM.cs" />
@@ -420,12 +424,14 @@
     <Content Include="Views\EquipmentKits\Details.cshtml" />
     <Content Include="Views\EquipmentKits\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CreateEquipmentItemVM.cshtml" />
+    <Content Include="Views\EquipmentReports\CalibrationDueOrder.cshtml" />
     <None Include="Web.SECRETS.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\CanvasEquipmentSubmission\" />
     <Folder Include="Views\CanvasSubmission\" />
+    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

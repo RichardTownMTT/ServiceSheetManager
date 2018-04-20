@@ -15,8 +15,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string currentLocation;
         private string equipmentTypeDescription;
         private bool calibrated;
-
-        private string calibrationCssClass;
+        
 
         public EquipmentIndexEquipmentItemVM(Equipment equipmentModel)
         {
@@ -103,6 +102,10 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get
             {
+                if (CurrentLocation.Equals(EquipmentLocationVMAssembler.AWAY_FOR_CALIBRATION))
+                {
+                    return "success";
+                }
                 if (!Calibrated)
                 {
                     return "danger";

@@ -111,6 +111,11 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get
             {
+                if (CurrentLocation.Equals(EquipmentLocationVMAssembler.AWAY_FOR_CALIBRATION))
+                {
+                    return "success";
+                }
+
                 if (!AllCalibrated)
                 {
                     return "danger";

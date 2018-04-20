@@ -1,0 +1,37 @@
+﻿@model ServiceSheetManager.ViewModels.EquipmentVMs.EquipmentCalibrationDueReportVM
+
+@{
+    ViewBag.Title = "Calibration Due Report";
+}
+
+<h2>Calibration Due Date Report</h2>
+
+@if (Model.AllItems.Count == 0)
+{
+    <p>There are no items to show.</p>
+}
+else
+{
+    <table class="table">
+            <tr>
+                <th>@Html.LabelFor(m => m.AllItems.FirstOrDefault().Barcode)</th>
+                <th>@Html.LabelFor(m => m.AllItems.FirstOrDefault().KitDescription)</th>
+                <th>@Html.LabelFor(m => m.AllItems.FirstOrDefault().Description)</th>
+                <th>@Html.LabelFor(m => m.AllItems.FirstOrDefault().CalibrationPeriod)</th>
+                <th>@Html.LabelFor(m => m.AllItems.FirstOrDefault().LastCalibratedStr)</th>
+                <th>@Html.LabelFor(m => m.AllItems.FirstOrDefault().CalibrationDueStr)</th>
+            </tr>
+        @foreach (var item in Model.AllItems)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => item.Barcode)</td>
+                <td>@Html.DisplayFor(m => item.KitDescription)</td>
+                <td>@Html.DisplayFor(m => item.Description)</td>
+                <td>@Html.DisplayFor(m => item.CalibrationPeriod)</td>
+                <td>@Html.DisplayFor(m => item.LastCalibratedStr)</td>
+                <td>@Html.DisplayFor(m => item.CalibrationDueStr)</td>
+            </tr>
+        }
+    </table>
+}
+
