@@ -22,11 +22,14 @@ namespace ServiceSheetManager.ViewModelAssemblers
                 EquipmentCalibrationDueItemVM itemToAdd = new EquipmentCalibrationDueItemVM(item);
 
                 //Add to report if calibration day is before today or hasn't been calibrated
-                if (itemToAdd.LastCalibrated.HasValue && itemToAdd.LastCalibrated < DateTime.Now)
+                if (itemToAdd.CalibrationDue.HasValue)
                 {
-                    retval.AllItems.Add(itemToAdd);
+                    if (itemToAdd.CalibrationDue.Value < DateTime.Now)
+                    {
+                        retval.AllItems.Add(itemToAdd);
+                    } 
                 }
-                else if (!itemToAdd.LastCalibrated.HasValue)
+                else if (!itemToAdd.CalibrationDue.HasValue)
                 {
                     retval.AllItems.Add(itemToAdd);
                 }
