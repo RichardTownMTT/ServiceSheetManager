@@ -20,7 +20,8 @@ namespace ServiceSheetManager.Controllers
         // GET: EquipmentReports
         public async Task<ActionResult> CalibrationDueOrder()
         {
-            var allEquipment = db.Equipments.Include(e => e.EquipmentKit).Include(e => e.EquipmentKit).Include(e => e.EquipmentCalibrations);
+            var allEquipment = db.Equipments.Include(e => e.EquipmentKit).Include(e => e.EquipmentKit.Equipments.Select(loc => loc.EquipmentLocations)).
+                                            Include(e => e.EquipmentCalibrations).Include(e => e.EquipmentLocations);
 
             EquipmentCalibrationDueReportVM vm = await EquipmentReportsVMAssembler.GenerateReportVM(allEquipment);
 

@@ -122,7 +122,8 @@ namespace ServiceSheetManager.Controllers
                 return RedirectToAction("Error");
             }
 
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("Index", "ServiceSheet", new { SubmissionNumber = vm.ServiceSheetModel.SubmissionNumber });
         }
 
         //private void updateServiceSheetTotals(ServiceSheet serviceSheetAdd)

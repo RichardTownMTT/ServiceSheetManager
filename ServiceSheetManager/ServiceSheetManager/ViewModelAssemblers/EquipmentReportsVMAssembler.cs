@@ -13,7 +13,8 @@ namespace ServiceSheetManager.ViewModelAssemblers
     {
         public static async Task<EquipmentCalibrationDueReportVM> GenerateReportVM(IQueryable<Equipment> allEquipment)
         {
-            List<Equipment> equipmentItems = await allEquipment.Where(e => e.CalibrationPeriodYears != null).Include(e => e.EquipmentCalibrations).Include(e => e.EquipmentKit).ToListAsync();
+            List<Equipment> equipmentItems = await allEquipment.Where(e => e.CalibrationPeriodYears != null).Include(e => e.EquipmentCalibrations).Include(e => e.EquipmentKit)
+                                                                .Include(e => e.EquipmentKit).Include(e => e.EquipmentKit.Equipments.Select(loc => loc.EquipmentLocations)).ToListAsync();
 
             EquipmentCalibrationDueReportVM retval = new EquipmentCalibrationDueReportVM();
 

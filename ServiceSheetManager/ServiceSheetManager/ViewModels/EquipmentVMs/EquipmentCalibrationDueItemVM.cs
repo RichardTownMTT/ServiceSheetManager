@@ -5,6 +5,7 @@ using System.Web;
 using ServiceSheetManager.Models;
 using ServiceSheetManager.Helpers;
 using System.ComponentModel.DataAnnotations;
+using ServiceSheetManager.ViewModelAssemblers;
 
 namespace ServiceSheetManager.ViewModels.EquipmentVMs
 {
@@ -16,6 +17,8 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string kitDescription;
         private int calibrationPeriod;
         private DateTime? calibrationDue;
+        private string location;
+        private int locationCode;
 
         public EquipmentCalibrationDueItemVM(Equipment item)
         {
@@ -28,11 +31,17 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             {
                 Barcode = item.EquipmentKit.Barcode;
                 KitDescription = item.EquipmentKit.Description;
+                List<EquipmentLocation> allLocations = item.EquipmentKit.EquipmentLocations.ToList();
+                location = EquipmentLocationVMAssembler.GetLocationDescription(allLocations);
+                locationCode = EquipmentLocationVMAssembler.GetLocationCode(allLocations);
             }
             else
             {
                 Barcode = item.Barcode;
                 KitDescription = "N/A";
+                List<EquipmentLocation> locations = item.EquipmentLocations.ToList();
+                location = EquipmentLocationVMAssembler.GetLocationDescription(locations);
+                locationCode = EquipmentLocationVMAssembler.GetLocationCode(locations);
             }
 
             CalibrationDue = EquipmentHelpers.CalculateCalibrationDueDate(item);
@@ -101,6 +110,24 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
                 {
                     return "No calibration record found";
                 }
+            }
+        }
+
+        public string Location
+        {
+            get { return location; }
+            set { location = value; }
+        }
+
+        public string GetRowCss
+        {
+            get
+            {
+                if (locationCode == EquipmentLocationVMAssembler.AWAY_FOR_CALIBRATION_INT)
+                {
+                    return "success";
+                }
+                return "";
             }
         }
     }

@@ -37,6 +37,36 @@ namespace ServiceSheetManager.ViewModelAssemblers
             return retval;
         }
 
+        public static int GetLocationCode(List<EquipmentLocation> allLocations)
+        {
+            if (allLocations.Count == 0)
+            {
+                return -1;
+            }
+
+            EquipmentLocation current = allLocations.OrderByDescending(l => l.DtScanned).FirstOrDefault();
+            return current.LocationCode;
+        }
+
+        public static string GetLocationDescription(List<EquipmentLocation> allLocations)
+        {
+            if (allLocations.Count == 0)
+            {
+                return "Location Not Set";
+            }
+
+            EquipmentLocation latest = allLocations.OrderByDescending(l => l.DtScanned).FirstOrDefault();
+
+            if (latest != null)
+            {
+                return GetLocationDescription(latest);
+            }
+            else
+            {
+                return "Location Not Set";
+            }
+        }
+
         public static string GetLocationDescription(EquipmentLocation currentLocation)
         {
             string retval = "";
