@@ -1,10 +1,10 @@
 ﻿@model ServiceSheetManager.ViewModels.EquipmentVMs.EquipmentCalibrationDueReportVM
 
 @{
-    ViewBag.Title = "Calibration Due Report";
+    ViewBag.Title = "Overdue Calibration Report";
 }
 
-<h2>Calibration Due Date Report</h2>
+<h2>Overdue Calibration Report</h2>
 
 @if (Model.AllItems.Count == 0)
 {
@@ -20,16 +20,18 @@ else
                 <th>@Html.LabelFor(m => m.AllItems.FirstOrDefault().CalibrationPeriod)</th>
                 <th>@Html.LabelFor(m => m.AllItems.FirstOrDefault().LastCalibratedStr)</th>
                 <th>@Html.LabelFor(m => m.AllItems.FirstOrDefault().CalibrationDueStr)</th>
+                <th>@Html.LabelFor(m => m.AllItems.FirstOrDefault().Location)</th>
             </tr>
         @foreach (var item in Model.AllItems)
         {
-            <tr>
+            <tr class="@item.GetRowCss">
                 <td>@Html.DisplayFor(m => item.Barcode)</td>
                 <td>@Html.DisplayFor(m => item.KitDescription)</td>
                 <td>@Html.DisplayFor(m => item.Description)</td>
                 <td>@Html.DisplayFor(m => item.CalibrationPeriod)</td>
                 <td>@Html.DisplayFor(m => item.LastCalibratedStr)</td>
                 <td>@Html.DisplayFor(m => item.CalibrationDueStr)</td>
+                <td>@Html.DisplayFor(m => item.Location)</td>
             </tr>
         }
     </table>

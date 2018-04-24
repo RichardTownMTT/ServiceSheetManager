@@ -179,6 +179,7 @@
     <Compile Include="Controllers\CanvasEquipmentSubmissionController.cs" />
     <Compile Include="Controllers\CanvasSubmissionController.cs" />
     <Compile Include="Controllers\EngineerStatisticsController.cs" />
+    <Compile Include="Controllers\EquipmentCalibrationController.cs" />
     <Compile Include="Controllers\EquipmentController.cs" />
     <Compile Include="Controllers\EquipmentKitsController.cs" />
     <Compile Include="Controllers\EquipmentReportsController.cs" />
@@ -266,6 +267,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelAssemblers\EquipmentCalibrationVMAssembler.cs" />
     <Compile Include="ViewModelAssemblers\EquipmentKitVMAssembler.cs" />
     <Compile Include="ViewModelAssemblers\EquipmentLocationVMAssembler.cs" />
     <Compile Include="ViewModelAssemblers\EquipmentReportsVMAssembler.cs" />
@@ -273,6 +275,7 @@
     <Compile Include="ViewModels\EngineerCalendarVM.cs" />
     <Compile Include="Helpers\JobCostHelpers.cs" />
     <Compile Include="Helpers\EngineerStatisticsHelpers.cs" />
+    <Compile Include="ViewModels\EquipmentVMs\CreateEquipmentCalibrationVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\CreateEquipmentItemVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\CreateEquipmentKitVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\DisplayEquipmentItemVM.cs" />
@@ -425,6 +428,7 @@
     <Content Include="Views\EquipmentKits\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CreateEquipmentItemVM.cshtml" />
     <Content Include="Views\EquipmentReports\CalibrationDueOrder.cshtml" />
+    <Content Include="Views\EquipmentCalibration\Create.cshtml" />
     <None Include="Web.SECRETS.config" />
   </ItemGroup>
   <ItemGroup>

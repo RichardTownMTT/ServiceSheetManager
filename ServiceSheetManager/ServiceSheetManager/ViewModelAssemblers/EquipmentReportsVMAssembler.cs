@@ -37,6 +37,11 @@ namespace ServiceSheetManager.ViewModelAssemblers
                 
             }
 
+            if (retval.AllItems.Count > 0)
+            {
+                retval.AllItems = retval.AllItems.OrderBy(e => e.Barcode).ToList();
+            }
+
             return retval;
         }
     }

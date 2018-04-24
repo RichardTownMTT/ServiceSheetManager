@@ -1,0 +1,54 @@
+﻿@model ServiceSheetManager.ViewModels.EquipmentVMs.CreateEquipmentCalibrationVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<div>
+    <form class="form-inline" asp-action="Create" method="get">
+        @Html.LabelFor(m => m.EquipmentBarcodesAndDesc)
+        @Html.DropDownListFor(m => m.SelectedEquipmentItem, new SelectList(Model.EquipmentBarcodesAndDesc, "Text", "Value"))
+        <input type="submit" value="Load Equipment" class="btn btn-default" />
+    </form>
+</div>
+@if (Model.EquipmentLoaded)
+{
+    <div class="panel panel-default">
+        <div class="row">
+            <div class="col-md-2">@Html.LabelFor(m => m.EquipmentDescription)</div>
+            <div class="col-md-4">@Html.DisplayFor(m => m.EquipmentDescription)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">@Html.LabelFor(m => m.SerialNumber)</div>
+            <div class="col-md-4">@Html.DisplayFor(m => m.SerialNumber)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">@Html.LabelFor(m => m.CalibrationPeriod)</div>
+            <div class="col-md-4">@Html.DisplayFor(m => m.CalibrationPeriod)</div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        @using (Html.BeginForm("CreateSave", "EquipmentCalibration", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.IdSelected)
+            <div class="row">
+                <div class="col-md-2">@Html.LabelFor(m => m.CertificateNo)</div>
+                <div class="col-md-4">@Html.EditorFor(m => m.CertificateNo)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">@Html.LabelFor(m => m.PassedCalibration)</div>
+                <div class="col-md-4">@Html.EditorFor(m => m.PassedCalibration)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">@Html.LabelFor(m => m.DtPassedCal)</div>
+                <div class="col-md-4">@Html.EditorFor(m => m.DtPassedCal)</div>
+                <div class="col-md-6">@Html.ValidationMessageFor(m => m.DtPassedCal)</div>
+            </div>
+            <input type="submit" value="Save" class="btn btn-default" />
+        }
+    </div>
+}
+
