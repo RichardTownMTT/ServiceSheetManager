@@ -44,7 +44,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
                 CurrentLocation = "Location Not Set";
             }
 
-            EquipmentCalibration calibrationRecord = equipmentModel.EquipmentCalibrations.OrderByDescending(c => c.DtCalibrated).FirstOrDefault();
+            EquipmentCalibration calibrationRecord = equipmentModel.EquipmentCalibrations.Where(e => e.Passed == true).OrderByDescending(c => c.DtCalibrated).FirstOrDefault();
             int? calibrationPeriodYears = equipmentModel.CalibrationPeriodYears;
 
             Calibrated = EquipmentHelpers.IsItemCalibrated(calibrationRecord, calibrationPeriodYears);

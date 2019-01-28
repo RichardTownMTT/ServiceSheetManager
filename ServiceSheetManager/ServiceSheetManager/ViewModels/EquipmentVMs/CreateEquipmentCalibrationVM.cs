@@ -23,7 +23,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         public CreateEquipmentCalibrationVM()
         {
             EquipmentBarcodesAndDesc = new List<SelectListItem>();
-            DtPassedCal = new DateTime();
+            DtPassedCal = DateTime.Now;
             EquipmentLoaded = false;
         }
 
@@ -67,8 +67,9 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             get { return passedCalibration; }
             set { passedCalibration = value; }
         }
-        [Display(Name = "Date Calibration Passed")]
+        [Display(Name = "Date Passed")]
         [Required]
+        [DataType(DataType.Date)]
         public DateTime DtPassedCal
         {
             get { return dtPassedCal; }
@@ -80,6 +81,8 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             set { equipmentLoaded = value; }
         }
         [Display(Name = "Certificate Number")]
+        [Required]
+        [MinLength(0)]
         public string CertificateNo
         {
             get { return certificateNo; }

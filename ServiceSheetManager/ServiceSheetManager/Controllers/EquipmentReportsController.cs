@@ -27,5 +27,26 @@ namespace ServiceSheetManager.Controllers
 
             return View(vm);
         }
+
+        //public async Task<ActionResult> EquipmentLocationHistory(EquipmentLocationHistoryVM returnedVM)
+        //{
+        //    EquipmentLocationHistoryVM vm = new EquipmentLocationHistoryVM(); ;
+
+        //    if (returnedVM.SelectedEquipmentItemBarcode == null)
+        //    {
+        //        var allEquipmentAndKit = await db.Equipments.Include(e => e.EquipmentKit).ToListAsync();
+
+        //        vm = EquipmentLocationHistoryReportVMAssembler.LoadEquipmentOnly(allEquipmentAndKit);
+        //    }
+        //    else
+        //    {
+        //        var allEquipmentKitAndLocations = await db.Equipments.Include(e => e.EquipmentKit).Include(e => e.EquipmentLocations).ToListAsync();
+
+
+        //        vm = EquipmentLocationHistoryReportVMAssembler.LoadEquipmentAndHistory(allEquipmentKitAndLocations, returnedVM.SelectedEquipmentItemBarcode);
+        //    }
+
+        //    return View(vm);
+        //}
     }
 }

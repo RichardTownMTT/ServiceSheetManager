@@ -42,21 +42,31 @@ namespace ServiceSheetManager.Helpers
                 return null;
             }
 
-            EquipmentCalibration lastCalibration = item.EquipmentCalibrations.OrderByDescending(c => c.DtCalibrated).FirstOrDefault();
+            EquipmentCalibration lastCalibration = item.EquipmentCalibrations.Where(e => e.Passed == true).OrderByDescending(c => c.DtCalibrated).FirstOrDefault();
+            if (lastCalibration == null)
+            {
+                //Failed calibration
+                return null;
+            }
             int? calPeriodYears = item.CalibrationPeriodYears;
 
             DateTime calDue = lastCalibration.DtCalibrated.AddYears(calPeriodYears.Value);
             return calDue;
         }
 
-        public static DateTime? GetLastCalibratedDate(Equipment item)
+        public static DateTime? GetLastCalibratedPassedDate(Equipment item)
         {
             if (item.EquipmentCalibrations.Count == 0)
             {
                 return null;
             }
 
-            EquipmentCalibration lastCal = item.EquipmentCalibrations.OrderByDescending(m => m.DtCalibrated).FirstOrDefault();
+            EquipmentCalibration lastCal = item.EquipmentCalibrations.Where(e => e.Passed == true).OrderByDescending(m => m.DtCalibrated).FirstOrDefault();
+            if (lastCal == null)
+            {
+                //Failed calibration
+                return null;
+            }
             return lastCal.DtCalibrated;
         }
     }

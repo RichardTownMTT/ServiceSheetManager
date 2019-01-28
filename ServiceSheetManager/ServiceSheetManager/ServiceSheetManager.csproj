@@ -269,6 +269,7 @@
     </Compile>
     <Compile Include="ViewModelAssemblers\EquipmentCalibrationVMAssembler.cs" />
     <Compile Include="ViewModelAssemblers\EquipmentKitVMAssembler.cs" />
+    <Compile Include="ViewModelAssemblers\EquipmentLocationHistoryReportVMAssembler.cs" />
     <Compile Include="ViewModelAssemblers\EquipmentLocationVMAssembler.cs" />
     <Compile Include="ViewModelAssemblers\EquipmentReportsVMAssembler.cs" />
     <Compile Include="ViewModelAssemblers\EquipmentTypeVMAssembler.cs" />
@@ -287,6 +288,8 @@
     <Compile Include="ViewModels\EquipmentVMs\EquipmentIndexKitItemVM.cs" />
     <Compile Include="ViewModels\EquipmentVMs\EquipmentIndexVM.cs" />
     <Compile Include="ViewModelAssemblers\EquipmentVMAssembler.cs" />
+    <Compile Include="ViewModels\EquipmentVMs\EquipmentLocationHistoryReportItem.cs" />
+    <Compile Include="ViewModels\EquipmentVMs\EquipmentLocationHistoryVM.cs" />
     <Compile Include="ViewModels\JobCostDetailsVM.cs" />
     <Compile Include="ViewModels\MatrixServiceStatsVM.cs" />
     <Compile Include="ViewModels\ServiceDayCreateVM.cs" />
@@ -429,6 +432,7 @@
     <Content Include="Views\Shared\EditorTemplates\CreateEquipmentItemVM.cshtml" />
     <Content Include="Views\EquipmentReports\CalibrationDueOrder.cshtml" />
     <Content Include="Views\EquipmentCalibration\Create.cshtml" />
+    <Content Include="Views\EquipmentReports\EquipmentLocationHistory.cshtml" />
     <None Include="Web.SECRETS.config" />
   </ItemGroup>
   <ItemGroup>

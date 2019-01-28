@@ -23,7 +23,7 @@ namespace ServiceSheetManager.Controllers
             //Need to load the equipment Types to the view
             EquipmentCalibrationVMAssembler assembler = new EquipmentCalibrationVMAssembler();
 
-            List<Equipment> allEquipmentAndKits = await db.Equipments.Include(e => e.EquipmentKit).ToListAsync();
+            List<Equipment> allEquipmentAndKits = await db.Equipments.Where(e => e.CalibrationPeriodYears != null).Include(e => e.EquipmentKit).ToListAsync();
 
             CreateEquipmentCalibrationVM equipmentCalVM = assembler.CreateEquipmentSearchView(allEquipmentAndKits, equipmentCalVMReturned);
 
@@ -45,16 +45,20 @@ namespace ServiceSheetManager.Controllers
 
             if (cal.DtCalibrated == new DateTime())
             {
-                ModelState.AddModelError(equipmentCalVMReturned.DtPassedCal.ToString(), "Date is required");
+                ModelState.AddModelError("", "Date is required");
             }
 
-            db.EquipmentCalibrations.Add(cal);
+            
             if (ModelState.IsValid)
             {
+                db.EquipmentCalibrations.Add(cal);
                 await db.SaveChangesAsync();
+                return RedirectToAction("Index", "Equipment");
             }
 
-            return null;
+            equipmentCalVMReturned.EquipmentLoaded = true;
+            equipmentCalVMReturned.SelectedEquipmentItem = equipmentCalVMReturned.IdSelected.ToString();
+            return RedirectToAction("Create", equipmentCalVMReturned);
 
         }
     }

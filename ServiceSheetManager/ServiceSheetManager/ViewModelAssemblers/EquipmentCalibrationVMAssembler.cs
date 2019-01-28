@@ -12,9 +12,10 @@ namespace ServiceSheetManager.ViewModelAssemblers
     {
         public CreateEquipmentCalibrationVM CreateEquipmentSearchView(List<Equipment> allEquipmentAndKits, CreateEquipmentCalibrationVM equipmentCalVMReturned)
         {
-            CreateEquipmentCalibrationVM vm = new CreateEquipmentCalibrationVM();
-
-            vm.EquipmentBarcodesAndDesc = createEquipmentSelectList(allEquipmentAndKits);
+            CreateEquipmentCalibrationVM vm = new CreateEquipmentCalibrationVM
+            {
+                EquipmentBarcodesAndDesc = CreateEquipmentSelectList(allEquipmentAndKits)
+            };
 
             int equipmentIdSelected;
             try
@@ -26,8 +27,9 @@ namespace ServiceSheetManager.ViewModelAssemblers
                 System.Diagnostics.Trace.TraceError(ex.ToString());
                 equipmentIdSelected = 0;
             }
-            catch (ArgumentNullException nEx)
+            catch (ArgumentNullException)
             {
+
                 equipmentIdSelected = 0;
             }
 
@@ -49,7 +51,7 @@ namespace ServiceSheetManager.ViewModelAssemblers
             return vm;
         }
 
-        private List<SelectListItem> createEquipmentSelectList(List<Equipment> allEquipmentAndKits)
+        private List<SelectListItem> CreateEquipmentSelectList(List<Equipment> allEquipmentAndKits)
         {
             List<SelectListItem> retval = new List<SelectListItem>();
 
@@ -57,13 +59,13 @@ namespace ServiceSheetManager.ViewModelAssemblers
             {
                 if (equipment.EquipmentKitId != null)
                 {
-                    string kitDesc = createKitDescription(equipment);
+                    string kitDesc = CreateKitDescription(equipment);
                     SelectListItem item = new SelectListItem() { Value = kitDesc, Text = equipment.Id.ToString() };
                     retval.Add(item);
                 }
                 else
                 {
-                    string kitDesc = createEquipmentDescription(equipment);
+                    string kitDesc = CreateEquipmentDescription(equipment);
                     SelectListItem item = new SelectListItem() { Value = kitDesc, Text = equipment.Id.ToString() };
                     retval.Add(item);
                 }
@@ -73,13 +75,13 @@ namespace ServiceSheetManager.ViewModelAssemblers
             return retval;
         }
 
-        private string createEquipmentDescription(Equipment equipment)
+        private string CreateEquipmentDescription(Equipment equipment)
         {
             string retval = equipment.Barcode + " - " + equipment.Description;
             return retval;
         }
 
-        private string createKitDescription(Equipment equipment)
+        private string CreateKitDescription(Equipment equipment)
         {
             string retval = equipment.EquipmentKit.Barcode + " - " + equipment.Description;
             return retval;

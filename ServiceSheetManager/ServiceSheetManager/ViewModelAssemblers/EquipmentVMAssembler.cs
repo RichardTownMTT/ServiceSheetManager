@@ -74,6 +74,9 @@ namespace ServiceSheetManager.ViewModelAssemblers
                 retval.AllEquipmentNotInKitItems.Add(equipmentItem);
             }
 
+            retval.AllEquipmentNotInKitItems = retval.AllEquipmentNotInKitItems.OrderBy(e => e.Barcode).ToList();
+            retval.AllKits = retval.AllKits.OrderBy(e => e.Barcode).ToList();
+
             //Set the filter lists
             retval.EquipmentTypes = EquipmentTypeVMAssembler.GetFilterList(allEquipmentTypes);
 

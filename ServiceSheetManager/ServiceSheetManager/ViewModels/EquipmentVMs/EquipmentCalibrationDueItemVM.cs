@@ -45,7 +45,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             }
 
             CalibrationDue = EquipmentHelpers.CalculateCalibrationDueDate(item);
-            LastCalibrated = EquipmentHelpers.GetLastCalibratedDate(item);
+            LastCalibrated = EquipmentHelpers.GetLastCalibratedPassedDate(item);
             Description = item.Description;
             CalibrationPeriod = item.CalibrationPeriodYears.Value;
         }

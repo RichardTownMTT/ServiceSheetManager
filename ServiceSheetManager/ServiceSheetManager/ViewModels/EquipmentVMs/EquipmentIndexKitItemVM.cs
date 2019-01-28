@@ -50,7 +50,7 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             {
                 int? calibrationPeriodYears = item.CalibrationPeriodYears;
 
-                EquipmentCalibration calibrationRecord = item.EquipmentCalibrations.OrderByDescending(c => c.DtCalibrated).FirstOrDefault();
+                EquipmentCalibration calibrationRecord = item.EquipmentCalibrations.Where(e => e.Passed == true).OrderByDescending(c => c.DtCalibrated).FirstOrDefault();
                 bool calibrated = EquipmentHelpers.IsItemCalibrated(calibrationRecord, calibrationPeriodYears);
 
                 if (!calibrated)
