@@ -48,7 +48,9 @@ namespace ServiceSheetManager.Controllers
             }
             //RT 15/1/18 - Adding in equipment type
             //Equipment equipment = await db.Equipments.FindAsync(id);
-            Equipment equipment = await db.Equipments.Where(e => e.Id == id.Value).Include(e => e.EquipmentType).FirstOrDefaultAsync();
+            //RT 28/1/18 - Adding in the latest calibration record
+            //Equipment equipment = await db.Equipments.Where(e => e.Id == id.Value).Include(e => e.EquipmentType).FirstOrDefaultAsync();
+            Equipment equipment = await db.Equipments.Where(e => e.Id == id.Value).Include(e => e.EquipmentType).Include(e => e.EquipmentCalibrations).FirstOrDefaultAsync();
 
             if (equipment == null)
             {

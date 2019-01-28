@@ -178,32 +178,49 @@ namespace ServiceSheetManager.Controllers
         public IQueryable<ServiceSheet> GetServiceSheets(int? submissionNumber, DateTime? sheetsFromDateSearch, DateTime? sheetsToDateSearch, string customerSearch,
                                             string mttJobNumberSearch, string selectedEngineer)
         {
+            //RT 28/1/18 - This returns too much data if there are no filters set.  Limit to the previous week in this case
+            bool filtersApplied = false;
+
             var result = db.ServiceSheets.AsQueryable();
 
             if (submissionNumber.HasValue)
             {
                 result = result.Where(s => s.SubmissionNumber == submissionNumber);
+                filtersApplied = true;
             }
             if (sheetsFromDateSearch.HasValue)
             {
                 result = result.Where(s => s.ServiceDays.Any(d => d.DtReport >= sheetsFromDateSearch));
+                filtersApplied = true;
             }
             if (sheetsToDateSearch.HasValue)
             {
                 result = result.Where(s => s.ServiceDays.Any(d => d.DtReport <= sheetsToDateSearch));
+                filtersApplied = true;
             }
             if (!string.IsNullOrEmpty(customerSearch))
             {
                 result = result.Where(s => s.Customer.Contains(customerSearch));
+                filtersApplied = true;
             }
             if (!string.IsNullOrEmpty(mttJobNumberSearch))
             {
                 result = result.Where(s => s.MttJobNumber.Contains(mttJobNumberSearch));
+                filtersApplied = true;
             }
             if (!string.IsNullOrEmpty(selectedEngineer))
             {
                 result = result.Where(s => s.Username.Equals(selectedEngineer));
+                filtersApplied = true;
             }
+
+            //Default to after last week if no filters have been set
+            if (!filtersApplied)
+            {
+                DateTime lastWeek = DateTime.Now.AddDays(-7);
+                result = result.Where(s => s.ServiceDays.Any(d => d.DtReport >= lastWeek));
+            }
+
             return result;
         }
 

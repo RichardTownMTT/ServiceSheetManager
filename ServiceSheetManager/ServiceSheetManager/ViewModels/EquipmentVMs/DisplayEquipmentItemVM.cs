@@ -15,6 +15,8 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         private string serialNumber;
         private int? calibrationPeriodYears;
         private string equipmentTypeDescription;
+        private string lastCalDate;
+        private string nextCalDate;
 
         public DisplayEquipmentItemVM(Equipment equipmentModel)
         {
@@ -32,6 +34,36 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
             {
                 this.equipmentTypeDescription = "Not Set";
                 System.Diagnostics.Trace.TraceError("Equipment Type not loaded! - equipment model is " + equipmentModel.Id.ToString());
+            }
+
+            //RT 28/1/19 - Adding last calibration record to the equipment display.  May be null if it hasn't been calibrated or there may be multiple records
+            if (equipmentModel.EquipmentCalibrations.Count > 0)
+            {
+                EquipmentCalibration calibration = equipmentModel.EquipmentCalibrations.OrderByDescending(e => e.DtCalibrated).First();
+                LastCalDate = calibration.DtCalibrated.ToShortDateString();
+
+                if (CalibrationPeriodYears.HasValue)
+                {
+                    var nextCal = calibration.DtCalibrated.AddYears(CalibrationPeriodYears.Value);
+                    NextCalDate = nextCal.ToShortDateString();
+                }
+                else
+                {
+                    NextCalDate = "Calibration not required";
+                }
+            }
+            else
+            {
+                LastCalDate = "Not Calibrated";
+
+                if (CalibrationPeriodYears.HasValue)
+                {
+                    NextCalDate = "Overdue";
+                }
+                else
+                {
+                    NextCalDate = "Calibration not required";
+                }
             }
         }
 
@@ -66,6 +98,18 @@ namespace ServiceSheetManager.ViewModels.EquipmentVMs
         {
             get { return equipmentTypeDescription; }
             set { equipmentTypeDescription = value; }
+        }
+        [Display(Name = "Last Calibrated Date")]
+        public string LastCalDate
+        {
+            get { return lastCalDate; }
+            set { lastCalDate = value; }
+        }
+        [Display(Name = "Next Calibration Due")]
+        public string NextCalDate
+        {
+            get { return nextCalDate; }
+            set { nextCalDate = value; }
         }
     }
 }

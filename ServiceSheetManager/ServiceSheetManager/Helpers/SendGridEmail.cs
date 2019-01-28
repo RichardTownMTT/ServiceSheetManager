@@ -16,7 +16,8 @@ namespace ServiceSheetManager.Helpers
             var email = new SendGridMessage();
             email.SetFrom(new EmailAddress("r.town@mtt.uk.com", "MTT"));
             email.AddTo("r.town@mtt.uk.com", "Richard");
-            email.SetSubject("Test");
+            email.AddTo("c.oconnor@mtt.uk.com", "Callum");
+            email.SetSubject("Equipment Tracker - Barcode not recognised");
             email.AddContent(MimeType.Text, message);
 
 

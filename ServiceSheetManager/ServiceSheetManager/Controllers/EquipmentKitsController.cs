@@ -30,7 +30,10 @@ namespace ServiceSheetManager.Controllers
 
             //RT 16/1/17 - Changing to include the equipment type
             //EquipmentKit equipmentKit = await db.EquipmentKits.Where(k => k.Id == id.Value).Include(e => e.Equipments).FirstOrDefaultAsync();
-            EquipmentKit equipmentKit = await db.EquipmentKits.Where(k => k.Id == id.Value).Include(e => e.Equipments).Include(k => k.EquipmentType).FirstOrDefaultAsync();
+            //EquipmentKit equipmentKit = await db.EquipmentKits.Where(k => k.Id == id.Value).Include(e => e.Equipments).Include(k => k.EquipmentType).FirstOrDefaultAsync();
+            //RT 28/1/19 - Adding in the calibration record
+            EquipmentKit equipmentKit = await db.EquipmentKits.Where(k => k.Id == id.Value).Include(e => e.Equipments).Include(k => k.EquipmentType)
+                                                .Include(e => e.Equipments.Select(c => c.EquipmentCalibrations)).FirstOrDefaultAsync();
 
             if (equipmentKit == null)
             {
