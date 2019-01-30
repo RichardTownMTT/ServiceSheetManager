@@ -433,6 +433,8 @@
     <Content Include="Views\EquipmentReports\CalibrationDueOrder.cshtml" />
     <Content Include="Views\EquipmentCalibration\Create.cshtml" />
     <Content Include="Views\EquipmentReports\EquipmentLocationHistory.cshtml" />
+    <Content Include="Views\Equipment\CalibrateEquipment.cshtml" />
+    <Content Include="Views\EquipmentKits\CalibrateEquipment.cshtml" />
     <None Include="Web.SECRETS.config" />
   </ItemGroup>
   <ItemGroup>

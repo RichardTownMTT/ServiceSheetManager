@@ -230,7 +230,49 @@ namespace ServiceSheetManager.Controllers
             }
             return deletedType;
         }
-        
+
+        //RT 30/1/19 - Adding functionality to mark equipment as away for calibration
+        public async Task<ActionResult> CalibrateEquipment(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Equipment equipment = await db.Equipments.Where(e => e.Id == id.Value).Include(e => e.EquipmentType).Include(e => e.EquipmentCalibrations).FirstOrDefaultAsync();
+
+            if (equipment == null)
+            {
+                return HttpNotFound();
+            }
+
+            EquipmentVMAssembler vmAssembler = new EquipmentVMAssembler();
+
+            DisplayEquipmentItemVM displayVM = vmAssembler.DisplayEquipmentVM(equipment);
+            return View(displayVM);
+        }
+
+        [HttpPost, ActionName("CalibrateEquipment")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CalibrateEquipmentConfirmed(int id)
+        {
+            Equipment equipment = await db.Equipments.FindAsync(id);
+
+            EquipmentLocation calLocation = new EquipmentLocation();
+            calLocation.CanvasSubmissionNumber = -1;
+            calLocation.DtScanned = DateTime.Now;
+            calLocation.Equipment = equipment;
+            calLocation.LocationCode = 3;
+            calLocation.ScannedUserFirstName = "Away for Calibration";
+            calLocation.ScannedUserName = "";
+            calLocation.ScannedUserSurname = "";
+
+            db.EquipmentLocations.Add(calLocation);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -1,4 +1,4 @@
-﻿@*@model ServiceSheetManager.Models.Equipment
+﻿@model ServiceSheetManager.ViewModels.EquipmentVMs.DisplayEquipmentItemVM
 
 @{
     ViewBag.Title = "Delete";
@@ -36,19 +36,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CalibrationPeriodDays)
+            @Html.DisplayNameFor(model => model.CalibrationPeriodYears)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CalibrationPeriodDays)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EquipmentKit.Barcode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EquipmentKit.Barcode)
+            @Html.DisplayFor(model => model.CalibrationPeriodYears)
         </dd>
 
     </dl>
@@ -61,4 +53,4 @@
             @Html.ActionLink("Back to List", "Index")
         </div>
     }
-</div>*@
+</div>

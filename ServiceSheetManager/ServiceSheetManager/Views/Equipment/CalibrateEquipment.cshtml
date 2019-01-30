@@ -1,10 +1,10 @@
 ﻿@model ServiceSheetManager.ViewModels.EquipmentVMs.DisplayEquipmentItemVM
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Away for Calibration";
 }
 
-<h2>Details</h2>
+<h2>Would you like to mark this as away for calibration?</h2>
 
 <div>
     <h4>Equipment</h4>
@@ -63,10 +63,15 @@
         </dd>
 
     </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Away for Calibration" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Sent for Calibration", "CalibrateEquipment", new { id = Model.Id }) |
-    @Html.ActionLink("Delete", "Delete", new { id = Model.Id}) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

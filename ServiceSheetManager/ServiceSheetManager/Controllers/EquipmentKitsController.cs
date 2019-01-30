@@ -200,6 +200,52 @@ namespace ServiceSheetManager.Controllers
             return deletedType;
         }
 
+        //RT 30/1/19 - Adding functionality to mark equipment as away for calibration
+        public async Task<ActionResult> CalibrateEquipment(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //RT 16/1/17 - Changing to include the equipment type
+            //EquipmentKit equipmentKit = await db.EquipmentKits.Where(k => k.Id == id.Value).Include(e => e.Equipments).FirstOrDefaultAsync();
+            //EquipmentKit equipmentKit = await db.EquipmentKits.Where(k => k.Id == id.Value).Include(e => e.Equipments).Include(k => k.EquipmentType).FirstOrDefaultAsync();
+            //RT 28/1/19 - Adding in the calibration record
+            EquipmentKit equipmentKit = await db.EquipmentKits.Where(k => k.Id == id.Value).Include(e => e.Equipments).Include(k => k.EquipmentType)
+                                                .Include(e => e.Equipments.Select(c => c.EquipmentCalibrations)).FirstOrDefaultAsync();
+
+            if (equipmentKit == null)
+            {
+                return HttpNotFound();
+            }
+
+            EquipmentKitVMAssembler vmKitAssesmbler = new EquipmentKitVMAssembler();
+            DisplayEquipmentKitVM displayVM = vmKitAssesmbler.Display(equipmentKit);
+
+            return View(displayVM);
+        }
+
+        [HttpPost, ActionName("CalibrateEquipment")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CalibrateEquipmentConfirmed(int id)
+        {
+            EquipmentKit equipmentKit = await db.EquipmentKits.FindAsync(id);
+
+            EquipmentLocation calLocation = new EquipmentLocation();
+            calLocation.CanvasSubmissionNumber = -1;
+            calLocation.DtScanned = DateTime.Now;
+            calLocation.EquipmentKit = equipmentKit;
+            calLocation.LocationCode = 3;
+            calLocation.ScannedUserFirstName = "Away for Calibration";
+            calLocation.ScannedUserName = "";
+            calLocation.ScannedUserSurname = "";
+
+            db.EquipmentLocations.Add(calLocation);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index", "Equipment");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

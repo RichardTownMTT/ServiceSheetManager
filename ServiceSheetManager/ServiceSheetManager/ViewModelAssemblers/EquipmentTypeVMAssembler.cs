@@ -15,7 +15,11 @@ namespace ServiceSheetManager.ViewModelAssemblers
         {
             List<SelectListItem> sl = new List<SelectListItem>();
 
-            List<EquipmentType> allTypes = await db.EquipmentTypes.Where(t => t.Deleted.HasValue == false).ToListAsync();
+            //RT 30/1/19 - Changing so we don't load the type for deleted items
+            //List<EquipmentType> allTypes = await db.EquipmentTypes.Where(t => t.Deleted.HasValue == false).ToListAsync();
+            List<EquipmentType> allTypes = await db.EquipmentTypes.Where(t => t.Deleted.HasValue == false && !t.Description.Equals("Deleted")).ToListAsync();
+
+
             foreach (var type in allTypes)
             {
                 SelectListItem ss = new SelectListItem
