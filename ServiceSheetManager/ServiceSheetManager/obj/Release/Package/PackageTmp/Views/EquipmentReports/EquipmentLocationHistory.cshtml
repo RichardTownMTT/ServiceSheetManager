@@ -1,0 +1,47 @@
+﻿@model ServiceSheetManager.ViewModels.EquipmentVMs.EquipmentLocationHistoryVM
+
+@{
+    ViewBag.Title = "Equipment Location History";
+}
+
+<h2>Equipment Location History Report</h2>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form class="form-horizontal" asp-action="EquipmentLocationHistory" method="get">
+            <div class="row form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.EquipmentBarcodesAndDesc, new { @class = "control-label" })</div>
+                <div class="col-md-10">@Html.DropDownListFor(m => m.SelectedEquipmentItemBarcode, new SelectList(Model.EquipmentBarcodesAndDesc, "Value", "Text"), new { @class = "form-control" })</div>
+            </div>
+            <input type="submit" value="Load Equipment" class="btn btn-default" />
+        </form>
+    </div>
+</div>
+
+@if (Model.AllHistory.Count == 0)
+{
+    <h3>There are no items to display</h3>
+}
+else
+{
+     <table class="table">
+         <thead>
+             <tr>
+                 <th>Location</th>
+                 <th>Scanned By</th>
+                 <th>Date Assigned</th>
+             </tr>
+         </thead>
+         <tbody>
+             @foreach (var item in Model.AllHistory)
+             {
+                 <tr>
+                     <td>@item.Location</td>
+                     <td>@item.ScannedBy</td>
+                     <td>@item.DisplayDateAssigned</td>
+                 </tr>
+             }
+         </tbody>
+     </table>
+}
+

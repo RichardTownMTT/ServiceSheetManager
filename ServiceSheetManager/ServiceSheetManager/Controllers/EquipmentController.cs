@@ -18,11 +18,18 @@ namespace ServiceSheetManager.Controllers
 
         // GET: Equipment
         public async Task<ActionResult> Index([Bind] int? SelectedEquipmentTypeId)
-        { 
-            var equipments = db.Equipments.Include(e => e.EquipmentKit)
-                                            .Include(e => e.EquipmentLocations)
-                                            .Include(e => e.EquipmentKit.Equipments.Select(loc => loc.EquipmentLocations))
-                                            .Include(e => e.EquipmentCalibrations);
+        {
+            //RT 30/1/19 - Removing the items marked as deleted from the index
+            //var equipments = db.Equipments.Include(e => e.EquipmentKit)
+            //                                .Include(e => e.EquipmentLocations)
+            //                                .Include(e => e.EquipmentKit.Equipments.Select(loc => loc.EquipmentLocations))
+            //                                .Include(e => e.EquipmentCalibrations);
+            EquipmentType deletedType = await RetrieveDeletedType();
+            var equipments = db.Equipments.Where(e => e.EquipmentTypeId != deletedType.Id && e.EquipmentKit.EquipmentTypeId != deletedType.Id).Include(e => e.EquipmentKit)
+                                           .Include(e => e.EquipmentLocations)
+                                           .Include(e => e.EquipmentKit.Equipments.Select(loc => loc.EquipmentLocations))
+                                           .Include(e => e.EquipmentCalibrations);
+
 
             //Apply the filters
             if (SelectedEquipmentTypeId.HasValue && SelectedEquipmentTypeId.Value != -1)
@@ -30,7 +37,10 @@ namespace ServiceSheetManager.Controllers
                 equipments = equipments.Where(e => e.EquipmentTypeId == SelectedEquipmentTypeId.Value || e.EquipmentKit.EquipmentTypeId == SelectedEquipmentTypeId.Value);
             }
 
-            var equipmentTypes = await db.EquipmentTypes.ToListAsync();
+            //RT 30/1/19 - Removing the items marked as deleted from the selectlist
+            //var equipmentTypes = await db.EquipmentTypes.ToListAsync();
+            var equipmentTypes = await db.EquipmentTypes.Where(e => e.Id != deletedType.Id).ToListAsync();
+
             //Create the VMs
             EquipmentVMAssembler vMAssembler = new EquipmentVMAssembler();
 
@@ -171,34 +181,56 @@ namespace ServiceSheetManager.Controllers
             return View(equipmentVM);
         }
 
-        //// GET: Equipment/Delete/5
-        //public async Task<ActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Equipment equipment = await db.Equipments.FindAsync(id);
-        //    if (equipment == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(equipment);
-        //}
+        // GET: Equipment/Delete/5
+        public async Task<ActionResult> Delete(int? id)
+        {
 
-        // POST: Equipment/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> DeleteConfirmed(int id)
-        //{
-        //    Equipment equipment = await db.Equipments.FindAsync(id);
-        //    db.Equipments.Remove(equipment);
-        //    await db.SaveChangesAsync();
-        //    return RedirectToAction("Index");
-        //}
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            Equipment equipment = await db.Equipments.Where(e => e.Id == id.Value).Include(e => e.EquipmentType).Include(e => e.EquipmentCalibrations).FirstOrDefaultAsync();
 
+            if (equipment == null)
+            {
+                return HttpNotFound();
+            }
+
+            EquipmentVMAssembler vmAssembler = new EquipmentVMAssembler();
+
+            DisplayEquipmentItemVM displayVM = vmAssembler.DisplayEquipmentVM(equipment);
+
+           
+            return View(displayVM);
+        }
+
+        //POST: Equipment/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            //RT 30/1/19 - On delete, just set the type to the deleted type, to keep the records
+            EquipmentType deletedType = await RetrieveDeletedType();
+
+            Equipment equipment = await db.Equipments.FindAsync(id);
+            equipment.EquipmentType = deletedType;
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        //RT 30/01/19 - Method to return the deleted type from the database.  This is used to mark equipment as deleted
+        private async Task<EquipmentType> RetrieveDeletedType()
+        {
+            EquipmentType deletedType = await db.EquipmentTypes.Where(e => e.Description.Equals("Deleted")).FirstAsync();
+
+            if (deletedType == null)
+            {
+                throw new Exception("Deleted type not found");
+            }
+            return deletedType;
+        }
         
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

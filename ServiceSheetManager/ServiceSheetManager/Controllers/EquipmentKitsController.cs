@@ -1,6 +1,7 @@
 ﻿using ServiceSheetManager.Models;
 using ServiceSheetManager.ViewModelAssemblers;
 using ServiceSheetManager.ViewModels.EquipmentVMs;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -153,30 +154,51 @@ namespace ServiceSheetManager.Controllers
         //}
 
         // GET: EquipmentKits/Delete/5
-        //public async Task<ActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    EquipmentKit equipmentKit = await db.EquipmentKits.FindAsync(id);
-        //    if (equipmentKit == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(equipmentKit);
-        //}
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EquipmentKit equipmentKit = await db.EquipmentKits.Where(k => k.Id == id.Value).Include(e => e.Equipments).Include(k => k.EquipmentType)
+                                                .Include(e => e.Equipments.Select(c => c.EquipmentCalibrations)).FirstOrDefaultAsync();
 
-        //// POST: EquipmentKits/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> DeleteConfirmed(int id)
-        //{
-        //    EquipmentKit equipmentKit = await db.EquipmentKits.FindAsync(id);
-        //    db.EquipmentKits.Remove(equipmentKit);
-        //    await db.SaveChangesAsync();
-        //    return RedirectToAction("Index");
-        //}
+            if (equipmentKit == null)
+            {
+                return HttpNotFound();
+            }
+
+            EquipmentKitVMAssembler vmKitAssesmbler = new EquipmentKitVMAssembler();
+            DisplayEquipmentKitVM displayVM = vmKitAssesmbler.Display(equipmentKit);
+            
+            return View(displayVM);
+        }
+
+        // POST: EquipmentKits/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            //RT 30/1/19 - On delete, just set the type to the deleted type, to keep the records
+            EquipmentType deletedType = await RetrieveDeletedType();
+
+            EquipmentKit equipmentKit = await db.EquipmentKits.FindAsync(id);
+            equipmentKit.EquipmentType = deletedType;
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index", "Equipment");
+        }
+
+        //RT 30/01/19 - Method to return the deleted type from the database.  This is used to mark equipment as deleted
+        private async Task<EquipmentType> RetrieveDeletedType()
+        {
+            EquipmentType deletedType = await db.EquipmentTypes.Where(e => e.Description.Equals("Deleted")).FirstAsync();
+
+            if (deletedType == null)
+            {
+                throw new Exception("Deleted type not found");
+            }
+            return deletedType;
+        }
 
         protected override void Dispose(bool disposing)
         {

@@ -26,15 +26,22 @@
             @Html.ActionLink("Approve \u00BB", "Index", "ServiceSheetApproval", new { }, new { @class = "btn btn-default" })
         </p>
     </div>
-    <div class="col-md-4">
+    @*<div class="col-md-4">
         <h2>Customer Statistics</h2>
         <p>Service contract statistics, engineer days onsite and company specific reporting</p>
         <p>
             @Html.ActionLink("Matrix Statistics \u00BB", "Index", "MatrixServiceStats", new { }, new { @class = "btn btn-default"})
         </p>
+    </div>*@
+    <div class="col-md-4">
+        <h2>Engineer Calendar</h2>
+        <p>View past engineer jobs, location tracker and other engineer related statistics</p>
+        <p>
+            @Html.ActionLink("Engineer Calendar \u00BB", "EngineerCalendar", "EngineerStatistics", new { }, new { @class = "btn btn-default" })
+        </p>
     </div>
 </div>
-<div class="row">
+@*<div class="row">
     <div class="col-md-4">
         <h2>Engineer Calendar</h2>
         <p>View past engineer jobs, location tracker and other engineer related statistics</p>
@@ -49,4 +56,4 @@
             @Html.ActionLink("Job Stats \u00BB", "Index", "JobCost", new { }, new { @class="btn btn-default"})
         </p>
     </div>
-</div>
+</div>*@
